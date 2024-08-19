@@ -330,11 +330,11 @@ const ActivityHistory = () => {
                           </div>
                           <div className="flex justify-between items-center pt-3">
                             <div className="flex items-center gap-3 ">
-                              <div className="w-12 h-6 border border-gray-300 rounded-full flex items-center justify-center shadow-md">
+                              <div className="w-13 h-8 border border-gray-300 rounded-full flex items-center justify-center shadow-md">
                                 <MdPushPin size={12} />{" "}
                                 <p className="text-xs">+4</p>
                               </div>
-                              <div className="w-12 h-6 border border-gray-300  rounded-full flex items-center justify-center shadow-md">
+                              <div className="w-13 h-8 border border-gray-300  rounded-full flex items-center justify-center shadow-md">
                                 <FaRegImage size={12} />{" "}
                                 <p className="text-xs">+4</p>
                               </div>

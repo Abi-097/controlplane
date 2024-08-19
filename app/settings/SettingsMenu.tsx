@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import MyProfile from "./Myprofile";
+import { CgProfile } from "react-icons/cg";
 
 const SettingsMenu = () => {
-  // Define the specific keys for the contentMap
+  // specific keys for the contentMap
   const options = ["My Profile", "Option 2", "Option 3", "Option 4"] as const;
-  type OptionType = (typeof options)[number]; // Union type of the options
+  type OptionType = (typeof options)[number];
 
   // State to keep track of the active option
   const [activeOption, setActiveOption] = useState<OptionType>("My Profile");
@@ -17,27 +18,35 @@ const SettingsMenu = () => {
     "Option 3": "Content for Option 3",
     "Option 4": "Content for Option 4",
   };
+  const iconsMap: Record<OptionType, React.ReactNode> = {
+    "My Profile": <CgProfile size={20} />,
+    "Option 2": <CgProfile size={20} />,
+    "Option 3": <CgProfile size={20} />,
+    "Option 4": <CgProfile size={20} />,
+  };
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-3 sm:grid-rows-2 gap-4 md:grid-cols-12">
-      {/* Left Side - Options */}
-      <div className="col-span-1 md:col-span-3 p-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-4 md:grid-cols-12 m-2">
+      {/* Left Side - Content */}
+
+      <div className="col-span-1 md:col-span-2 p-4 bg-slate-100 rounded-md">
         {options.map((option) => (
           <div
             key={option}
-            className={`cursor-pointer p-2 mb-2 ${
+            className={`cursor-pointer p-2 mb-2 rounded-md text-sm flex items-center gap-3 ${
               activeOption === option
                 ? "bg-gray-300 text-black border-l-4 border-black"
                 : "text-gray-600"
             }`}
             onClick={() => setActiveOption(option)}
           >
+            {iconsMap[option]}
             {option}
           </div>
         ))}
       </div>
 
       {/* Right Side - Content */}
-      <div className="col-span-1 md:col-span-9  p-4">
+      <div className="col-span-1 md:col-span-10 p-4 bg-slate-100 rounded-md">
         {contentMap[activeOption]}
       </div>
     </div>
