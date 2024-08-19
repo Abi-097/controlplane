@@ -1,4 +1,4 @@
-import { VscBell } from "react-icons/vsc";
+"use client";
 import { IoChevronDownSharp, IoHelpCircleOutline } from "react-icons/io5";
 import { useState, useRef, useEffect } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";

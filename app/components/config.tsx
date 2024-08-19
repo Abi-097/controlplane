@@ -8,37 +8,37 @@ export const SideNavOptions = [
   {
     id: 1,
     title: "Contacts",
-    Icon: <CgProfile size={24} />,
+    Icon: <CgProfile size={20} />,
     path: "/contact",
   },
   {
     id: 2,
     title: "Company",
-    Icon: <FaRegBuilding size={24} />,
+    Icon: <FaRegBuilding size={20} />,
     path: "/company",
   },
   {
     id: 3,
     title: "Leads",
-    Icon: <HiOutlineUserGroup size={24} />,
+    Icon: <HiOutlineUserGroup size={20} />,
     path: "/leads",
   },
   {
     id: 4,
     title: "Opportunity",
-    Icon: <FaRegLightbulb size={24} />,
+    Icon: <FaRegLightbulb size={20} />,
     path: "/opportunity",
   },
   {
     id: 5,
     title: "Customer",
-    Icon: <FaRegHandshake size={24} />,
+    Icon: <FaRegHandshake size={20} />,
     path: "/customer",
   },
   {
     id: 6,
     title: "Settings",
-    Icon: <IoMdSettings size={24} />,
+    Icon: <IoMdSettings size={20} />,
     path: "/settings",
   },
   // {
