@@ -4,11 +4,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { IoLocationOutline } from "react-icons/io5";
 import { FaEarthAmericas } from "react-icons/fa6";
 import { RiLockPasswordLine } from "react-icons/ri";
+import NameImage from "./NameImage";
 const MyProfile = () => {
   return (
     <div id="profile">
       <div>
-        <Tabs defaultValue="nameImage" className="w-[700px]">
+        <Tabs defaultValue="nameImage" className="w-full">
           <TabsList className="grid w-full grid-cols-4 bg-gray-200">
             <TabsTrigger value="nameImage">
               <CgProfile size={20} className="mr-2" /> Name & Image
@@ -26,7 +27,9 @@ const MyProfile = () => {
             </TabsTrigger>
           </TabsList>
           <hr className="text-gray-300 my-2" />
-          <TabsContent value="nameImage">nameImage</TabsContent>
+          <TabsContent value="nameImage" className="">
+            <NameImage />
+          </TabsContent>
           <TabsContent value="address">address</TabsContent>
           <TabsContent value="time">time</TabsContent>
           <TabsContent value="password">password</TabsContent>

@@ -1,53 +1,88 @@
 "use client";
 import React, { useState } from "react";
-import MyProfile from "./Myprofile";
 import { CgProfile } from "react-icons/cg";
+import { FiSettings } from "react-icons/fi";
+import { AiOutlineHistory } from "react-icons/ai";
 
 const SettingsMenu = () => {
-  // specific keys for the contentMap
-  const options = ["My Profile", "Option 2", "Option 3", "Option 4"] as const;
-  type OptionType = (typeof options)[number];
+  const [activeOption, setActiveOption] = useState(null);
+  const [expandedOption, setExpandedOption] = useState(null);
 
-  // State to keep track of the active option
-  const [activeOption, setActiveOption] = useState<OptionType>("My Profile");
+  const handleExpand = (option) => {
+    setExpandedOption(expandedOption === option ? null : option);
+  };
 
-  // Content corresponding to each option
-  const contentMap: Record<OptionType, React.ReactNode> = {
-    "My Profile": <MyProfile />,
-    "Option 2": "Content for Option 2",
-    "Option 3": "Content for Option 3",
-    "Option 4": "Content for Option 4",
+  const handleOptionClick = (option) => {
+    setActiveOption(option);
   };
-  const iconsMap: Record<OptionType, React.ReactNode> = {
-    "My Profile": <CgProfile size={20} />,
-    "Option 2": <CgProfile size={20} />,
-    "Option 3": <CgProfile size={20} />,
-    "Option 4": <CgProfile size={20} />,
-  };
+
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 sm:grid-rows-2 gap-4 md:grid-cols-12 m-2">
-      {/* Left Side - Content */}
-
-      <div className="col-span-1 md:col-span-2 p-4 bg-slate-100 rounded-md">
-        {options.map((option) => (
-          <div
-            key={option}
-            className={`cursor-pointer p-2 mb-2 rounded-md text-sm flex items-center gap-3 ${
-              activeOption === option
-                ? "bg-gray-300 text-black border-l-4 border-black"
-                : "text-gray-600"
-            }`}
-            onClick={() => setActiveOption(option)}
-          >
-            {iconsMap[option]}
-            {option}
+    <div className="grid grid-cols-12 gap-2 m-2 h-[90vh]">
+      {/* Left Side - Menu */}
+      <div className="col-span-12 md:col-span-12 lg:col-span-2 xl:col-span-2 p-4 bg-slate-100 rounded-md">
+        <div
+          className={`cursor-pointer p-2 mb-2 rounded-md text-sm flex items-center gap-3 ${
+            activeOption === "userDetails"
+              ? "bg-gray-300 text-black border-l-4 border-black"
+              : "text-gray-600"
+          }`}
+          onClick={() => {
+            handleExpand("userDetails");
+            handleOptionClick("userDetails");
+          }}
+        >
+          <CgProfile className="text-lg" />
+          User Details
+        </div>
+        {expandedOption === "userDetails" && (
+          <div className="pl-4 overflow-hidden transition-all duration-300 ease-in-out transform scale-y-100">
+            {["Name & Image", "Address", "Region"].map((option) => (
+              <div
+                key={option}
+                className={`cursor-pointer p-2 mb-2 rounded-md text-sm flex items-center gap-3 ${
+                  activeOption === option
+                    ? "bg-gray-300 text-black border-l-4 border-black"
+                    : "text-gray-600"
+                }`}
+                onClick={() => handleOptionClick(option)}
+              >
+                {option}
+              </div>
+            ))}
           </div>
-        ))}
+        )}
+        <div
+          className={`cursor-pointer p-2 mb-2 rounded-md text-sm flex items-center gap-3 ${
+            activeOption === "companyDetails"
+              ? "bg-gray-300 text-black border-l-4 border-black"
+              : "text-gray-600"
+          }`}
+          onClick={() => handleOptionClick("companyDetails")}
+        >
+          <FiSettings className="text-lg" />
+          Company Details
+        </div>
+        <div
+          className={`cursor-pointer p-2 mb-2 rounded-md text-sm flex items-center gap-3 ${
+            activeOption === "history"
+              ? "bg-gray-300 text-black border-l-4 border-black"
+              : "text-gray-600"
+          }`}
+          onClick={() => handleOptionClick("history")}
+        >
+          <AiOutlineHistory className="text-lg" />
+          History
+        </div>
       </div>
 
       {/* Right Side - Content */}
-      <div className="col-span-1 md:col-span-10 p-4 bg-slate-100 rounded-md">
-        {contentMap[activeOption]}
+      <div className="col-span-12 md:col-span-12 lg:col-span-10 xl:col-span-10 p-4 bg-slate-100 rounded-md">
+        {activeOption && (
+          <div className="p-4">
+            <h2 className="text-xl font-semibold">{activeOption}</h2>
+            {/* Add content based on the selected option */}
+          </div>
+        )}
       </div>
     </div>
   );
