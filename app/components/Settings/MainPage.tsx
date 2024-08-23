@@ -1,5 +1,5 @@
 import React from "react";
-import Header from "../components/common/Header";
+import Header from "../common/Header";
 import SettingsMenu from "./SettingsMenu";
 
 const SettingsMainPage = () => {

@@ -288,7 +288,7 @@ const AddContactDialog: React.FC<AddContactDialogProps> = ({
                   onChange={(phone) => setPhone(phone)}
                   inputStyle={{
                     width: "100%",
-                    border: "1px solid #C7C8CC",
+                    border: "1px solid #e4e4e7 ",
                   }}
                 />
               </div>

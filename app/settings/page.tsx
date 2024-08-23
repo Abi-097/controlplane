@@ -1,6 +1,6 @@
 import React from "react";
 import SideNav from "../components/sidenav/SideNav";
-import SettingsMainPage from "./MainPage";
+import SettingsMainPage from "../components/Settings/MainPage";
 
 const Settings = () => {
   return (
