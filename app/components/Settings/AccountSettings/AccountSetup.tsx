@@ -2,9 +2,16 @@ import React, { useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import { RiLockPasswordLine } from "react-icons/ri";
 
-import { CiLocationOn } from "react-icons/ci";
+import { CiCalendar, CiLocationOn } from "react-icons/ci";
 import { BiWorld } from "react-icons/bi";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
+import CompanyDetails from "./CompanyDetails";
+import AccountAddress from "./AccountAddress";
+import AccountEnvironment from "./AccountEnvironment";
+import AccountRegion from "./AccountRegion";
+import { FiDatabase } from "react-icons/fi";
+import Password from "../MyProfile/Password";
+import CorporateDetails from "./CoperateTable/CorporateDetails";
 
 const AccountSetup = () => {
   // specific keys for the contentMap
@@ -28,12 +35,12 @@ const AccountSetup = () => {
 
   // Content corresponding to each option
   const contentMap: Record<OptionType, React.ReactNode> = {
-    "Company Details": "",
-    Address: "",
-    Environment: "",
-    Region: "",
-    "Password Change": "Password Change",
-    "Corporate Calender": "Corporate Calender",
+    "Company Details": <CompanyDetails />,
+    Address: <AccountAddress />,
+    Environment: <AccountEnvironment />,
+    Region: <AccountRegion />,
+    "Password Change": <Password />,
+    "Corporate Calender": <CorporateDetails />,
     "Alerts & Notification": "Alerts & Notification",
     "Account Action & Permission": "Account Action & Permission",
     "Terms & Privacy Policy": "Terms & Privacy Policy",
@@ -42,10 +49,10 @@ const AccountSetup = () => {
   const iconsMap: Record<OptionType, React.ReactNode> = {
     "Company Details": <HiOutlineBuildingOffice2 size={20} />,
     Address: <CiLocationOn size={20} />,
-    Environment: <BiWorld size={20} />,
-    Region: <RiLockPasswordLine size={20} />,
-    "Password Change": <CgProfile size={20} />,
-    "Corporate Calender": <CgProfile size={20} />,
+    Environment: <FiDatabase size={20} />,
+    Region: <BiWorld size={20} />,
+    "Password Change": <RiLockPasswordLine size={20} />,
+    "Corporate Calender": <CiCalendar size={20} />,
     "Alerts & Notification": <CgProfile size={20} />,
     "Account Action & Permission": <CgProfile size={20} />,
     "Terms & Privacy Policy": <CgProfile size={20} />,
@@ -53,7 +60,7 @@ const AccountSetup = () => {
   };
   return (
     // <div id="profile">
-    <div className="flex flex-wrap gap-2 w-full h-[90vh]">
+    <div className="flex flex-wrap gap-2 w-full bg-gray-100">
       {/* Left Side - Menu */}
       <div
         className="
@@ -89,7 +96,7 @@ const AccountSetup = () => {
           md:w-[100%]
           lg:w-[81%]
           xl:w-[81%]
-          p-1 bg-white shadow-md rounded-md
+          p-1 bg-white rounded-md
         "
       >
         {contentMap[activeOption]}

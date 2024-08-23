@@ -3,8 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState } from "react";
 import { MdOutlineHistory } from "react-icons/md";
-import PhoneInput from "react-phone-input-2";
-import "react-phone-input-2/lib/style.css";
+import moment from "moment-timezone";
 import { Country, State, City } from "country-state-city";
 import {
   Select,
@@ -13,15 +12,20 @@ import {
   SelectItem,
   SelectLabel,
   SelectTrigger,
+  SelectValue,
 } from "@/components/ui/select";
 import Flag from "react-world-flags";
 import { CiLocationOn } from "react-icons/ci";
-const Address = () => {
-  const [phone, setPhone] = useState<string>("");
+import { RiLockPasswordLine } from "react-icons/ri";
+const AccountAddress = () => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
 
+  const timezones = moment.tz.names().map((tz) => {
+    const offset = moment.tz(tz).format("Z"); // Get the UTC offset
+    return `(UTC${offset}) ${tz}`;
+  });
   const handleCountryChange = (value: string) => {
     setSelectedCountry(value);
     setSelectedState("");
@@ -47,13 +51,16 @@ const Address = () => {
 
   return (
     <div>
-      <form className="w-full p-4">
+      <form className="w-full p-4 h-[90vh]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <CiLocationOn size={24} />
             <p className="font-semibold">Address</p>
           </div>
-          <MdOutlineHistory size={24} />
+          <div className="flex items-center gap-2">
+            <RiLockPasswordLine size={24} />
+            <MdOutlineHistory size={24} />
+          </div>
         </div>
         <hr className="text-slate-300 my-4" />
         <div>
@@ -199,26 +206,21 @@ const Address = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Office Desk Location</Label>
-            <Input type="team" placeholder="" className="bg-[#f9fafb]" />
-          </div>
-
-          <div
-            className=" mb-4 w-full md:w-full 
-          lg:w-[40%] 
-          xl:w-[40%]"
-          >
-            <Label className="text-md mb-1 ">Desk Contact Number</Label>
-            <PhoneInput
-              country={"us"}
-              value={phone}
-              onChange={(phone) => setPhone(phone)}
-              inputStyle={{
-                width: "100%",
-                border: "1px solid #e4e4e7 ",
-                background: "#f9fafb",
-              }}
-            />
+            <Label className="text-md mb-1 ">Time Zone</Label>
+            <Select>
+              <SelectTrigger className="w-full bg-[#f9fafb]">
+                <SelectValue placeholder="Choose a timezone" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  {timezones.map((timezone, index) => (
+                    <SelectItem key={index} value={timezone}>
+                      {timezone}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
         </div>
         <div className="flex justify-end">
@@ -231,4 +233,4 @@ const Address = () => {
   );
 };
 
-export default Address;
+export default AccountAddress;

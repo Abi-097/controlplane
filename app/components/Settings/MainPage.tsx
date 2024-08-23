@@ -4,7 +4,7 @@ import SettingsMenu from "./SettingsMenu";
 
 const SettingsMainPage = () => {
   return (
-    <div className="flex flex-col w-full overflow-auto">
+    <div className="flex flex-col w-full">
       <Header />
       <SettingsMenu />
     </div>

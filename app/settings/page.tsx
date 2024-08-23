@@ -4,7 +4,7 @@ import SettingsMainPage from "../components/Settings/MainPage";
 
 const Settings = () => {
   return (
-    <main className="flex relative h-full w-full">
+    <main className="flex relative w-full h-screen overflow-hidden">
       {/* side nav */}
 
       <SideNav />

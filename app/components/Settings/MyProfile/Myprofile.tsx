@@ -38,7 +38,7 @@ const MyProfile = () => {
   };
   return (
     // <div id="profile">
-    <div className="flex flex-wrap gap-2 w-full h-[90vh]">
+    <div className="flex flex-wrap gap-2 w-full h-[90vh] bg-gray-100">
       {/* Left Side - Menu */}
       <div
         className="
@@ -47,13 +47,13 @@ const MyProfile = () => {
           md:w-[100%] 
           lg:w-[15%] 
           xl:w-[15%]
-          p-1 bg-white rounded-md
+         p-1 bg-white rounded-md
         "
       >
         {options.map((option) => (
           <div
             key={option}
-            className={`cursor-pointer py-2 pl-4 mb-2 rounded-sm text-sm flex items-center gap-3 ${
+            className={`cursor-pointer  py-2 pl-4 mb-2 rounded-sm text-sm flex items-center gap-3 ${
               activeOption === option
                 ? "bg-[#e5e7eb] text-black border-l-4 border-black"
                 : "text-gray-600"
@@ -74,7 +74,7 @@ const MyProfile = () => {
           md:w-[100%]
           lg:w-[84%]
           xl:w-[84%]
-          p-1 bg-white shadow-md rounded-md
+         p-1 bg-white shadow-md rounded-md
         "
       >
         {contentMap[activeOption]}

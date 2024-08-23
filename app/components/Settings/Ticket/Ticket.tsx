@@ -28,7 +28,7 @@ const Ticket = () => {
   return (
     <div className="flex flex-col">
       {/* Navigation Tabs */}
-      <div className="flex">
+      <div className="flex pt-3 px-3">
         {tabs.map((tab) => (
           <button
             key={tab}
@@ -39,7 +39,7 @@ const Ticket = () => {
           >
             {tab}
             {activeTab === tab && (
-              <span className="absolute left-0 bottom-0 w-full h-1 bg-blue-500 rounded"></span>
+              <span className="absolute left-0 bottom-0 w-full h-1 bg-blue-500 rounded" />
             )}
           </button>
         ))}

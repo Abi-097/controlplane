@@ -43,7 +43,7 @@ const SettingsMenu = () => {
     "System Outage": <CgProfile size={20} />,
   };
   return (
-    <div className="flex flex-wrap gap-2 my-2 h-[90vh] w-full">
+    <div className="flex flex-wrap gap-2 my-2 w-full md:overflow-auto lg:overflow-hidden xl:overflow-hidden bg-gray-100 p-2">
       {/* Left Side - Menu */}
       <div
         className="
@@ -52,7 +52,7 @@ const SettingsMenu = () => {
           md:w-[100%] 
           lg:w-[13%] 
           xl:w-[13%]
-          p-1 bg-white shadow-md rounded-md
+         p-1 bg-white shadow-md rounded-md
         "
       >
         {options.map((option) => (
@@ -79,7 +79,7 @@ const SettingsMenu = () => {
           md:w-[100%]
           lg:w-[86%]
           xl:w-[86%]
-          p-1 bg-white shadow-md rounded-md
+          bg-white rounded-md
         "
       >
         {contentMap[activeOption]}

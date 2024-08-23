@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import { Providers } from "./GlobalRedux/provider";
 
 export const metadata: Metadata = {
   title: "Control Plane",

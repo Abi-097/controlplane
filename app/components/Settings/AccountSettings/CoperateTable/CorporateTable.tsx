@@ -24,8 +24,12 @@ import {
 import { LiaTicketAltSolid } from "react-icons/lia";
 import { useMemo, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { FaAngleDown, FaSearch } from "react-icons/fa";
+import {
+  IoIosArrowBack,
+  IoIosArrowForward,
+  IoIosCalendar,
+} from "react-icons/io";
+import { FaAngleDown, FaRegCalendar, FaSearch } from "react-icons/fa";
 import clsx from "clsx";
 import { MdDownload, MdOutlineRefresh, MdViewColumn } from "react-icons/md";
 import * as XLSX from "xlsx";
@@ -42,20 +46,19 @@ import {
 } from "@/components/ui/sheet";
 import { FiDownload } from "react-icons/fi";
 import { Label } from "@/components/ui/label";
+import { CiCalendar } from "react-icons/ci";
 
-interface DataTableProps<TData, TValue> {
+interface CorporateTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  heading: string;
+  //   heading: string;
   //   isExpanded: boolean;
 }
 
-export function TicketTable<TData, TValue>({
+export function CorporateTable<TData, TValue>({
   columns,
   data,
-  heading,
-}: //   isExpanded,
-DataTableProps<TData, TValue>) {
+}: CorporateTableProps<TData, TValue>) {
   const [isIconMenuOpen, setIsIconMenuOpen] = useState(false);
   const iconRef = useRef<HTMLDivElement>(null);
   const [rowSelection, setRowSelection] = useState({});
@@ -146,8 +149,8 @@ DataTableProps<TData, TValue>) {
       {/* <h2 className="text-xl mb-4">{heading}</h2> */}
       <div className="flex justify-between items-center pb-2 px-7">
         <div className="flex items-center gap-3">
-          <LiaTicketAltSolid size={20} />
-          <p className="text-sm">Tickets List</p>
+          <CiCalendar size={20} />
+          <p className="text-sm">Corporate Calendar</p>
         </div>
         <div className="flex items-center justify-center gap-3">
           <div className="relative" ref={iconRef}>
@@ -251,12 +254,13 @@ DataTableProps<TData, TValue>) {
             <Input
               placeholder="Search Ticket"
               value={
-                (table.getColumn("ticketName")?.getFilterValue() as string) ??
-                ""
+                (table
+                  .getColumn("corporateName")
+                  ?.getFilterValue() as string) ?? ""
               }
               onChange={(event) =>
                 table
-                  .getColumn("ticketName")
+                  .getColumn("corporateName")
                   ?.setFilterValue(event.target.value)
               }
               className="pl-10 bg-[#f9fafb]"
@@ -265,8 +269,8 @@ DataTableProps<TData, TValue>) {
         </div>
       </div>
       {/* <div className="flex flex-col h-full"> */}
-      <div className="flex-1 max-h-[650px] w-[82vw] overflow-auto">
-        <div className="rounded-md border">
+      <div className="flex-1 max-h-[650px] overflow-y-auto">
+        <div className="rounded-md border overflow-auto">
           <Table>
             <TableHeader>
               {table.getHeaderGroups().map((headerGroup) => (
@@ -316,7 +320,7 @@ DataTableProps<TData, TValue>) {
         </div>
       </div>
       {/* <div className="flex items-center justify-center space-x-2 py-4"> */}
-      <div className="flex items-center justify-between space-x-2 p-4">
+      <div className="flex items-center justify-between space-x-2 py-4">
         <div className="flex items-center gap-3">
           <div className="text-sm text-gray-800">
             {`${
