@@ -41,6 +41,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { FiPlus } from "react-icons/fi";
+import AddNewMeeting from "./AddNewMeeting";
 
 const contentList = [
   {
@@ -132,6 +133,12 @@ const MeetingContent = () => {
                      
                     }
                   /> */}
+                  <AddNewMeeting 
+                    trigger={
+                      <button className="bg-transparent border-none">
+                        <FiPlus size={18} />
+                      </button>
+                    } />
                 </div>
               </TooltipTrigger>
               <TooltipContent>

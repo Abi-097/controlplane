@@ -6,6 +6,12 @@ import MyProfile from "./MyProfile/Myprofile";
 import Ticket from "./Ticket/Ticket";
 import { GrUserSettings } from "react-icons/gr";
 import AccountSetup from "./AccountSettings/AccountSetup";
+import SystemOutage from "./SystemOutage/SystemOutage";
+import { BsLightbulbOff } from "react-icons/bs";
+import SettingsAuditLogs from "./AduitLogs/SettingsAuditLogs";
+import { IoDocumentTextOutline } from "react-icons/io5";
+import { FaRegUser } from "react-icons/fa";
+import UserManagement from "./UserManagment/UserManagement";
 
 const SettingsMenu = () => {
   // specific keys for the contentMap
@@ -27,20 +33,20 @@ const SettingsMenu = () => {
   const contentMap: Record<OptionType, React.ReactNode> = {
     "My Profile": <MyProfile />,
     "Account Setup": <AccountSetup />,
-    "User Management": "Content for User Management",
+    "User Management": <UserManagement />,
     "Invoice & Billing": "Content for Invoice & Billing",
-    "Audit Logs": "",
+    "Audit Logs": <SettingsAuditLogs />,
     "Ticket & Support": <Ticket />,
-    "System Outage": "",
+    "System Outage": <SystemOutage />,
   };
   const iconsMap: Record<OptionType, React.ReactNode> = {
     "My Profile": <CgProfile size={20} />,
     "Account Setup": <GrUserSettings size={20} />,
-    "User Management": <CgProfile size={20} />,
+    "User Management": <FaRegUser size={20} />,
     "Invoice & Billing": <CgProfile size={20} />,
-    "Audit Logs": <CgProfile size={20} />,
+    "Audit Logs": <IoDocumentTextOutline size={20} />,
     "Ticket & Support": <CgProfile size={20} />,
-    "System Outage": <CgProfile size={20} />,
+    "System Outage": <BsLightbulbOff size={20} />,
   };
   return (
     <div className="flex flex-wrap gap-2 my-2 w-full md:overflow-auto lg:overflow-hidden xl:overflow-hidden bg-gray-100 p-2">

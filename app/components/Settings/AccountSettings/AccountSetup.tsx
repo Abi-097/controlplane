@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { CgProfile } from "react-icons/cg";
-import { RiLockPasswordLine } from "react-icons/ri";
+import { RiDeleteBinLine, RiLockPasswordLine } from "react-icons/ri";
 
 import { CiCalendar, CiLocationOn } from "react-icons/ci";
 import { BiWorld } from "react-icons/bi";
@@ -12,6 +12,14 @@ import AccountRegion from "./AccountRegion";
 import { FiDatabase } from "react-icons/fi";
 import Password from "../MyProfile/Password";
 import CorporateDetails from "./CoperateTable/CorporateDetails";
+import AlertsNotifications from "./Alerts";
+import { FaRegBell } from "react-icons/fa";
+import { BsBell } from "react-icons/bs";
+import AccountingAccess from "./AccountingAccess";
+import Image from "next/image";
+import TermsCondition from "./TermsCondition";
+import { IoDocumentTextOutline } from "react-icons/io5";
+import DeleteAccount from "./DeleteAccount";
 
 const AccountSetup = () => {
   // specific keys for the contentMap
@@ -41,10 +49,10 @@ const AccountSetup = () => {
     Region: <AccountRegion />,
     "Password Change": <Password />,
     "Corporate Calender": <CorporateDetails />,
-    "Alerts & Notification": "Alerts & Notification",
-    "Account Action & Permission": "Account Action & Permission",
-    "Terms & Privacy Policy": "Terms & Privacy Policy",
-    "Delete Account": "Delete Account",
+    "Alerts & Notification": <AlertsNotifications />,
+    "Account Action & Permission": <AccountingAccess />,
+    "Terms & Privacy Policy": <TermsCondition />,
+    "Delete Account": <DeleteAccount />,
   };
   const iconsMap: Record<OptionType, React.ReactNode> = {
     "Company Details": <HiOutlineBuildingOffice2 size={20} />,
@@ -53,10 +61,19 @@ const AccountSetup = () => {
     Region: <BiWorld size={20} />,
     "Password Change": <RiLockPasswordLine size={20} />,
     "Corporate Calender": <CiCalendar size={20} />,
-    "Alerts & Notification": <CgProfile size={20} />,
-    "Account Action & Permission": <CgProfile size={20} />,
-    "Terms & Privacy Policy": <CgProfile size={20} />,
-    "Delete Account": <CgProfile size={20} />,
+    "Alerts & Notification": <BsBell size={20} />,
+    "Account Action & Permission": (
+      <Image
+        src="/icons/checkmark.png"
+        alt="checkmark.png"
+        width={20}
+        height={20}
+      />
+    ),
+    "Terms & Privacy Policy": <IoDocumentTextOutline size={20} />,
+    "Delete Account": (
+      <RiDeleteBinLine className="text-red-500 cursor-pointer" size={20} />
+    ),
   };
   return (
     // <div id="profile">

@@ -17,16 +17,7 @@ import {
 } from "@/components/ui/hover-card";
 import { MdOutlineFileDownload } from "react-icons/md";
 import { Badge } from "@/components/ui/badge";
-// import {
-//   Select,
-//   SelectContent,
-//   SelectGroup,
-//   SelectItem,
-//   SelectLabel,
-//   SelectTrigger,
-//   SelectValue,
-// } from "@/components/ui/select";
-import Select from "react-select";
+
 import { FillButton } from "@/components/libs/buttons";
 const EmailDialog = ({ onClose }: { onClose: () => void }) => {
   const [showCC, setShowCC] = useState(false);
@@ -37,7 +28,7 @@ const EmailDialog = ({ onClose }: { onClose: () => void }) => {
   const [toEmails, setToEmails] = useState<string[]>([]);
   const [ccEmails, setCcEmails] = useState<string[]>([]);
   const [bccEmails, setBccEmails] = useState<string[]>([]);
-  const [selectedOption, setSelectedOption] = useState(null);
+
   const toggleCC = () => setShowCC(!showCC);
   const toggleBCC = () => setShowBCC(!showBCC);
   const onDrop = (acceptedFiles: File[]) => {

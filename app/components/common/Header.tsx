@@ -8,6 +8,12 @@ import { IoMdSettings } from "react-icons/io";
 import { FaRegBell } from "react-icons/fa";
 import { MdHelpOutline } from "react-icons/md";
 import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import {
   Popover,
   PopoverContent,
   PopoverTrigger,
@@ -15,6 +21,7 @@ import {
 import SearchBar from "./SearchBar";
 import ActionItem from "./ActionItem";
 import Notifications from "../Notifications/Notifications";
+import { GoBell, GoQuestion } from "react-icons/go";
 
 const Header = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -24,30 +31,40 @@ const Header = () => {
     setDropdownVisible(!dropdownVisible);
   };
 
-  const handleClickOutside = (event: any) => {
-    if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-      setDropdownVisible(false);
-    }
-  };
-
   useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setDropdownVisible(false);
+      }
+    };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, []);
+  }, [dropdownRef]);
 
   return (
     <div className="flex px-10 py-3 justify-between items-center border-b-2">
       <SearchBar />
-      <div className="flex gap-2">
+      <div className="flex gap-4 items-center mr-3">
         <Popover>
           <PopoverTrigger>
-            <ActionItem
-              title="Notifications"
-              Icon={<FaRegBell size={20} />}
-              className="hidden md:flex"
-            />
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div className="hidden md:flex">
+                    <GoBell size={24} />
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Notifications</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
           </PopoverTrigger>
           <PopoverContent className="w-[450px]">
             <div className="flex items-center justify-between">
@@ -57,11 +74,20 @@ const Header = () => {
             <Notifications />
           </PopoverContent>
         </Popover>
-        <ActionItem
-          title="Help Center"
-          Icon={<MdHelpOutline size={20} />}
-          className="hidden md:flex"
-        />
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <div className="hidden md:flex">
+                <GoQuestion size={26} />
+              </div>
+            </TooltipTrigger>
+            <TooltipContent>
+              <p>Help Center</p>
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+
         {/* Profile Menu */}
         <div className="group cursor-pointer flex justify-center items-center text-gray-600 transition-all ">
           {/* <div className="rounded-full mr-3 w-[20px] h-[20px] overflow-hidden">
@@ -73,46 +99,56 @@ const Header = () => {
               height={24}
             />
           </div> */}
-          <Avatar className="w-6 h-6 mr-2 overflow-hidden">
-            <AvatarImage src="/users/dp.jpg" alt="@shadcn" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
-          <div className="text-sm hidden md:flex">Dana Morris</div>
-          <div
-            onClick={toggleDropdown}
-            className="group-hover:bg-[#0002] p-2 m-1 rounded-full"
-          >
-            <IoChevronDownSharp />
+
+          <div className="relative">
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Avatar
+                    className="w-8 h-8 cursor-pointer"
+                    onClick={toggleDropdown}
+                  >
+                    <AvatarImage src="/users/dp.jpg" alt="@shadcn" />
+                    <AvatarFallback>CN</AvatarFallback>
+                  </Avatar>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>Dana Morris</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            {/* Dropdown Menu */}
+            {dropdownVisible && (
+              <div
+                ref={dropdownRef}
+                className="absolute top-12 right-0 bg-white border border-gray-200 rounded-lg shadow-lg w-40"
+              >
+                <ul className="flex flex-col text-left p-2">
+                  <li className="p-2 gap-3 hover:bg-gray-100 cursor-pointer text-sm flex items-center">
+                    <CgProfile size={20} />
+                    Profile
+                  </li>
+                  <li className="p-2 gap-3 hover:bg-gray-100 cursor-pointer text-sm flex items-center md:hidden">
+                    <FaRegBell size={20} />
+                    Notifications
+                  </li>
+                  <li className="p-2 hover:bg-gray-100 cursor-pointer text-sm flex items-center md:hidden">
+                    <MdHelpOutline size={20} />
+                    Help Center
+                  </li>
+                  <li className="p-2 gap-3 hover:bg-gray-100 cursor-pointer text-sm flex items-center">
+                    <IoMdSettings size={20} />
+                    Settings
+                  </li>
+                  <li className="p-2 gap-3 hover:bg-gray-100 cursor-pointer text-sm flex items-center">
+                    <RiLogoutBoxLine size={20} />
+                    Logout
+                  </li>
+                </ul>
+              </div>
+            )}
           </div>
-          {dropdownVisible && (
-            <div
-              ref={dropdownRef}
-              className="absolute top-16 right-12 bg-white border border-gray-200 rounded-lg shadow-lg w-40"
-            >
-              <ul className="flex flex-col text-left p-2">
-                <li className="p-2 gap-3 hover:bg-gray-100 cursor-pointer text-sm flex items-center">
-                  <CgProfile size={20} />
-                  Profile
-                </li>
-                <li className="p-2 gap-3 hover:bg-gray-100 cursor-pointer text-sm flex items-center md:hidden">
-                  <FaRegBell size={20} />
-                  Notifications
-                </li>
-                <li className="p-2 hover:bg-gray-100 cursor-pointer text-sm flex items-center md:hidden">
-                  <MdHelpOutline size={20} />
-                  &nbsp; Help Center
-                </li>
-                <li className="p-2 gap-3 hover:bg-gray-100 cursor-pointer text-sm flex items-center">
-                  <IoMdSettings size={20} />
-                  Settings
-                </li>
-                <li className="p-2 gap-3 hover:bg-gray-100 cursor-pointer text-sm flex items-center">
-                  <RiLogoutBoxLine size={20} />
-                  Logout
-                </li>
-              </ul>
-            </div>
-          )}
         </div>
       </div>
     </div>

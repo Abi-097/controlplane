@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 import { RiLockPasswordLine } from "react-icons/ri";
 import Flatpickr from "react-flatpickr";
-import "flatpickr/dist/themes/material_green.css";
+import "flatpickr/dist/themes/light.css";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 const CompanyDetails = () => {
   const [phone, setPhone] = useState<string>("");

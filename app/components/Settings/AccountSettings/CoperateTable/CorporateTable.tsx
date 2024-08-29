@@ -47,6 +47,8 @@ import {
 import { FiDownload } from "react-icons/fi";
 import { Label } from "@/components/ui/label";
 import { CiCalendar } from "react-icons/ci";
+import { FillButton } from "@/components/libs/buttons";
+import AddHoliday from "./AddHoliday";
 
 interface CorporateTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -147,7 +149,7 @@ export function CorporateTable<TData, TValue>({
   return (
     <>
       {/* <h2 className="text-xl mb-4">{heading}</h2> */}
-      <div className="flex justify-between items-center pb-2 px-7">
+      <div className="flex justify-between items-center pb-2 px-7 ">
         <div className="flex items-center gap-3">
           <CiCalendar size={20} />
           <p className="text-sm">Corporate Calendar</p>
@@ -264,6 +266,15 @@ export function CorporateTable<TData, TValue>({
                   ?.setFilterValue(event.target.value)
               }
               className="pl-10 bg-[#f9fafb]"
+            />
+          </div>
+          <div>
+            <AddHoliday
+              trigger={
+                <FillButton className="px-2 py-1">
+                  <p className="text-sm">Add Corporate Calender</p>
+                </FillButton>
+              }
             />
           </div>
         </div>
