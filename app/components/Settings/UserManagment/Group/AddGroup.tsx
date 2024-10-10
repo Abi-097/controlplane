@@ -8,17 +8,17 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import React, { useState } from "react";
 import Switch from "react-switch";
 import { IoMdSettings } from "react-icons/io";
+import MultiUserSelect from "@/components/multipleusers";
 
 interface UserManagementGroupDialogProps {
   trigger: React.ReactNode;
+  mode: "addGroup" | "editGroup";
 
   // change
   contactData?: {
@@ -37,7 +37,7 @@ interface UserManagementGroupDialogProps {
 
 const UserManagementGroupDialog: React.FC<UserManagementGroupDialogProps> = ({
   trigger,
-  //   mode,
+  mode,
   contactData,
 }) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -51,19 +51,20 @@ const UserManagementGroupDialog: React.FC<UserManagementGroupDialogProps> = ({
     <div>
       <Dialog>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-        <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[800px] max-h-screen overflow-x-auto">
+        <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[800px] max-h-[80%] overflow-x-auto">
           <DialogTitle className="text-lg font-medium">
             <span className="flex items-center gap-2">
               <IoMdSettings size={20} />
-              Add Group
+
+              {mode === "addGroup" ? "Add Group" : "Edit Group"}
             </span>
             <hr className="my-1" />
           </DialogTitle>
           <DialogDescription className="mt-2 mb-4 text-sm text-gray-500">
             <form className="space-y-4">
-              <div className="flex items-center justify-between gap-4">
+              <div className="flex items-center justify-between gap-4 mb-4">
                 <div
-                  className=" mb-4 w-full md:w-full 
+                  className=" w-full md:w-full 
           lg:w-[55%] 
           xl:w-[55%]"
                 >
@@ -78,7 +79,7 @@ const UserManagementGroupDialog: React.FC<UserManagementGroupDialogProps> = ({
                   />
                 </div>
                 <div
-                  className=" mb-4 w-full md:w-full 
+                  className=" w-full md:w-full 
           lg:w-[55%] 
           xl:w-[55%]"
                 >
@@ -96,7 +97,7 @@ const UserManagementGroupDialog: React.FC<UserManagementGroupDialogProps> = ({
                   </div>
                 </div>
                 <div
-                  className=" mb-4 w-full md:w-full 
+                  className=" w-full md:w-full 
            lg:w-[55%] 
           xl:w-[55%]"
                 >
@@ -111,43 +112,31 @@ const UserManagementGroupDialog: React.FC<UserManagementGroupDialogProps> = ({
           lg:w-[55%] 
           xl:w-[55%]"
               >
-                <Label className="text-md mb-1 ">Users</Label>
-                <MultiGroupSelect />
+                <Label className="text-md mb-1 ">Role</Label>
+                <MultiRoleSelect />
               </div>
               <div
                 className=" mb-4 w-full md:w-full 
           lg:w-[55%] 
           xl:w-[55%]"
               >
-                <Label className="text-md mb-1 ">Role</Label>
+                <Label className="text-md mb-1 ">Users</Label>
 
-                <MultiRoleSelect />
+                <MultiUserSelect />
               </div>
 
-              <div className="mt-4 flex flex-col md:flex-row justify-end md:space-x-2">
+              <div className="mt-10 flex flex-col md:flex-row justify-end md:space-x-2">
                 <DialogClose asChild>
-                  <button className="px-4 py-2 bg-gray-200 text-black rounded-md w-full md:w-1/2">
+                  <button className="px-4 py-2 bg-gray-300 text-black rounded-md w-[13%] ">
                     Cancel
                   </button>
                 </DialogClose>
-                <button className="px-4 py-2 bg-black text-white rounded-md w-full md:w-1/2">
+                <button className="px-4 py-2 bg-saveButton text-white rounded-md w-[13%]">
                   Save
                 </button>
               </div>
             </form>
           </DialogDescription>
-
-          {/* Add your form or other content here */}
-          <div className="mt-4 flex flex-col md:flex-row justify-end md:space-x-2">
-            <DialogClose asChild>
-              <button className="px-4 py-2 bg-gray-200 text-black rounded-md w-full md:w-1/2">
-                Cancel
-              </button>
-            </DialogClose>
-            <button className="px-4 py-2 bg-black text-white rounded-md w-full md:w-1/2">
-              Save
-            </button>
-          </div>
         </DialogContent>
         {/* </Dialog.Portal> */}
       </Dialog>

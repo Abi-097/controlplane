@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogClose,
@@ -42,7 +42,7 @@ import { Country, State, City } from "country-state-city";
 import Flag from "react-world-flags";
 import Switch from "react-switch";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { FaRegBuilding } from "react-icons/fa";
+import AvatarEditor from "react-avatar-editor";
 // import {
 //   Select,
 //   SelectContent,
@@ -83,6 +83,7 @@ const AddContactDialog: React.FC<AddContactDialogProps> = ({
   const [selectedCity, setSelectedCity] = useState("");
   const [isChecked, setIsChecked] = useState(false);
 
+  // image uploading scenario
   const handleButtonClick = () => {
     document.getElementById("fileInput")?.click();
   };
@@ -146,7 +147,7 @@ const AddContactDialog: React.FC<AddContactDialogProps> = ({
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       {/* <Dialog.Portal> */}
       {/* <Dialog.Overlay className="bg-black bg-opacity-50 fixed inset-0" /> */}
-      <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[650px]">
+      <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[650px] z-[1001]">
         <DialogTitle className="text-lg font-medium">
           {mode === "add" ? "Create New Contact" : "Update Contact"}
           <hr className="my-1" />
@@ -155,7 +156,7 @@ const AddContactDialog: React.FC<AddContactDialogProps> = ({
         <DialogDescription className="mt-1 mb-4 text-sm text-gray-500">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 mb-3">
-              <div className="rounded-full w-[50px] h-[50px] bg-gray-200 flex items-center justify-center">
+              <div className="rounded-full w-[50px] h-[50px] bg-imageUpload flex items-center justify-center">
                 {selectedImage ? (
                   <Image
                     src={selectedImage}
@@ -169,7 +170,7 @@ const AddContactDialog: React.FC<AddContactDialogProps> = ({
                 )}
               </div>
               <button
-                className="flex items-center bg-gray-200 text-black px-4 py-2"
+                className="flex items-center bg-imageUpload text-black px-4 py-2"
                 onClick={handleButtonClick}
               >
                 <MdOutlineFileUpload />
@@ -182,7 +183,7 @@ const AddContactDialog: React.FC<AddContactDialogProps> = ({
                 onChange={handleFileChange}
               />
 
-              <button className="bg-gray-200 p-2 rounded-md">
+              <button className="bg-imageUpload p-2 rounded-md">
                 <RiDeleteBin5Line size={20} />
               </button>
             </div>
@@ -194,8 +195,8 @@ const AddContactDialog: React.FC<AddContactDialogProps> = ({
                 checked={isChecked}
                 uncheckedIcon={false}
                 checkedIcon={false}
-                width={25}
-                height={15}
+                width={40}
+                height={20}
                 className="mr-2"
               />
             </div>
@@ -243,11 +244,11 @@ const AddContactDialog: React.FC<AddContactDialogProps> = ({
                 </label>
 
                 <Select defaultValue={contactData?.category || ""}>
-                  <SelectTrigger className="w-full">
+                  <SelectTrigger className="w-full ">
                     <SelectValue placeholder="Select Category" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectGroup>
+                    <SelectGroup className="z-[1001]">
                       {/* <SelectLabel>Fruits</SelectLabel> */}
                       {Selection.map((item, index) => (
                         <SelectItem key={index} value={item.value}>
@@ -330,7 +331,7 @@ const AddContactDialog: React.FC<AddContactDialogProps> = ({
                       {date ? format(date, "PPP") : <span>Pick a date</span>}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
+                  <PopoverContent className="w-auto p-0  z-[1001]">
                     <Calendar
                       mode="single"
                       selected={date}
@@ -405,7 +406,7 @@ const AddContactDialog: React.FC<AddContactDialogProps> = ({
                         : "Select Country"}
                     </span>
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-[1001]">
                     <SelectGroup>
                       <SelectLabel>Select Country</SelectLabel>
                       {countries.map((country) => (
@@ -449,7 +450,7 @@ const AddContactDialog: React.FC<AddContactDialogProps> = ({
                         : "Select a Country First"}
                     </span>
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-[1001]">
                     <SelectGroup>
                       <SelectLabel>Select State</SelectLabel>
                       {states.map((state) => (
@@ -484,7 +485,7 @@ const AddContactDialog: React.FC<AddContactDialogProps> = ({
                       : "Select a State First"}
                   </span>
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="z-[1001]">
                   <SelectGroup>
                     <SelectLabel>Select City</SelectLabel>
                     {cities.map((city) => (
@@ -520,7 +521,8 @@ const AddContactDialog: React.FC<AddContactDialogProps> = ({
               Cancel
             </button>
           </DialogClose>
-          <button className="px-4 py-2 bg-black text-white rounded-md w-full md:w-1/2">
+
+          <button className="px-4 py-2 bg-saveButton hover:hoverSaveButton text-white rounded-md w-full md:w-1/2">
             {mode === "add" ? "Save" : "Update"}
           </button>
         </div>

@@ -31,7 +31,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Object Type <RiExpandUpDownLine className="ml-2 h-4 w-4" />
@@ -44,7 +44,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Object Name
@@ -58,7 +58,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Activity
@@ -68,12 +68,12 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     },
   },
   {
-    accessorKey: "createdBy",
+    accessorKey: "createdby",
 
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Created By
@@ -83,12 +83,12 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     },
   },
   {
-    accessorKey: "createdAt",
+    accessorKey: "createdat",
 
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Created At
@@ -98,24 +98,6 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     },
     cell: ({ row }) => {
       const date = new Date(row.getValue("createdAt"));
-
-      // // Format the date
-      // const dateFormatter = new Intl.DateTimeFormat("en-GB", {
-      //   day: "numeric",
-      //   month: "long",
-      //   year: "numeric",
-      // });
-      // const formattedDate = dateFormatter.format(date);
-
-      // // Format the time
-      // const timeFormatter = new Intl.DateTimeFormat("en-GB", {
-      //   hour: "2-digit",
-      //   minute: "2-digit",
-      //   second: "2-digit",
-      //   hour12: true,
-      // });
-      // const formattedTime = timeFormatter.format(date);
-      // const formattedDateTime = `${formattedDate} ${formattedTime}`;
 
       // Function to get ordinal suffix
       const getOrdinalSuffix = (day: number) => {
@@ -163,7 +145,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Reason
@@ -173,11 +155,11 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     },
   },
   {
-    accessorKey: "iPAddress",
+    accessorKey: "ipaddress",
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           IP Address
@@ -191,7 +173,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Network
@@ -206,7 +188,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Version
@@ -221,22 +203,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          City
-          <RiExpandUpDownLine className="ml-2 h-4 w-4" />
-        </div>
-      );
-    },
-  },
-  {
-    accessorKey: "city",
-
-    header: ({ column }) => {
-      return (
-        <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           City
@@ -251,7 +218,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Region
@@ -266,7 +233,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Country
@@ -276,12 +243,12 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     },
   },
   {
-    accessorKey: "postalCode",
+    accessorKey: "postalcode",
 
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Postal Code
@@ -296,7 +263,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Latitude
@@ -311,7 +278,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Longitude
@@ -326,7 +293,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Timezone
@@ -341,7 +308,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Org
@@ -356,7 +323,7 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Browser
@@ -366,12 +333,12 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     },
   },
   {
-    accessorKey: "updatedBy",
+    accessorKey: "updatedby",
 
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Updated By
@@ -381,12 +348,12 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     },
   },
   {
-    accessorKey: "updatedAt",
+    accessorKey: "updatedat",
 
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Updated At
@@ -396,24 +363,6 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
     },
     cell: ({ row }) => {
       const date = new Date(row.getValue("updatedAt"));
-
-      // // Format the date
-      // const dateFormatter = new Intl.DateTimeFormat("en-GB", {
-      //   day: "numeric",
-      //   month: "long",
-      //   year: "numeric",
-      // });
-      // const formattedDate = dateFormatter.format(date);
-
-      // // Format the time
-      // const timeFormatter = new Intl.DateTimeFormat("en-GB", {
-      //   hour: "2-digit",
-      //   minute: "2-digit",
-      //   second: "2-digit",
-      //   hour12: true,
-      // });
-      // const formattedTime = timeFormatter.format(date);
-      // const formattedDateTime = `${formattedDate} ${formattedTime}`;
 
       // Function to get ordinal suffix
       const getOrdinalSuffix = (day: number) => {
@@ -458,7 +407,13 @@ export const columns: ColumnDef<SettingsAuditLogsTableColumn>[] = [
   },
   {
     id: "actions",
-    header: "Action",
+    header: () => {
+      return (
+        <div className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap">
+          Action
+        </div>
+      );
+    },
     enableHiding: false,
     cell: ({ row }) => {
       const user = row.original;

@@ -18,7 +18,7 @@ const AvatarGroup = () => {
           className="absolute top-0"
           style={{ transform: `translateX(${index * 15}px)` }}
         >
-          <Avatar className="w-[30px] h-[30px]">
+          <Avatar className="w-[26px] h-[26px]">
             <AvatarImage src={avatar.src} alt={avatar.alt} />
             <AvatarFallback>{avatar.alt.charAt(1)}</AvatarFallback>
           </Avatar>

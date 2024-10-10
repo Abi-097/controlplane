@@ -1,25 +1,14 @@
 import clsx from "clsx";
-import { useContext, useEffect, useState } from "react";
-import { IoAdd } from "react-icons/io5";
-import { FillButton, InverseFillButton } from "../../../../../components/libs/buttons";
-import UsersData from "@/public/data/users";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CompanyData from "@/public/data/companies";
-// import UserInfoPanel from "../../UserInfoPanel/UserInfoPanel";
-// import DataTable from "../../ContactTable/Table";
 import DataTableCompany from "../CompanyTable/TableCompany";
-// import SearchBar from "../../SearchBar";
 import { FaSearch } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
-// import AddCategoryDialog from "../../UserInfoPanel/AddCategory";
-// import CreateCompanyDialog from "../../UserInfoPanel/AddCompany";
-import CreateNewChat from "../demoDialogBoxes/CreateNewChat";
-import LogCallDialog from "../demoDialogBoxes/LogCallDialog";
-// import AddContactDialog from "../../UserInfoPanel/AddContact";
-import CreateNewTasksDialog from "../demoDialogBoxes/CreateNewTasksDialog";
-import { IoMdRefresh } from "react-icons/io";
-import { HiViewColumns } from "react-icons/hi2";
-import SideSheetCompany from "../componentsCompany/ShideSheetCompany";
-import Testing from "../CompanyTable/Testing";
+import { BsThreeDots } from "react-icons/bs";
+import { MdOutlineRefresh, MdViewColumn } from "react-icons/md";
+import { IoAdd } from "react-icons/io5";
+import { InverseFillButton } from "@/components/libs/buttons";
+import AddContinents from "../companyInfoPanel/AddContinents";
 // const users: Users[] = UsersData;
 // type Activity = {
 //   id: number;
@@ -54,35 +43,40 @@ import Testing from "../CompanyTable/Testing";
 const ListFragmentCompany = () => {
   const [isSelected, setIsSelected] = useState<number>(1);
   const [searchInput, setSearchInput] = useState("");
+  const [selectedContinents, setSelectedContinents] = useState<string[]>([]);
+  const iconRef = useRef<HTMLDivElement>(null);
+  const [isIconMenuOpen, setIsIconMenuOpen] = useState(false);
+  const sheetTriggerRef = useRef<HTMLButtonElement>(null);
 
-  // const usersheader = [
-  //   { name: "Name", uid: "name" },
-  //   { name: "Email", uid: "email" },
-  //   { name: "Phone", uid: "contact" },
-  //   { name: "Category", uid: "category" },
-  //   { name: "Location", uid: "location" },
-  //   { name: "Gender", uid: "gender" },
-  //   { name: "Action", uid: "action" },
-  // ];
+  const handleClickOutside = (event: MouseEvent) => {
+    if (iconRef.current && !iconRef.current.contains(event.target as Node)) {
+      setIsIconMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleIconMenu = () => {
+    setIsIconMenuOpen(!isIconMenuOpen);
+  };
+
+  const handleViewColumnClick = () => {
+    if (sheetTriggerRef.current) {
+      sheetTriggerRef.current.click();
+    }
+  };
+
   const ListNavSettings = [
     {
       id: 1,
       title: "All Companies",
       action: "*",
     },
-    // {
-    //   id: 2,
-    //   title: "Manufecture",
-    //   action: "manufecture",
-    // },{
-    //   id: 3,
-    //   title: "Retail",
-    //   action: "retail",
-    // },{
-    //   id: 4,
-    //   title: "Software",
-    //   action: "software",
-    // },
   ];
 
   const handleNavClick = (id: number) => {
@@ -118,19 +112,23 @@ const ListFragmentCompany = () => {
   );
 
   // const filteredData = getFilteredData();
+
+  const handleContinentChange = (newSelectedContinents: string[]) => {
+    setSelectedContinents(newSelectedContinents);
+  };
   return (
-    <div className="block w-full">
+    <div className="block w-full bg-fullbg">
       {/* <UserInfoPanel /> */}
-      <div className="flex py-6 px-8 border-b-2 justify-between items-center">
+      <div className="flex py-3 px-4 justify-between items-center bg-white mx-4">
         {/* left headersection */}
         <div className="flex">
           {ListNavSettings.map((item) => (
             <div
               key={item.id}
               className={clsx(
-                " cursor-pointer  px-4 py-2 rounded-full text-sm text-gray-500 font-bold",
+                "cursor-pointer  px-4 py-2 rounded-full text-sm text-gray-500 font-bold",
                 isSelected === item.id
-                  ? "bg-[#eee] text-gray-800"
+                  ? "bg-[#f4f2ee] text-gray-800"
                   : "hover:text-gray-800"
               )}
               onClick={() => handleNavClick(item.id)}
@@ -138,8 +136,48 @@ const ListFragmentCompany = () => {
               {item.title} (4)
             </div>
           ))}
+          {selectedContinents.length > 0 && (
+            <div className="flex justify-between items-center bg-white mx-4">
+              {selectedContinents.map((continent, index) => (
+                <div
+                  key={index}
+                  className="cursor-pointer px-4 py-2 rounded-full text-sm text-gray-500 font-bold"
+                >
+                  {continent}
+                </div>
+              ))}
+            </div>
+          )}
         </div>
         <div className="flex items-center justify-center gap-3">
+          {/* Horizontal Icon */}
+          <div className="relative" ref={iconRef}>
+            <div
+              className="cursor-pointer rounded-full hover:bg-gray-200 h-8 w-8 p-0 flex items-center justify-center ml-3"
+              onClick={toggleIconMenu}
+            >
+              <BsThreeDots size={20} />
+            </div>
+
+            {/* Icons with Animation */}
+            <div
+              className={`flex items-center gap-3 absolute right-full top-1/2 transform -translate-y-1/2 transition-opacity duration-300 ${
+                isIconMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <MdOutlineRefresh
+                className="text-gray-400 cursor-pointer hover:text-gray-700"
+                size={20}
+              />
+
+              <MdViewColumn
+                onClick={handleViewColumnClick}
+                className="text-gray-400 cursor-pointer hover:text-gray-700"
+                size={20}
+              />
+            </div>
+          </div>
+
           {/* SearchBar */}
           <div className="relative max-w-sm">
             {/* Search Icon */}
@@ -152,59 +190,23 @@ const ListFragmentCompany = () => {
               className="pl-10"
             />
           </div>
-          {/* <AddCategoryDialog
+          <AddContinents
+            onContinentsChange={handleContinentChange}
+            selectedContinents={selectedContinents}
             trigger={
               <InverseFillButton>
                 <IoAdd size={16} />
-                <div className="text-sm">Add Categories</div>
-              </InverseFillButton>
-            }
-          /> */}
-
-          {/* Demo dialogBoxes */}
-          {/* <AddContactDialog
-          mode='add'
-          trigger={
-            <InverseFillButton>
-              <IoAdd size={16} />
-              <div className="text-sm">Add Contact</div>
-            </InverseFillButton>
-          }
-          /> */}
-
-          <CreateNewChat
-            trigger={
-              <InverseFillButton>
-                <div className="text-sm">Create New Chat</div>
+                <div className="text-sm">Add Regions</div>
               </InverseFillButton>
             }
           />
-          <LogCallDialog
-            trigger={
-              <InverseFillButton>
-                <div className="text-sm">Log A Call</div>
-              </InverseFillButton>
-            }
-          />
-          <CreateNewTasksDialog
-            trigger={
-              <InverseFillButton>
-                <div className="text-sm">Create New task</div>
-              </InverseFillButton>
-            }
-          />
-
-          {/* ------------------ */}
-          {/* right side buttons */}
-          {/* <SideSheetCompany
-            trigger={
-              <HiViewColumns className="hover:text-blue-800 cursor-pointer" />
-            }
-          /> */}
         </div>
       </div>
-      <div>
-        <DataTableCompany companies={displayedCompanies} />
+      <div className="bg-fullbg">
+        <DataTableCompany
+          companies={displayedCompanies}
+          sheetTriggerRef={sheetTriggerRef}
+        />
       </div>
     </div>
   );

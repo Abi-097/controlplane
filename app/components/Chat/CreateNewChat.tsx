@@ -10,6 +10,34 @@ import {
 import { Input } from "@/components/ui/input";
 import { FaSearch } from "react-icons/fa";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import Image from "next/image";
+import { IoPerson } from "react-icons/io5";
+import { MdOutlineFileUpload, MdOutlineStar } from "react-icons/md";
+import DateTimePickerForm from "@/components/custom/dateTimePicker/DateTimePickerForm";
+
+const SelectTaskPriority = [
+  {
+    name: "High",
+    value: "High",
+  },
+  {
+    name: "Medium",
+    value: "Medium",
+  },
+  {
+    name: "Low",
+    value: "Low",
+  },
+];
 
 interface CreateNewChatProps {
   trigger: React.ReactNode;
@@ -30,9 +58,40 @@ const CreateNewChat: React.FC<CreateNewChatProps> = ({ trigger }) => {
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[650px]">
         <DialogTitle className="text-lg font-medium">
-          Create New Chat
+          <div className="flex flex-row w-full justify-between items-center">
+            Create New Chat
+            <div className="w-[200px] mr-6">
+              <Select>
+                <SelectTrigger className="w-full">
+                  <SelectValue placeholder="Select Priority" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {SelectTaskPriority.map((item, index) => (
+                      <SelectItem key={index} value={item.value} className="flex justify-start items-start">
+                        <div className="flex flex-row gap-1 w-full items-center justify-start">
+                        <MdOutlineStar
+                            className={
+                              item.name === "High"
+                                ? "text-red-500"
+                                : item.name === "Medium"
+                                ? "text-blue-500"
+                                : "text-gray-500"
+                            }
+                            size={12}
+                          />
+                          {item.name}
+                          
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
         </DialogTitle>
-        <hr className="my-2" />
+        <hr className="my-0" />
         <DialogDescription className="mt-1 mb-4 text-sm text-gray-500">
           <form className="space-y-4">
             <div className="w-full">
@@ -49,6 +108,7 @@ const CreateNewChat: React.FC<CreateNewChatProps> = ({ trigger }) => {
                 />
               </div>
             </div>
+
             <div className="w-full">
               <label
                 htmlFor="subject"

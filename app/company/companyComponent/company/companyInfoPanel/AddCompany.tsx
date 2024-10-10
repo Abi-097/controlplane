@@ -23,21 +23,20 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Switch } from "@/components/ui/switch"
+import { Switch } from "@/components/ui/switch";
 import Image from "next/image";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import { Country, State, City } from "country-state-city";
 import Flag from "react-world-flags";
 
-
-import TimezoneSelect, { type ITimezone } from "react-timezone-select"
-
+import TimezoneSelect, { type ITimezone } from "react-timezone-select";
+import { Button } from "@/components/ui/button";
 
 interface AddContactDialogProps {
   trigger: React.ReactNode;
   mode: "add" | "edit";
-  // change 
+  // change
   contactData?: {
     companyName: string;
     industryType: string;
@@ -68,8 +67,8 @@ const CreateCompanyDialog: React.FC<AddContactDialogProps> = ({
 
   // TimeZone Select
   const [selectedTimezone, setSelectedTimezone] = useState<ITimezone>(
-    Intl.DateTimeFormat().resolvedOptions().timeZone,
-  )
+    Intl.DateTimeFormat().resolvedOptions().timeZone
+  );
 
   const handleButtonClick = () => {
     document.getElementById("fileInput")?.click();
@@ -115,7 +114,6 @@ const CreateCompanyDialog: React.FC<AddContactDialogProps> = ({
   const handleCityChange = (value: string) => {
     setSelectedCity(value);
     setSelectedTimezone("");
-
   };
 
   const handleTimezoneChange = (value: string) => {
@@ -155,13 +153,13 @@ const CreateCompanyDialog: React.FC<AddContactDialogProps> = ({
                   <IoPerson className="text-xl" />
                 )}
               </div>
-              <button
+              <Button
                 className="flex items-center bg-gray-200 text-black px-4 py-2"
                 onClick={handleButtonClick}
               >
                 <MdOutlineFileUpload />
                 &nbsp; Uploads Image
-              </button>
+              </Button>
               <input
                 type="file"
                 id="fileInput"
@@ -171,12 +169,13 @@ const CreateCompanyDialog: React.FC<AddContactDialogProps> = ({
             </div>
             <div className="flex flex-row items-center gap-2">
               <div className="flex gap-4 items-baseline ">
-                <PiBuildingOfficeBold size={36} className="text-gray-900 cursor-pointer mb-1"/>
-                </div>
+                <PiBuildingOfficeBold
+                  size={36}
+                  className="text-gray-900 cursor-pointer mb-1"
+                />
+              </div>
 
-                <Switch />
-
-              
+              <Switch />
             </div>
           </div>
 
@@ -361,8 +360,8 @@ const CreateCompanyDialog: React.FC<AddContactDialogProps> = ({
                     <span className={`ml-8 ${!selectedCountry && "pl-3"}`}>
                       {selectedCountry
                         ? countries.find(
-                          (country) => country.isoCode === selectedCountry
-                        )?.name
+                            (country) => country.isoCode === selectedCountry
+                          )?.name
                         : "Select Country"}
                     </span>
                   </SelectTrigger>
@@ -403,11 +402,11 @@ const CreateCompanyDialog: React.FC<AddContactDialogProps> = ({
                     <span className={`ml-8 ${!selectedState && "pl-3"}`}>
                       {selectedState
                         ? states.find(
-                          (state) => state.isoCode === selectedState
-                        )?.name
+                            (state) => state.isoCode === selectedState
+                          )?.name
                         : selectedCountry
-                          ? "Select State"
-                          : "Select a Country First"}
+                        ? "Select State"
+                        : "Select a Country First"}
                     </span>
                   </SelectTrigger>
                   <SelectContent>
@@ -440,10 +439,11 @@ const CreateCompanyDialog: React.FC<AddContactDialogProps> = ({
                     <CiLocationOn className="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <span className={`ml-8 ${!selectedCity && "pl-3"}`}>
                       {selectedCity
-                        ? cities.find((city) => city.name === selectedCity)?.name
+                        ? cities.find((city) => city.name === selectedCity)
+                            ?.name
                         : selectedState
-                          ? "Select City"
-                          : "Select a State First"}
+                        ? "Select City"
+                        : "Select a State First"}
                     </span>
                   </SelectTrigger>
                   <SelectContent>
@@ -465,12 +465,9 @@ const CreateCompanyDialog: React.FC<AddContactDialogProps> = ({
                 >
                   TimeZone
                 </label>
-                <Select
-                  onValueChange={handleTimezoneChange}
-                >
+                <Select onValueChange={handleTimezoneChange}>
                   <SelectTrigger className="w-full relative">
                     <div> Select Timezone</div>
-                  
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
@@ -501,13 +498,13 @@ const CreateCompanyDialog: React.FC<AddContactDialogProps> = ({
         {/* Add your form or other content here */}
         <div className="mt-4 flex flex-col md:flex-row justify-end md:space-x-2">
           <DialogClose asChild>
-            <button className="px-4 py-2 bg-gray-200 text-black rounded-md w-full md:w-1/2">
+            <Button className="px-4 py-2 bg-gray-200 text-black rounded-md w-full md:w-1/2">
               Cancel
-            </button>
+            </Button>
           </DialogClose>
-          <button className="px-4 py-2 bg-black text-white rounded-md w-full md:w-1/2">
+          <Button className="px-4 py-2 bg-black text-white rounded-md w-full md:w-1/2">
             {mode === "add" ? "Save" : "Update"}
-          </button>
+          </Button>
         </div>
       </DialogContent>
       {/* </Dialog.Portal> */}

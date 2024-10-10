@@ -13,9 +13,6 @@ const config = {
     container: {
       center: true,
       padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
     },
     extend: {
       colors: {
@@ -24,6 +21,18 @@ const config = {
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        inputField: "#f9fafb",
+        saveButton: "#57534E",
+        tableBg: "#249EDC",
+        textColor: "#21232c",
+        hoverSaveButton: "#0070C0",
+        screenbg: "white",
+        tableText: "#F5F7F8",
+        fullbg: "#f4f2ee",
+        popupbg: "#CCCCCC",
+        imageUpload: "#f3f2ef",
+        cancelButton: "#fcfcf7",
+        primaryBlue: "#0070c0",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -83,6 +92,16 @@ const config = {
       screens: {
         md1: "955px",
         md2: "700px",
+        xl1: "1483px",
+        xl2: "1300px",
+        "2xl": "1400px",
+      },
+      margin: {
+        betweenComponents: "8px",
+        rightLeftMargin: "16px",
+      },
+      boxShadow: {
+        containerShadow: "0 1px 2px 0 rgb(0 0 0 / 0.05);",
       },
     },
   },

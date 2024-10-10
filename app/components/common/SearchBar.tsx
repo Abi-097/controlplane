@@ -2,7 +2,7 @@ import { LuSearch } from "react-icons/lu";
 
 const SearchBar = () => {
   return (
-    <div className="cursor-default flex border-2 rounded-md border-[#B2B2B2] items-center justify-center px-2 py-1 min-w-[200px] w-[370px] max-w-full">
+    <div className="cursor-default flex border rounded-md border-[#B2B2B2] items-center justify-center px-2 py-1 min-w-[200px] w-[370px] max-w-full">
       <LuSearch size={25} color="#B2B2B2" />
       <input
         className="px-2 w-full outline-none text-gray-800 caret-gray-500 text-sm"

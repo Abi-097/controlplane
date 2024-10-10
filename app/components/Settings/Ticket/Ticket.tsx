@@ -26,7 +26,7 @@ const Ticket = () => {
   }, []);
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full h-[92vh] p-1">
       {/* Navigation Tabs */}
       <div className="flex pt-3 px-3">
         {tabs.map((tab) => (

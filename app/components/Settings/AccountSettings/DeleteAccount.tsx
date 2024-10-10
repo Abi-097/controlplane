@@ -8,6 +8,7 @@ import Switch from "react-switch";
 import { BsBell } from "react-icons/bs";
 import { AlertTable } from "./AlertsTable/AlertTable";
 import { columns } from "./AlertsTable/AlertsTableColumn";
+import History from "../../History/History";
 
 const DeleteAccount = () => {
   const [isChecked, setIsChecked] = useState(false);
@@ -20,20 +21,22 @@ const DeleteAccount = () => {
     <div>
       <form className="w-full p-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 ">
+          <div className="flex items-center gap-2">
             <RiDeleteBinLine
               size={20}
               className="text-red-500 cursor-pointer"
             />
             <p className="font-semibold">Delete Account</p>
           </div>
-          <MdOutlineHistory size={24} />
+          <History
+            trigger={<MdOutlineHistory className="cursor-pointer" size={24} />}
+          />
         </div>
         <hr className="text-slate-300 my-4" />
         <div className="my-7">
-          <p className="font-semibold mb-2">Delete Account</p>
+          <p className="font-semibold mb-2 text-sm">Delete Account</p>
           <div className="flex items-center justify-between mr-4">
-            <p>
+            <p className="text-sm">
               Deleting your account will remove all settings and information
               associated with your client or organization permanently. DataNue
               will only keep <br /> your information for a maximum of 7 days

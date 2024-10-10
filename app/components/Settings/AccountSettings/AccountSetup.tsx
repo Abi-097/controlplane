@@ -20,6 +20,8 @@ import Image from "next/image";
 import TermsCondition from "./TermsCondition";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import DeleteAccount from "./DeleteAccount";
+import { MdOutlineLocationOn } from "react-icons/md";
+import { GoDatabase } from "react-icons/go";
 
 const AccountSetup = () => {
   // specific keys for the contentMap
@@ -49,15 +51,15 @@ const AccountSetup = () => {
     Region: <AccountRegion />,
     "Password Change": <Password />,
     "Corporate Calender": <CorporateDetails />,
-    "Alerts & Notification": <AlertsNotifications />,
+    "Alerts & Notification": <AlertsNotifications UserSettings={false} />,
     "Account Action & Permission": <AccountingAccess />,
     "Terms & Privacy Policy": <TermsCondition />,
     "Delete Account": <DeleteAccount />,
   };
   const iconsMap: Record<OptionType, React.ReactNode> = {
     "Company Details": <HiOutlineBuildingOffice2 size={20} />,
-    Address: <CiLocationOn size={20} />,
-    Environment: <FiDatabase size={20} />,
+    Address: <MdOutlineLocationOn size={20} />,
+    Environment: <GoDatabase size={20} />,
     Region: <BiWorld size={20} />,
     "Password Change": <RiLockPasswordLine size={20} />,
     "Corporate Calender": <CiCalendar size={20} />,
@@ -77,16 +79,16 @@ const AccountSetup = () => {
   };
   return (
     // <div id="profile">
-    <div className="flex flex-wrap gap-2 w-full bg-gray-100">
+    <div className="flex flex-wrap gap-3 w-full h-[92vh] bg-gray-100">
       {/* Left Side - Menu */}
       <div
         className="
           w-full 
-          sm:w-full sm:mb-2
+          sm:w-full
           md:w-[100%] 
           lg:w-[18%] 
           xl:w-[18%] 
-          p-1 bg-white rounded-md
+         p-1 bg-white rounded-md
         "
       >
         {options.map((option) => (

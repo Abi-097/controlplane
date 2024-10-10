@@ -10,6 +10,12 @@ import {
 import { RiDeleteBin5Line, RiExpandUpDownLine } from "react-icons/ri";
 import { MoreHorizontal } from "lucide-react";
 import { MdOutlineHistory } from "react-icons/md";
+import Delete from "@/app/components/common/Delete";
+import History from "@/app/components/History/History";
+import { GoShieldLock } from "react-icons/go";
+import AddOrganizationAnnouncementDialog from "./AddOrganizationAnnouncement";
+import { FillButton } from "@/components/libs/buttons";
+import { BsThreeDots } from "react-icons/bs";
 // import AuditLogs from "@/app/components/History/AuditLogs/AuditLogs";
 
 export type AlertsTableColumnProps = {
@@ -37,7 +43,7 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Announcement ID
@@ -51,7 +57,7 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Name
@@ -66,7 +72,7 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Start Date
@@ -123,7 +129,7 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           End Date
@@ -180,7 +186,7 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Status
@@ -194,7 +200,7 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Created By
@@ -209,7 +215,7 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Created At
@@ -266,7 +272,7 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Updated By
@@ -280,7 +286,7 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Updated At
@@ -294,7 +300,7 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Time Zone
@@ -308,7 +314,7 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Banner style
@@ -322,7 +328,7 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Message
@@ -336,7 +342,7 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Country
@@ -347,41 +353,78 @@ export const columns: ColumnDef<AlertsTableColumnProps>[] = [
   },
   {
     id: "actions",
-    header: "Action",
+
+    header: () => {
+      return (
+        <div className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap">
+          Action
+        </div>
+      );
+    },
     enableHiding: false,
     cell: ({ row }) => {
       const user = row.original;
-
       return (
         <DropdownMenu>
-          {/* <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <MoreHorizontal className="h-4 w-4" />
+              <BsThreeDots className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.id)}
+            {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
+            {/* <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(UsersData.id)}
             >
               Copy user ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <span className="pl-2 gap-1 flex items-center justify-center">
-                <MdOutlineHistory className="mr-2" size={20} /> Pending !!!
-              </span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleMenuItemClick}>
-              <AuditLogs
+            </DropdownMenuItem> */}
+            {/* <DropdownMenuSeparator /> */}
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
+              <AddOrganizationAnnouncementDialog
+                mode="editAlert"
                 trigger={
-                  <span className="pl-2 gap-1 flex items-center justify-center">
-                    <RiDeleteBin5Line className="mr-2" size={20} /> Audit Logs
+                  <FillButton className="px-2 py-1">
+                    <p className="text-sm">Add Announcement</p>
+                  </FillButton>
+                }
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              // onClick={handleMenuItemClick}
+            >
+              <GoShieldLock />
+              Security
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
+              <History
+                trigger={
+                  <span className="flex items-center justify-center">
+                    <MdOutlineHistory className="mr-2" size={20} /> History
                   </span>
                 }
               />
             </DropdownMenuItem>
-          </DropdownMenuContent> */}
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
+              <Delete
+                trigger={
+                  <span className="flex items-center justify-center">
+                    <RiDeleteBin5Line className="mr-2 text-red-500" size={20} />{" "}
+                    Delete
+                  </span>
+                }
+              />
+            </DropdownMenuItem>
+          </DropdownMenuContent>
         </DropdownMenu>
       );
     },

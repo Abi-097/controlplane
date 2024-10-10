@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { MdOutlineHistory } from "react-icons/md";
 import { Label } from "@/components/ui/label";
 import { BiWorld } from "react-icons/bi";
+import History from "../../History/History";
 const Region = () => {
   const languageCodes = ISO6391.getAllCodes();
   const [selectedTimezone, setSelectedTimezone] = useState<string | null>(null);
@@ -23,13 +24,17 @@ const Region = () => {
 
   return (
     <div>
-      <form className="w-full p-4">
+      <form className="w-full p-4 h-[87vh]">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <BiWorld size={24} />
             <p className="font-semibold">Region & Time Zone</p>
           </div>
-          <MdOutlineHistory size={24} />
+          <History
+            trigger={
+              <MdOutlineHistory className="mr-2 cursor-pointer" size={24} />
+            }
+          />
         </div>
         <hr className="text-slate-300 my-4" />
         <div>
@@ -38,9 +43,9 @@ const Region = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Locale</Label>
+            <Label className="text-sm mb-1 ">Locale</Label>
             <Select>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full bg-inputField">
                 <SelectValue placeholder="Choose a language" />
               </SelectTrigger>
               <SelectContent>
@@ -59,9 +64,9 @@ const Region = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Time Zone</Label>
+            <Label className="text-sm mb-1">Time Zone</Label>
             <Select>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full bg-inputField">
                 <SelectValue placeholder="Choose a timezone" />
               </SelectTrigger>
               <SelectContent>
@@ -80,9 +85,9 @@ const Region = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Languages</Label>
+            <Label className="text-sm mb-1 ">Languages</Label>
             <Select>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full bg-inputField">
                 <SelectValue placeholder="Choose a language" />
               </SelectTrigger>
               <SelectContent>
@@ -98,7 +103,7 @@ const Region = () => {
           </div>
         </div>
         <div className="flex justify-end">
-          <Button className="bg-[#57534e] text-white ">
+          <Button className="bg-saveButton text-white ">
             Save Account Details
           </Button>
         </div>

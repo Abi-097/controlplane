@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import History from "../../History/History";
 
 interface Attachment {
   id: number;
@@ -62,15 +63,19 @@ const TermsCondition = () => {
 
   return (
     <>
-      <form className="w-full p-4 h-[90vh] overflow-auto">
+      <form className="w-full p-4 overflow-auto">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <IoDocumentTextOutline size={24} />
             <p className="font-semibold">Terms & Privacy Policy</p>
           </div>
           <div className="flex items-center gap-2">
             <RiLockPasswordLine size={24} />
-            <MdOutlineHistory size={24} />
+            <History
+              trigger={
+                <MdOutlineHistory className="cursor-pointer" size={24} />
+              }
+            />
           </div>
         </div>
         <hr className="text-slate-300 my-4" />
@@ -80,8 +85,8 @@ const TermsCondition = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Document Name</Label>
-            <Input type="docName" placeholder="" className="bg-[#f9fafb]" />
+            <Label className="text-sm mb-1 ">Document Name</Label>
+            <Input type="docName" placeholder="" className="bg-inputField" />
             <p className="text-gray-400 italic text-xs mt-1">
               Terms & Privacy Policy Contract Document Name
             </p>
@@ -93,7 +98,7 @@ const TermsCondition = () => {
           xl:w-[40%]"
           >
             <div className="flex justify-between items-center">
-              <Label className="text-md mb-1 ">Attachment</Label>
+              <Label className="text-sm mb-1 ">Attachment</Label>
               <label className="cursor-pointer">
                 <input
                   type="file"
@@ -145,9 +150,9 @@ const TermsCondition = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Status</Label>
+            <Label className="text-sm mb-1 ">Status</Label>
             <Select>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full text-sm">
                 <SelectValue placeholder="Select a Status" />
               </SelectTrigger>
               <SelectContent>
@@ -170,7 +175,7 @@ const TermsCondition = () => {
               width={25}
               height={15}
             />
-            <p>Notify DataNue Team</p>
+            <p className="text-sm">Notify DataNue Team</p>
           </div>
           <p className="text-gray-400 italic text-xs mt-2  mb-9">
             Selecting Notify and status - Sign Completed will automatically sent
@@ -187,7 +192,7 @@ const TermsCondition = () => {
           </div> */}
         </div>
         <div className="flex justify-end">
-          <Button className="bg-[#57534e] text-white">
+          <Button className="bg-bg-saveButton text-white">
             Save Account Details
           </Button>
         </div>

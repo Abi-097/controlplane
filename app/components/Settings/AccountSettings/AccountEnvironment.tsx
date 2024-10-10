@@ -19,6 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { GoDatabase } from "react-icons/go";
+import History from "../../History/History";
 const AccountEnvironment = () => {
   const [phone, setPhone] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -46,20 +48,24 @@ const AccountEnvironment = () => {
 
   return (
     <>
-      <form className="w-full p-4 h-[90vh] overflow-auto">
+      <form className="w-full p-4 overflow-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <FiDatabase size={24} />
+            <GoDatabase size={24} />
             <p className="font-semibold">Environment</p>
           </div>
           <div className="flex items-center gap-2">
             <RiLockPasswordLine size={24} />
-            <MdOutlineHistory size={24} />
+            <History
+              trigger={
+                <MdOutlineHistory className="mr-2 cursor-pointer" size={24} />
+              }
+            />
           </div>
         </div>
         <hr className="text-slate-300 my-4" />
 
-        <p className="py-5 text-md">
+        <p className="py-5 text-sm">
           Select the following Environment Options to choose for your need to
           leverage DataNue&apos;s environment services.
         </p>
@@ -69,9 +75,9 @@ const AccountEnvironment = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Edition</Label>
+            <Label className="text-sm mb-1">Edition</Label>
             <Select>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full bg-inputField">
                 <SelectValue placeholder="" />
               </SelectTrigger>
               <SelectContent>
@@ -94,10 +100,10 @@ const AccountEnvironment = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Subscription Renewal Date</Label>
+            <Label className="text-sm mb-1 ">Subscription Renewal Date</Label>
 
             <Flatpickr
-              className="bg-[#f9fafb] flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              className="bg-inputField flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               data-enable-time
               value={date}
               onChange={(date) => setDate(date[0])}
@@ -109,7 +115,7 @@ const AccountEnvironment = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md">Subscription Payment Type</Label>
+            <Label className="text-sm">Subscription Payment Type</Label>
             <p className="text-sm my-2 text-gray-600">
               Choose your payment type to pay Subscription
             </p>
@@ -139,9 +145,9 @@ const AccountEnvironment = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Cloud Environment</Label>
+            <Label className="text-sm mb-1 ">Cloud Environment</Label>
             <Select>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full bg-inputField">
                 <SelectValue placeholder="" />
               </SelectTrigger>
               <SelectContent>
@@ -165,9 +171,9 @@ const AccountEnvironment = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Size</Label>
+            <Label className="text-sm mb-1 ">Size</Label>
             <Select>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full bg-inputField">
                 <SelectValue placeholder="" />
               </SelectTrigger>
               <SelectContent>
@@ -190,9 +196,9 @@ const AccountEnvironment = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">CPU Configuration</Label>
+            <Label className="text-sm mb-1 ">CPU Configuration</Label>
             <Select>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full bg-inputField">
                 <SelectValue placeholder="" />
               </SelectTrigger>
               <SelectContent>
@@ -227,11 +233,11 @@ const AccountEnvironment = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">
+            <Label className="text-sm mb-1 ">
               System Environment / Landscape
             </Label>
             <Select>
-              <SelectTrigger className="w-full">
+              <SelectTrigger className="w-full bg-inputField">
                 <SelectValue placeholder="" />
               </SelectTrigger>
               <SelectContent>
@@ -248,8 +254,8 @@ const AccountEnvironment = () => {
             </p>
           </div>
         </div>
-        <div className="flex justify-end">
-          <Button className="bg-[#57534e] text-white">
+        <div className="flex justify-end pb-4">
+          <Button className="bg-saveButton text-white">
             Save Account Details
           </Button>
         </div>

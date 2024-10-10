@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 // import MyProfile from "../components/Settings/MyProfile/Myprofile";
 import { CgProfile } from "react-icons/cg";
 import MyProfile from "./MyProfile/Myprofile";
@@ -12,6 +12,10 @@ import SettingsAuditLogs from "./AduitLogs/SettingsAuditLogs";
 import { IoDocumentTextOutline } from "react-icons/io5";
 import { FaRegUser } from "react-icons/fa";
 import UserManagement from "./UserManagment/UserManagement";
+import InvoiceBillingMain from "./InvoiceBilling/InvoiceBilling";
+// import MyProfile from "@/app/settings/myprofile/page";
+import { TfiEmail } from "react-icons/tfi";
+import CreateEmailTemplate from "../emailTemplates/EmailTemplates";
 
 const SettingsMenu = () => {
   // specific keys for the contentMap
@@ -34,7 +38,7 @@ const SettingsMenu = () => {
     "My Profile": <MyProfile />,
     "Account Setup": <AccountSetup />,
     "User Management": <UserManagement />,
-    "Invoice & Billing": "Content for Invoice & Billing",
+    "Invoice & Billing": <InvoiceBillingMain />,
     "Audit Logs": <SettingsAuditLogs />,
     "Ticket & Support": <Ticket />,
     "System Outage": <SystemOutage />,
@@ -49,17 +53,17 @@ const SettingsMenu = () => {
     "System Outage": <BsLightbulbOff size={20} />,
   };
   return (
-    <div className="flex flex-wrap gap-2 my-2 w-full md:overflow-auto lg:overflow-hidden xl:overflow-hidden bg-gray-100 p-2">
+    <div className="flex flex-wrap gap-3 py-2 w-[100%] md:overflow-auto lg:overflow-hidden xl:overflow-hidden bg-gray-100">
+      {/* // <div className="flex w-full py-2 gap-3 bg-gray-100"> */}
       {/* Left Side - Menu */}
       <div
         className="
-          w-full 
-          sm:w-full sm:mb-2
-          md:w-[100%] 
-          lg:w-[13%] 
-          xl:w-[13%]
-         p-1 bg-white shadow-md rounded-md
-        "
+        w-full 
+        sm:w-full
+        md:w-full 
+        lg:w-[13%] 
+        xl:w-[13%] 2xl:w-[13%] h-fit xl:h-fit lg:h-fit md:h-full sm:h-full
+        p-1 bg-white rounded-md"
       >
         {options.map((option) => (
           <div
@@ -82,12 +86,25 @@ const SettingsMenu = () => {
         className="
           w-full 
           sm:w-full
-          md:w-[100%]
+          md:w-full
           lg:w-[86%]
           xl:w-[86%]
           bg-white rounded-md
         "
       >
+        {/* <div
+        className="
+  w-full 
+  sm:w-full
+  md:w-full
+  lg:flex-1
+  xl:flex-1
+  2xl:flex-1
+  bg-white 
+  rounded-md 
+  overflow-auto
+"
+      > */}
         {contentMap[activeOption]}
       </div>
     </div>

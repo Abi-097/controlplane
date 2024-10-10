@@ -70,7 +70,7 @@ const CreateNewChat: React.FC<CreateNewChatProps> = ({ trigger }) => {
               >
                 Chat Message
               </label>
-             
+
               <Textarea
                 id="chatMessage"
                 placeholder="Enter message here"

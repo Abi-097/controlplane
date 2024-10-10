@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 // import { CorporateTable } from "./CorporateTable";
-import { columns } from "./CorporateCalenderColoumn";
+import { columns } from "./CorporateCalenderColumn";
 import { CorporateTable } from "./CorporateTable";
 
 const CorporateDetails = () => {

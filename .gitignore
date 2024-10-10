@@ -36,3 +36,9 @@ yarn-error.log*
 next-env.d.ts
 
 app/components/content/comps/UserInfoPanel/AddContact copy.tsx
+LoginRegister-copy.tsx
+settingspage
+test
+Emailcopy
+Emailcopy2
+/controlplane/app/components/EmailContent/Emailcopy.tsx

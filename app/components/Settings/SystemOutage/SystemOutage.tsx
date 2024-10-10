@@ -23,9 +23,9 @@ const SystemOutage = () => {
         </div>
         <hr className="text-slate-300 my-4" />
         <div className="my-7">
-          <p className="font-semibold mb-2">System Outage</p>
+          <p className="font-semibold mb-2 text-sm">System Outage</p>
           <div className="flex items-center justify-between mr-4">
-            <p>
+            <p className="text-sm">
               Receive a notification in email when there is a general DataNue
               outage. Follow outage status and details at status.DataNue.com
             </p>

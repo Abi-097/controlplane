@@ -1,5 +1,20 @@
 // const UsersData = [];
 // export default UsersData;
+import bcrypt from "bcryptjs";
+
+// Static user list with hashed passwords
+export const nueUsers = [
+  { email: "ramesh@datanue.com", password: bcrypt.hashSync("Zoom@321", 10) },
+  { email: "murali@datanue.com", password: bcrypt.hashSync("Webex@321", 10) },
+  { email: "abi@datanue.com", password: bcrypt.hashSync("Teams@321", 10) },
+  { email: "test@email.com", password: bcrypt.hashSync("Teams@321", 10) },
+  { email: "viji@datanue.com", password: bcrypt.hashSync("Info@321", 10) },
+  {
+    email: "niranjan@datanue.com",
+    password: bcrypt.hashSync("Content@321", 10),
+  },
+];
+
 const UsersData = [
   {
     id: 1,

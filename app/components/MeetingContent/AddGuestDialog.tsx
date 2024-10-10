@@ -49,7 +49,6 @@ const GuestData = [
     id: 6,
     name: "Renee Hudson",
   },
-
 ];
 
 interface Guests {
@@ -62,8 +61,9 @@ const AddGuestDialog: React.FC<Guests> = ({ trigger }) => {
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[450px]">
         <DialogTitle className="text-lg font-medium flex flex-row gap-1 items-center">
-        <FaRegUser />
-          Add Guest</DialogTitle>
+          <FaRegUser />
+          Add Guest
+        </DialogTitle>
         <hr className="my-1" />
         <DialogDescription className="mt-1 mb-4 text-sm text-gray-500">
           <form className="space-y-4">
@@ -74,12 +74,7 @@ const AddGuestDialog: React.FC<Guests> = ({ trigger }) => {
               >
                 Select A Guest
               </Label>
-              {/* <Input
-              type="text"
-              id="subject"
-              placeholder="Enter message here"
-              name="subject"
-            /> */}
+
               <div>
                 <Select>
                   <SelectTrigger className="w-full">
@@ -87,32 +82,9 @@ const AddGuestDialog: React.FC<Guests> = ({ trigger }) => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectGroup>
-                      {/* <SelectLabel>North America</SelectLabel> */}
-                      {/* <SelectItem value="select all">
-                      <div className="flex flex-row gap-3 items-center">
-
-                      <Checkbox
-                              className="border-gray-300"
-                            //   checked={row.getIsSelected()}
-                            //   onCheckedChange={(value) =>
-                            //     row.toggleSelected(!!value)
-                            //   }
-                              aria-label="Select row"
-                            />
-                            <div className="capitalize text-sm">Sellect All </div>
-                            </div>
-                      </SelectItem> */}
                       {GuestData.map((item, index) => (
                         <SelectItem key={index} value={item.name}>
                           <div className="flex flex-row gap-3 items-center">
-                            {/* <Checkbox
-                              className="border-gray-300"
-                            //   checked={row.getIsSelected()}
-                            //   onCheckedChange={(value) =>
-                            //     row.toggleSelected(!!value)
-                            //   }
-                              aria-label="Select row"
-                            /> */}
                             <Avatar className="w-6 h-6">
                               <AvatarImage
                                 src={`/users/${item.id + 1}.jpg`}
@@ -144,7 +116,6 @@ const AddGuestDialog: React.FC<Guests> = ({ trigger }) => {
           </button>
         </div>
       </DialogContent>
-      {/* </Dialog.Portal> */}
     </Dialog>
   );
 };

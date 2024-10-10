@@ -37,6 +37,20 @@ import { HiOutlineMailOpen } from "react-icons/hi";
 import dynamic from "next/dynamic";
 import LogCallDialog from "../Call/LogCallDialog";
 import AddContactDialog from "../ContactTable/AddContact";
+import CreateNewChat from "../Chat/CreateNewChat";
+import { VscSend } from "react-icons/vsc";
+import {
+  Mail,
+  MapPin,
+  NotebookPen,
+  Phone,
+  Plus,
+  Projector,
+} from "lucide-react";
+import { IoFemale, IoMale } from "react-icons/io5";
+import AddNewMeeting from "../MeetingContent/AddNewMeeting";
+import LogDialog from "../Log/LogDialog";
+import AddNoteDialog from "../NotesContent/NewNote";
 
 const EmailDialog = dynamic(() => import("../EmailContent/Email"), {
   ssr: false,
@@ -108,23 +122,23 @@ const DataCard = ({ user }: UserCardProps) => {
                 <div className="absolute bottom-2 right-1 transform translate-x-1/2 translate-y-1/2">
                   <div className="flex items-center justify-center w-5 h-5 bg-white rounded-full border border-gray-400 ">
                     {user.gender === "Male" && (
-                      <BsGenderMale size={11} className="text-gray-600" />
+                      <IoMale size={11} className="text-gray-600" />
                     )}
                     {user.gender === "Female" && (
-                      <BsGenderFemale className="text-gray-400" />
+                      <IoFemale size={11} className="text-gray-600" />
                     )}
                     {user.gender !== "Male" && user.gender !== "Female" && (
-                      <BsGenderTrans className="text-gray-400" />
+                      <BsGenderTrans size={11} className="text-gray-600" />
                     )}
                   </div>
                 </div>
               </div>
               <div>
-                <CardTitle className="text-[18px] text-gray-700">
+                <CardTitle className="text-[18px] text-textColor">
                   {user.name}
                 </CardTitle>
                 <div className="flex items-center gap-1 text-gray-500 text-sm">
-                  <SlLocationPin />
+                  <MapPin size={14} />
                   <p>
                     {user.location}, {user.country}
                   </p>
@@ -152,7 +166,7 @@ const DataCard = ({ user }: UserCardProps) => {
                     }
                   />
                 </DropdownMenuItem>
-                <DropdownMenuItem
+                {/* <DropdownMenuItem
                   onClick={() => {
                     const tmp_data = UsersData.find(
                       (item) => item.id === user.id
@@ -167,7 +181,7 @@ const DataCard = ({ user }: UserCardProps) => {
                   <span className="pl-2 gap-3 flex items-center justify-center">
                     <GrContactInfo size={20} /> Contact View
                   </span>
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
                 <DropdownMenuItem
                   onClick={() => {
                     const tmp_data = UsersData.find(
@@ -181,7 +195,7 @@ const DataCard = ({ user }: UserCardProps) => {
                   className="cursor-pointer"
                 >
                   <span className="pl-2 gap-3 flex items-center justify-center">
-                    <GrContactInfo size={20} /> Contact Full View
+                    <GrContactInfo size={20} /> Contact View
                   </span>
                 </DropdownMenuItem>
                 <DropdownMenuItem
@@ -197,6 +211,78 @@ const DataCard = ({ user }: UserCardProps) => {
                     }
                   />
                 </DropdownMenuItem>
+
+                <DropdownMenuSeparator />
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={handleMenuItemClick}
+                >
+                  <AddNewMeeting
+                    trigger={
+                      <span className="pl-2 gap-3 flex items-center justify-center">
+                        <Projector size={20} /> Meetings
+                      </span>
+                    }
+                  />
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={handleMenuItemClick}
+                >
+                  <AddNoteDialog
+                    mode="add"
+                    trigger={
+                      <span className="pl-2 gap-3 flex items-center justify-center">
+                        <NotebookPen size={19} /> Notes
+                      </span>
+                    }
+                  />
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={handleMenuItemClick}
+                >
+                  <LogDialog
+                    trigger={
+                      <span className="pl-2 gap-3 flex items-center justify-center">
+                        <Plus size={17} /> Logs
+                      </span>
+                    }
+                  />
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={handleMenuItemClick}
+                >
+                  <CreateNewChat
+                    trigger={
+                      <span className="pl-2 gap-3 flex items-center justify-center">
+                        <VscSend className="" size={20} /> Chat
+                      </span>
+                    }
+                  />
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={handleMenuItemClick}
+                >
+                  <LogCallDialog
+                    trigger={
+                      <span className="pl-2 gap-3 flex items-center justify-center">
+                        <FiPhone className="" size={20} /> Call
+                      </span>
+                    }
+                  />
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  className="cursor-pointer"
+                  onClick={handleAddCategoryClick}
+                >
+                  <span className="pl-2 gap-3 flex items-center justify-center">
+                    <HiOutlineMailOpen size={20} /> Mail
+                  </span>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator />
                 <DropdownMenuItem
                   className="cursor-pointer"
                   onClick={handleMenuItemClick}
@@ -222,39 +308,19 @@ const DataCard = ({ user }: UserCardProps) => {
                     }
                   />
                 </DropdownMenuItem>
-                <DropdownMenuSeparator />
-                <DropdownMenuItem
-                  className="cursor-pointer"
-                  onClick={handleMenuItemClick}
-                >
-                  <LogCallDialog
-                    trigger={
-                      <span className="pl-2 gap-3 flex items-center justify-center">
-                        <FiPhone size={20} /> Call
-                      </span>
-                    }
-                  />
-                </DropdownMenuItem>
-                <DropdownMenuItem
-                  className="cursor-pointer"
-                  onClick={handleAddCategoryClick}
-                >
-                  <span className="pl-2 gap-3 flex items-center justify-center">
-                    <HiOutlineMailOpen size={20} /> Mail
-                  </span>
-                </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
           {isCardOpen && <EmailDialog onClose={handleCloseCard} />}
-          <div className="flex items-center gap-2 text-gray-500 text-sm">
-            <TfiEmail className="mt-1" /> <p className="mt-1"> {user.email}</p>
+          <div className="flex items-center gap-2 text-textColor text-sm">
+            <Mail size={14} className="mt-1" />
+            <p className="mt-1"> {user.email}</p>
           </div>
-          <div className="flex items-center gap-2 text-gray-500 text-sm">
-            <PiPhoneLight className="mt-1" />{" "}
+          <div className="flex items-center gap-2 text-textColor text-sm">
+            <Phone size={14} className="mt-1" />
             <p className="mt-1">{user.contact}</p>
           </div>
-          <div className="flex items-center gap-2 text-gray-500 text-sm mb-1">
+          <div className="flex items-center gap-2 text-textColor text-sm mb-1">
             <Image
               className="rounded-full transition-all group-hover:scale-110 mt-1"
               alt="profile"

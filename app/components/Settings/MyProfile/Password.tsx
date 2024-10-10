@@ -11,21 +11,27 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import History from "../../History/History";
+import { LockKeyhole } from "lucide-react";
 const Password = () => {
   return (
     <div>
       <form className="w-full p-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <RiLockPasswordLine size={24} />
+          <div className="flex items-center gap-2">
+            <LockKeyhole size={24} />
             <p className="font-semibold">Password</p>
           </div>
-          <MdOutlineHistory size={24} />
+          <History
+            trigger={
+              <MdOutlineHistory className="mr-2 cursor-pointer" size={24} />
+            }
+          />
         </div>
         <hr className="text-slate-300 my-4" />
         <div>
           <div className="mb-4">
-            <span>
+            <span className="text-sm">
               A password policy is a set of rules designed to improve security
               by establishing strict password requirements for your users.
               Password rules are enforced on all users in your account.&nbsp;
@@ -62,8 +68,12 @@ const Password = () => {
       lg:w-[40%] 
       xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Old Password</Label>
-            <Input type="oldpassword" placeholder="" className="bg-[#f9fafb]" />
+            <Label className="text-sm mb-1 ">Old Password</Label>
+            <Input
+              type="oldpassword"
+              placeholder=""
+              className="bg-inputField"
+            />
           </div>
 
           <div
@@ -71,8 +81,8 @@ const Password = () => {
       lg:w-[40%] 
       xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">New Password</Label>
-            <Input type="newpass" placeholder="" className="bg-[#f9fafb]" />
+            <Label className="text-sm mb-1 ">New Password</Label>
+            <Input type="newpass" placeholder="" className="bg-inputField" />
           </div>
 
           <div
@@ -80,12 +90,16 @@ const Password = () => {
       lg:w-[40%] 
       xl:w-[40%]"
           >
-            <Label className="text-md mb-1">Confirm Password</Label>
-            <Input type="confirmpass" placeholder="" className="bg-[#f9fafb]" />
+            <Label className="text-sm mb-1">Confirm Password</Label>
+            <Input
+              type="confirmpass"
+              placeholder=""
+              className="bg-inputField"
+            />
           </div>
         </div>
         <div className="flex justify-end">
-          <Button className="bg-[#57534e] text-white w-20 h-8">Save</Button>
+          <Button className="bg-saveButton text-white">Save</Button>
         </div>
       </form>
     </div>

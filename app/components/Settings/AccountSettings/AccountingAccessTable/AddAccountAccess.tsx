@@ -33,6 +33,7 @@ interface Attachment {
 }
 interface AddAccountAccessDialogProps {
   trigger: React.ReactNode;
+  mode: "addAccess" | "editAccess";
 }
 
 const AddAccountAccessDialog: React.FC<AddAccountAccessDialogProps> = ({
@@ -68,7 +69,7 @@ const AddAccountAccessDialog: React.FC<AddAccountAccessDialogProps> = ({
               alt="checkmark.png"
               width={20}
               height={20}
-            />{" "}
+            />
             Account Access & Permission
           </span>
           <hr className="my-1" />
@@ -169,7 +170,7 @@ const AddAccountAccessDialog: React.FC<AddAccountAccessDialogProps> = ({
               Cancel
             </button>
           </DialogClose>
-          <button className="px-4 py-2 bg-black text-white rounded-md w-full md:w-1/2">
+          <button className="px-4 py-2 bg-saveButton text-white rounded-md w-full md:w-1/2">
             Save
           </button>
         </div>

@@ -9,6 +9,7 @@ const UserPanelContext = createContext({
     email: null,
     contact: null,
     job_title: null,
+    due_date: null,
     annual_revenue: null,
     status: null,
     location: null,

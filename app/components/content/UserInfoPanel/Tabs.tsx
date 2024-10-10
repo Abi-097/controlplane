@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
-import { SlLocationPin } from "react-icons/sl";
-const Tabs = () => {
+
+const ContactTabs = () => {
   const [activeTab, setActiveTab] = useState("leads");
   return (
     <div className="w-full flex flex-col">
@@ -9,7 +9,7 @@ const Tabs = () => {
         <button
           className={`flex-grow px-10 py-2 -mb-px text-sm font-medium focus:outline-none ${
             activeTab === "leads"
-              ? "border-b-2 border-blue-500 text-blue-500"
+              ? "border-b-2 font-semibold border-primaryBlue text-primaryBlue"
               : "text-gray-500"
           }`}
           onClick={() => setActiveTab("leads")}
@@ -19,7 +19,7 @@ const Tabs = () => {
         <button
           className={`flex-grow px-10 py-2 -mb-px text-sm font-medium focus:outline-none ${
             activeTab === "address"
-              ? "border-b-2 border-blue-500 text-blue-500"
+              ? "border-b-2 font-semibold border-primaryBlue text-primaryBlue"
               : "text-gray-500"
           }`}
           onClick={() => setActiveTab("address")}
@@ -76,11 +76,33 @@ const Tabs = () => {
           </div>
         ) : (
           <div className="flex items-center gap-4">
-            {/* Address Info content goes here */}
-            <SlLocationPin size={20} className="text-gray-500" />
-            <p className="text-gray-500 text-md ">
-              12005 Main St <br /> Suite# 100 <br /> Frisco. Texas 75085 USA{" "}
-            </p>
+            <div className="pl-2">
+              {/* Leads Info content goes here */}
+              <label className="block text-sm font-medium text-slate-400 mb-1">
+                Address 1
+              </label>
+              <p className="text-sm mb-3"> 12005 Main St </p>
+              <label className="block text-sm font-medium text-slate-400 mb-1">
+                Address 2
+              </label>
+              <p className="text-sm mb-3"> Suite# 100</p>
+              <label className="block text-sm font-medium text-slate-400 mb-1">
+                City
+              </label>
+              <p className="text-sm mb-3">Frisco</p>
+              <label className="block text-sm font-medium text-slate-400 mb-1">
+                State
+              </label>
+              <p className="text-sm mb-3">Texas</p>
+              <label className="block text-sm font-medium text-slate-400 mb-1">
+                Country
+              </label>
+              <p className="text-sm mb-3">USA</p>
+              <label className="block text-sm font-medium text-slate-400 mb-1">
+                Zip Code
+              </label>
+              <p className="text-sm mb-3">75085</p>
+            </div>
           </div>
         )}
       </div>
@@ -88,4 +110,4 @@ const Tabs = () => {
   );
 };
 
-export default Tabs;
+export default ContactTabs;

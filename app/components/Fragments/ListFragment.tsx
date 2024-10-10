@@ -19,6 +19,7 @@ import {
   MdViewColumn,
 } from "react-icons/md";
 import { BsThreeDots } from "react-icons/bs";
+import { LuSearch } from "react-icons/lu";
 
 // const users: Users[] = UsersData;
 type Activity = {
@@ -57,15 +58,6 @@ const ListFragment = () => {
   const [isIconMenuOpen, setIsIconMenuOpen] = useState(false);
   const iconRef = useRef<HTMLDivElement>(null);
 
-  // const usersheader = [
-  //   { name: "Name", uid: "name" },
-  //   { name: "Email", uid: "email" },
-  //   { name: "Phone", uid: "contact" },
-  //   { name: "Category", uid: "category" },
-  //   { name: "Location", uid: "location" },
-  //   { name: "Gender", uid: "gender" },
-  //   { name: "Action", uid: "action" },
-  // ];
   const ListNavSettings = [
     {
       id: 1,
@@ -143,18 +135,18 @@ const ListFragment = () => {
 
   // const filteredData = getFilteredData();
   return (
-    <div className="block w-full">
+    <div className="block w-full bg-fullbg">
       {/* <UserInfoPanel /> */}
-      <div className="flex py-6 px-8 border-b-2 justify-between items-center">
+      <div className="flex py-3 px-4 justify-between items-center bg-white mx-4">
         {/* left headersection */}
         <div className="flex">
           {ListNavSettings.map((item) => (
             <div
               key={item.id}
               className={clsx(
-                " cursor-pointer  px-4 py-2 rounded-full text-sm text-gray-500 font-bold",
+                "cursor-pointer  px-4 py-2 rounded-full text-sm text-gray-500 font-bold",
                 isSelected === item.id
-                  ? "bg-[#eee] text-gray-800"
+                  ? "bg-[#f4f2ee] text-gray-800"
                   : "hover:text-gray-800"
               )}
               onClick={() => handleNavClick(item.id)}
@@ -194,7 +186,12 @@ const ListFragment = () => {
           {/* SearchBar */}
           <div className="relative max-w-sm">
             {/* Search Icon */}
-            <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+            <LuSearch
+              color="#B2B2B2"
+              size={20}
+              className="absolute left-3 top-1/2 transform -translate-y-1/2"
+            />
+
             {/* Input Field */}
             <Input
               placeholder="Filter by Name"
@@ -213,7 +210,7 @@ const ListFragment = () => {
           />
         </div>
       </div>
-      <div>
+      <div className="bg-fullbg">
         <DataTable users={displayedUsers} sheetTriggerRef={sheetTriggerRef} />
       </div>
     </div>

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import React, { useState } from "react";
-import { MdOutlineHistory } from "react-icons/md";
+import { MdOutlineHistory, MdOutlineLocationOn } from "react-icons/md";
 import moment from "moment-timezone";
 import { Country, State, City } from "country-state-city";
 import {
@@ -17,6 +17,8 @@ import {
 import Flag from "react-world-flags";
 import { CiLocationOn } from "react-icons/ci";
 import { RiLockPasswordLine } from "react-icons/ri";
+import History from "../../History/History";
+import { MapPin } from "lucide-react";
 const AccountAddress = () => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
@@ -51,15 +53,19 @@ const AccountAddress = () => {
 
   return (
     <div>
-      <form className="w-full p-4 h-[90vh]">
+      <form className="w-full p-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <CiLocationOn size={24} />
+          <div className="flex items-center gap-2">
+            <MapPin size={24} />
             <p className="font-semibold">Address</p>
           </div>
           <div className="flex items-center gap-2">
             <RiLockPasswordLine size={24} />
-            <MdOutlineHistory size={24} />
+            <History
+              trigger={
+                <MdOutlineHistory className="mr-2 cursor-pointer" size={24} />
+              }
+            />
           </div>
         </div>
         <hr className="text-slate-300 my-4" />
@@ -69,11 +75,11 @@ const AccountAddress = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Address line 1</Label>
+            <Label className="text-sm mb-1 ">Address line 1</Label>
             <Input
               type="addresslineOne"
               placeholder=""
-              className="bg-[#f9fafb]"
+              className="bg-inputField"
             />
           </div>
 
@@ -82,11 +88,11 @@ const AccountAddress = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Address line 2</Label>
+            <Label className="text-sm mb-1 ">Address line 2</Label>
             <Input
               type="addresslineTwo"
               placeholder=""
-              className="bg-[#f9fafb]"
+              className="bg-inputField"
             />
           </div>
 
@@ -95,10 +101,10 @@ const AccountAddress = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Country</Label>
+            <Label className="text-sm mb-1 ">Country</Label>
 
             <Select onValueChange={handleCountryChange}>
-              <SelectTrigger className="w-full relative bg-[#f9fafb]">
+              <SelectTrigger className="w-full relative bg-inputField">
                 {selectedCountry && (
                   <Flag
                     code={selectedCountry}
@@ -134,12 +140,12 @@ const AccountAddress = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">State/Province</Label>
+            <Label className="text-sm mb-1 ">State/Province</Label>
             <Select
               onValueChange={handleStateChange}
               disabled={!selectedCountry}
             >
-              <SelectTrigger className="w-full relative bg-[#f9fafb]">
+              <SelectTrigger className="w-full relative bg-inputField">
                 <CiLocationOn className="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-500" />
                 <span className={`ml-8 ${!selectedState && "pl-3"}`}>
                   {selectedState
@@ -168,9 +174,9 @@ const AccountAddress = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">City</Label>
+            <Label className="text-sm mb-1 ">City</Label>
             <Select onValueChange={handleCityChange} disabled={!selectedState}>
-              <SelectTrigger className="w-full relative bg-[#f9fafb]">
+              <SelectTrigger className="w-full relative bg-inputField">
                 <CiLocationOn className="absolute left-2 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
                 <span className={`ml-8 ${!selectedCity && "pl-3"}`}>
                   {selectedCity
@@ -198,17 +204,17 @@ const AccountAddress = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1">Zip Code</Label>
-            <Input type="zipcode" placeholder="" className="bg-[#f9fafb]" />
+            <Label className="text-sm mb-1">Zip Code</Label>
+            <Input type="zipcode" placeholder="" className="bg-inputField" />
           </div>
           <div
             className=" mb-4 w-full md:w-full 
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Time Zone</Label>
+            <Label className="text-sm mb-1 ">Time Zone</Label>
             <Select>
-              <SelectTrigger className="w-full bg-[#f9fafb]">
+              <SelectTrigger className="w-full bg-inputField">
                 <SelectValue placeholder="Choose a timezone" />
               </SelectTrigger>
               <SelectContent>
@@ -224,7 +230,7 @@ const AccountAddress = () => {
           </div>
         </div>
         <div className="flex justify-end">
-          <Button className="bg-[#57534e] text-white">
+          <Button className="bg-saveButton text-white">
             Save Account Details
           </Button>
         </div>

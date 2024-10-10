@@ -59,7 +59,7 @@ const SideSheetCompany: React.FC<SideSheetCompanyProps> = ({
                     onChange: table.getToggleAllColumnsVisibilityHandler(),
                   }}
                 />{" "}
-                Select All 
+                Select All
               </label>
             </div>
             {/* {table.getAllLeafColumns().map((column: any) => {
@@ -89,8 +89,7 @@ const SideSheetCompany: React.FC<SideSheetCompanyProps> = ({
                         onChange: column.getToggleVisibilityHandler(),
                       }}
                     />{" "}
-
-                    {(column.columnDef.meta as string) || column.id} 
+                    {(column.columnDef.meta as string) || column.id}
                   </label>
                 </div>
               );

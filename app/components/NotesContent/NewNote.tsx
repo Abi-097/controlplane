@@ -4,8 +4,6 @@ import {
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
@@ -16,13 +14,15 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
+import { MdOutlineStar } from "react-icons/md";
 
 interface AddNoteDialogProps {
   trigger: React.ReactNode;
+  mode: "add" | "edit";
   contactData?: {
     firstName: string;
     lastName: string;
@@ -33,11 +33,12 @@ interface AddNoteDialogProps {
     gender: string;
     country: string;
     occupation: string;
-    // mode: string;
+    mode: string;
   };
 }
 const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   trigger,
+  mode,
   contactData,
 }) => {
   const NameSelection = [
@@ -57,15 +58,15 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
   const TaskSelection = [
     {
       value: "one",
-      name: "First Priority",
+      name: "High",
     },
     {
       value: "two",
-      name: "Second Priority",
+      name: "Medium",
     },
     {
       value: "three",
-      name: "Third Priority",
+      name: "Low",
     },
   ];
   return (
@@ -73,11 +74,11 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       {/* <Dialog.Portal> */}
       {/* <Dialog.Overlay className="bg-black bg-opacity-50 fixed inset-0" /> */}
-      <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[650px]">
+      <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[650px] z-[999]">
         <DialogTitle className="text-lg font-medium">
-          Create New Note
+          {mode === "add" ? "Create New Note" : "Update Note Details"}
         </DialogTitle>
-        <hr className="my-2" />
+        <hr className="" />
         <DialogDescription className="mt-2 mb-4 text-sm text-gray-500">
           <form className="space-y-4">
             <div className="w-full">
@@ -101,8 +102,8 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
               >
                 Note
               </label>
-              <Input
-                type="text"
+
+              <Textarea
                 id="note"
                 placeholder="Enter message here"
                 name="note"
@@ -121,12 +122,12 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select Person or Enter name" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-[999]">
                     <SelectGroup>
                       {/* <SelectLabel>Fruits</SelectLabel> */}
                       {NameSelection.map((item, index) => (
                         <SelectItem key={index} value={item.value}>
-                          {item.name}
+                          {item.name} 
                         </SelectItem>
                       ))}
                     </SelectGroup>
@@ -145,13 +146,28 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
                   <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select Category" />
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent className="z-[999]">
                     <SelectGroup>
                       {/* <SelectLabel>Fruits</SelectLabel> */}
                       {TaskSelection.map((item, index) => (
-                        <SelectItem key={index} value={item.value}>
-                          {item.name}
-                        </SelectItem>
+                       <SelectItem
+                       key={index}
+                       value={item.value}
+                     >
+                        <div className="flex flex-row gap-1 w-full items-center justify-start">
+                        <MdOutlineStar
+                         className={
+                           item.name === "High" ? "text-red-500" :
+                           item.name === "Medium" ? "text-blue-500" :
+                           "text-gray-500"
+                         }
+                         size={12}
+                       />
+                       {item.name}
+                       
+                       </div>
+                      
+                     </SelectItem>
                       ))}
                     </SelectGroup>
                   </SelectContent>
@@ -163,12 +179,12 @@ const AddNoteDialog: React.FC<AddNoteDialogProps> = ({
         {/* Add your form or other content here */}
         <div className="mt-4 flex flex-col md:flex-row justify-end md:space-x-2">
           <DialogClose asChild>
-            <button className="px-4 py-2 bg-gray-200 text-black rounded-md w-full md:w-1/2">
+            <button className="px-4 py-2 bg-fullbg text-black rounded-md w-full md:w-1/2">
               Cancel
             </button>
           </DialogClose>
           <button className="px-4 py-2 bg-black text-white rounded-md w-full md:w-1/2">
-            Save
+            {mode === "add" ? "Save" : "Update"}
           </button>
         </div>
       </DialogContent>

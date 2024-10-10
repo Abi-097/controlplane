@@ -24,7 +24,10 @@ import {
 } from "@/components/ui/popover";
 import { CiLocationOn } from "react-icons/ci";
 import { PiBuildingOfficeBold } from "react-icons/pi";
-import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
+import {
+  HiOutlineBuildingOffice,
+  HiOutlineBuildingOffice2,
+} from "react-icons/hi2";
 import {
   Select,
   SelectContent,
@@ -170,7 +173,7 @@ const CreateCompanyDialog: React.FC<AddContactDialogProps> = ({
         <DialogDescription className="mt-2 mb-4 text-sm text-gray-500">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 mb-3">
-              <div className="rounded-full w-[50px] h-[50px] bg-gray-200 flex items-center justify-center">
+              <div className="rounded-full w-[50px] h-[50px] bg-imageUpload flex items-center justify-center">
                 {selectedImage ? (
                   <Image
                     src={selectedImage}
@@ -184,7 +187,7 @@ const CreateCompanyDialog: React.FC<AddContactDialogProps> = ({
                 )}
               </div>
               <button
-                className="flex items-center bg-gray-200 text-black px-4 py-2"
+                className="flex items-center bg-imageUpload text-black px-4 py-2"
                 onClick={handleButtonClick}
               >
                 <MdOutlineFileUpload />
@@ -197,20 +200,20 @@ const CreateCompanyDialog: React.FC<AddContactDialogProps> = ({
                 onChange={handleFileChange}
               />
 
-              <button className="bg-gray-200 p-2 rounded-md">
+              <button className="bg-imageUpload p-2 rounded-md">
                 <RiDeleteBin5Line size={20} />
               </button>
             </div>
             <div className="flex items-center p-2 gap-2 cursor-pointer">
               {" "}
-              <FaRegBuilding size={24} />
+              <HiOutlineBuildingOffice size={24} />
               <Switch
                 onChange={handleSwitchChange}
                 checked={isChecked}
                 uncheckedIcon={false}
                 checkedIcon={false}
-                width={25}
-                height={15}
+                width={40}
+                height={20}
                 className="mr-2"
               />
             </div>
@@ -547,7 +550,7 @@ const CreateCompanyDialog: React.FC<AddContactDialogProps> = ({
         {/* Add your form or other content here */}
         <div className="mt-4 flex flex-col md:flex-row justify-end md:space-x-2">
           <DialogClose asChild>
-            <button className="px-4 py-2 bg-gray-200 text-black rounded-md w-full md:w-1/2">
+            <button className="px-4 py-2 bg-fullbg text-black rounded-md w-full md:w-1/2">
               Cancel
             </button>
           </DialogClose>

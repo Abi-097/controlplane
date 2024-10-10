@@ -23,7 +23,7 @@ import Switch from "react-switch";
 import ContactProperty from "../../Selector/ContactProperty";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import AddContactDialog from "../../ContactTable/AddContact";
-import { BiSolidEdit } from "react-icons/bi";
+import { BiDetail, BiSolidEdit } from "react-icons/bi";
 import Delete from "@/app/components/common/Delete";
 import UpcomingActivity from "../../ActivityContent/UpcomingActivity";
 import NotesContent from "../../NotesContent/NotesContent";
@@ -33,6 +33,7 @@ import EmailContact from "../../EmailContent/EmailContact";
 import MeetingContent from "../../MeetingContent/MeetingContent";
 import CreateNewChat from "../../Chat/CreateNewChat";
 import LogCallDialog from "../../Call/LogCallDialog";
+import MoreDetailsDilaogbox from "../../dialogBoxes/MoreDetailsDialogbox";
 
 const EmailDialog = dynamic(() => import("../../EmailContent/Email"), {
   ssr: false,
@@ -49,10 +50,6 @@ const UserInfoPanel = () => {
   const [taskPriorityOpen, setTaskPriorityOpen] = useState(false);
   const [assignedToOpen, setAssignedToOpen] = useState(false);
 
-  const [reminder, setReminder] = useState("reminder");
-  const [taskPriority, setTaskPriority] = useState("High");
-  const [assignedTo, setAssignedTo] = useState("User");
-
   const [isCardOpen, setIsCardOpen] = useState<boolean>(false);
 
   const toggleReminderDropdown = () => setReminderOpen(!reminderOpen);
@@ -60,20 +57,6 @@ const UserInfoPanel = () => {
     setTaskPriorityOpen(!taskPriorityOpen);
   const toggleAssignedToDropdown = () => setAssignedToOpen(!assignedToOpen);
 
-  const handleReminderSelect = (option: string) => {
-    setReminder(option);
-    setReminderOpen(false);
-  };
-
-  const handleTaskPrioritySelect = (option: string) => {
-    setTaskPriority(option);
-    setTaskPriorityOpen(false);
-  };
-
-  const handleAssignedToSelect = (option: string) => {
-    setAssignedTo(option);
-    setAssignedToOpen(false);
-  };
   const handleSwitchChange = (checked: boolean) => {
     setIsChecked(checked);
     // Add your logic
@@ -102,10 +85,12 @@ const UserInfoPanel = () => {
       {isPanelVisible && panelData && (
         <div
           onClick={() => setPanelVisible(false)}
-          className="absolute flex justify-end top-0 left-0 w-full bg-[#0003] z-10 h-svh"
+          // className="absolute flex justify-end top-0 left-0 w-full h-full bg-[#0003] z-10 overflow-auto"
+          className="absolute flex justify-end top-0 left-0 w-full bg-[#0003] z-10 h-full"
         >
           <div
             onClick={(e) => e.stopPropagation()}
+            // className="bg-white w-full md:w-full lg:w-[80%] xl:w-[50%] flex flex-col z-20 overflow-auto"
             className="bg-white w-full md:w-full lg:w-[80%] xl:w-[50%] flex flex-col z-20 overflow-y-scroll"
           >
             <div className="w-full">
@@ -113,7 +98,7 @@ const UserInfoPanel = () => {
               <div className="flex justify-between py-4 px-10 border-b-[1px] border-gray-300">
                 <div className="flex gap-2 items-center justify-center text-[#1D62B4] font-[500]">
                   <LuArrowRightFromLine />
-                  <div className="cursor-default text-sm">Contact View</div>
+                  <div className="cursor-default text-sm">Contact Views</div>
                 </div>
                 <div
                   onClick={handleViewFullDetails}
@@ -262,6 +247,25 @@ const UserInfoPanel = () => {
                               }
                             />
                           </DropdownMenuItem>
+
+                          <DropdownMenuItem
+                            className="cursor-pointer"
+                            onClick={handleMenuItemClick}
+                          >
+                            <MoreDetailsDilaogbox                              
+                              trigger={
+                                <span className="pl-2 gap-3 flex items-center justify-center">
+                                  <BiDetail 
+                                    className="text-black"
+                                    size={20}
+                                  />
+                                  More Details
+                                </span>
+                              }
+                            />
+                          </DropdownMenuItem>
+
+
                           <DropdownMenuItem
                             className="cursor-pointer"
                             onClick={handleMenuItemClick}
@@ -300,54 +304,38 @@ const UserInfoPanel = () => {
                       <div className="text-sm text-gray-500">Job Title</div>
                       <div className="text-sm">{panelData.job_title}</div>
                     </div>
-                    <div className="flex items-center justify-center w-full flex-col border-t-0 p-4 gap-1">
+                    <div className="flex items-center justify-center w-full flex-col border-r-[1px] border-t-0 p-4 gap-1">
                       <div className="text-sm text-gray-500">
-                        Annual revenue
+                        Annual Revenue
                       </div>
                       <div className="text-sm">{panelData.annual_revenue}</div>
+                    </div>
+                    <div className="flex items-center justify-center w-full flex-col border-t-0 p-4 gap-1">
+                      <div className="text-sm text-gray-500">
+                        Due Date
+                      </div>
+                      <div className="text-sm">{panelData.due_date}</div>
                     </div>
                   </div>
                 </div>
 
-                {/* <div className="flex border-[2px] border-[#1D62B4] tems-center cursor-default">
-                  <div className="flex p-4 border-r-2 border-[#1D62B4] items-center justify-center gap-2 w-full bg-[#1D62B440] text-[#1D62B4]">
-                    <MdOutlineCheck />
-                    <div>New</div>
-                  </div>
-                  <div className="flex p-4 border-r-2 border-[#1D62B4] items-center justify-center gap-2 w-full bg-[#1D62B440] text-[#1D62B4]">
-                    <MdOutlineCheck />
-                    <div>Contacted</div>
-                  </div>
-                  <div className="flex p-4 border-r-2 border-[#1D62B4] items-center justify-center gap-2 w-full bg-[#1D62B4] text-white">
-                    <MdOutlineCheck />
-                    <div>Qualified</div>
-                  </div>
-                  <div className="flex p-4 border-r-2 border-[#1D62B4] items-center justify-center gap-2 w-full text-gray-500">
-                    <MdOutlineCheck />
-                    <div>Negotiation</div>
-                  </div>
-                  <div className="flex p-4 border-r-2 items-center justify-center gap-2 w-full text-gray-500">
-                    <MdOutlineCheck />
-                    <div>Closed</div>
-                  </div>
-                </div> */}
                 <ContactProperty />
               </div>
               {isCardOpen && <EmailDialog onClose={handleEmailCloseCard} />}
-              <div className="py-4 px-10">
+              <div className="pt-4 px-10">
                 <UpcomingActivity />
               </div>
 
-              <div className="py-4 px-10 ">
+              <div className="px-10 ">
                 <ActivityHistory />
               </div>
-              <div className="py-4 px-10 ">
+              <div className="px-10 ">
                 <EmailContact />
               </div>
-              <div className="py-4 px-10 ">
+              <div className="px-10 ">
                 <NotesContent />
               </div>
-              <div className="py-4 px-10 ">
+              <div className="px-10 ">
                 <MeetingContent />
               </div>
             </div>

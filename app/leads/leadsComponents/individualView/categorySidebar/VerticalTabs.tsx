@@ -15,8 +15,8 @@ interface VerticalTabsProps {
 
 const VerticalTabs: React.FC<VerticalTabsProps> = ({ tabs, activeTab, onTabChange }) => {
   return (
-    <div className="flex flex-col w-48 border-r-2">
-      <h2 className="font-bold mb-4 text-sm pl-10 pt-5 text-blue-600">Categories</h2>
+    <div className="flex flex-col w-[11vw] bg-white rounded-sm h-[63.5vh]">
+      <h2 className="font-bold mb-4 text-sm pl-10 pt-5 text-primaryBlue">Categories</h2>
       <ul className="pt-0">
         {tabs.map((tab) => (
           <li

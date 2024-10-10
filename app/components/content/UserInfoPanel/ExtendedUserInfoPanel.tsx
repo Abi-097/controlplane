@@ -20,16 +20,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { CiEdit } from "react-icons/ci";
 import Switch from "react-switch";
-import ContactProperty from "../../Selector/ContactProperty";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { TiVendorMicrosoft } from "react-icons/ti";
 import SocialIcons from "@/app/components/SocialMedia/SocialIcons";
 import Tabs from "./Tabs";
 import Activities from "../../common/ContactActivities";
 import { FaArrowCircleRight } from "react-icons/fa";
-import ContactStatus from "../../ContactStatus/ContactStatus";
-import Stepper from "../../ContactStatus/ContactStatus";
-import VerticalStepper from "../../ContactStatus/ContactStatus";
+import ContactStatus from "../../Status/ContactStatus";
+import Stepper from "../../Status/ContactStatus";
+import VerticalStepper from "../../Status/ContactStatus";
+import ContactProperty from "../../Selector/ContactProperty";
+import StatusTabs from "./StatusTab";
 const ExtendedUserInfoPanel = () => {
   const {
     isExtendedUserInfoPanelVisible,
@@ -54,19 +55,19 @@ const ExtendedUserInfoPanel = () => {
   // }, [panelData]);
 
   return (
-    <>
+    <div>
       {isExtendedUserInfoPanelVisible && setExtendedUserInfoPanelVisible && (
         <div
           onClick={() => setExtendedUserInfoPanelVisible(false)}
-          className="absolute flex justify-end top-0 left-0 w-full bg-[#0003] z-10 h-svh"
+          className="absolute flex justify-end top-0 left-0 w-full bg-[#0003] z-[999] h-full"
         >
           <div
             onClick={(e) => e.stopPropagation()}
-            className="bg-white w-full sm:w-full md:w-full lg:w-full xl:w-[75%] flex flex-col z-20 "
+            className="bg-white w-full sm:w-full md:w-full lg:w-full xl:w-[75%] flex flex-col z-50 h-full"
           >
             {/* <div className="w-[56.5em] md:w-full"> */}
             {/* Top header */}
-            <div className="flex justify-between py-6 px-10 border-b-[1px] border-gray-300">
+            <div className="flex justify-between py-4 px-10 border-b-[1px] border-gray-300">
               <div className="flex gap-2 items-center justify-center font-[500]">
                 <FaArrowCircleRight
                   size={24}
@@ -74,16 +75,16 @@ const ExtendedUserInfoPanel = () => {
                   onClick={() => setExtendedUserInfoPanelVisible(false)}
                 />
               </div>
-              <div
+              {/* <div
                 onClick={handleViewDetails}
                 className=" flex cursor-pointer items-center justify-center text-xs font-semibold text-gray-500 px-2 rounded-sm outline outline-[1px] outline-gray-300 hover:bg-[#1D62B4] hover:text-white"
               >
                 View contact details
-              </div>
+              </div> */}
             </div>
-            <div className="grid grid-cols-12  h-full">
-              <div className="col-span-12 md1:col-span-3 border-r pt-4 border-gray-300 ">
-                <div className="flex flex-col items-center text-center mt-7">
+            <div className="grid grid-cols-12 h-full">
+              <div className="col-span-12 md1:col-span-3 border-r pt-4 border-gray-300 h-full">
+                <div className="flex flex-col items-center text-center">
                   <Avatar className="w-24 h-24 mb-5">
                     <AvatarImage
                       src="https://github.com/shadcn.png"
@@ -95,7 +96,7 @@ const ExtendedUserInfoPanel = () => {
                     <strong>Jenny Wilson</strong>
                   </p>
                   <div className="flex items-center gap-3 mb-7">
-                    <TiVendorMicrosoft size={15} />
+                    <TiVendorMicrosoft size={26} />
                     <p className="text-lg text-slate-400">Microsoft</p>
                   </div>
                   {/* <Badge variant="secondary" className="mb-5">
@@ -116,22 +117,23 @@ const ExtendedUserInfoPanel = () => {
                   <Tabs />
                 </div>
               </div>
-              <div className="col-span-12 md1:col-span-6 border-r border-gray-300">
-                <div className="md1:h-[92vh] md1:overflow-y-auto">
+              <div className="col-span-12 md1:col-span-6 border-r border-gray-300 h-full">
+                <div className="md1:h-full">
                   <Activities />
                 </div>
               </div>
-              <div className="col-span-12 md1:col-span-3 border-gray-300">
+              <div className="col-span-12 md1:col-span-3 border-gray-300 relative mt-5">
                 <VerticalStepper />
+                {/* <StatusTabs /> */}
               </div>
             </div>
             {/* </div> */}
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 
 export default ExtendedUserInfoPanel;
-//
+//change

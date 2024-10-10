@@ -4,6 +4,7 @@ import clsx from "clsx";
 import { IoAdd } from "react-icons/io5";
 import UsersData from "@/public/data/users";
 import GridCard from "../DataCard/GridDataCard";
+import AddCategoryDialog from "../category/AddCategory";
 type Activity = {
   id: number;
   remainder: string;
@@ -73,9 +74,9 @@ const GridFragment = () => {
     }
   };
   return (
-    <div className="block w-full">
+    <div className="block w-full bg-fullbg h-[80vh]">
       {/* <UserInfoPanel /> */}
-      <div className="flex py-6 px-8 border-b-2 justify-between">
+      <div className="flex py-3 px-4 justify-between items-center bg-white mx-4">
         {/* left headersection */}
         <div className="flex">
           {ListNavSettings.map((item) => (
@@ -85,7 +86,7 @@ const GridFragment = () => {
               className={clsx(
                 " cursor-pointer  px-4 py-2 rounded-full text-sm text-gray-500 font-bold",
                 isSelected === item.id
-                  ? "bg-[#eee] text-gray-800"
+                  ? "bg-[#f4f2ee] text-gray-800"
                   : "hover:text-gray-800"
               )}
             >
@@ -93,12 +94,16 @@ const GridFragment = () => {
             </div>
           ))}
         </div>
-        <InverseFillButton>
-          <IoAdd size={16} />
-          <div className="text-sm">PlaceHolders</div>
-        </InverseFillButton>
+        <AddCategoryDialog
+          trigger={
+            <InverseFillButton>
+              <IoAdd size={16} />
+              <div className="text-sm">Add Categories</div>
+            </InverseFillButton>
+          }
+        />
       </div>
-      <div>
+      <div className="bg-fullbg">
         <GridCard users={filteredUsers} />
       </div>
     </div>

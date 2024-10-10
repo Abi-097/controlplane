@@ -36,12 +36,13 @@ import {
 } from "@/components/ui/select";
 import Image from "next/image";
 import { IoPerson } from "react-icons/io5";
-import { MdOutlineFileUpload } from "react-icons/md";
+import { MdOutlineFileUpload, MdOutlineStar } from "react-icons/md";
 import DateTimePickerForm from "@/components/custom/dateTimePicker/DateTimePickerForm";
 import { Textarea } from "@/components/ui/textarea";
 
 interface CreateNewTasksDialogProps {
   trigger: React.ReactNode;
+  mode: "add" | "edit";
   data?: {
     taskName: string;
     taskDescription: string;
@@ -49,10 +50,13 @@ interface CreateNewTasksDialogProps {
     taskPriority: string;
     setReminder: string;
     dueDate: string;
+    mode: string;
+
   };
 }
 const CreateNewTasksDialog: React.FC<CreateNewTasksDialogProps> = ({
   trigger,
+  mode,
 }) => {
   const [date, setDate] = useState<Date>();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -91,16 +95,16 @@ const CreateNewTasksDialog: React.FC<CreateNewTasksDialogProps> = ({
   ];
   const SelectTaskPriority = [
     {
-      name: "most important",
-      value: "most important",
+      name: "High",
+      value: "High",
     },
     {
-      name: "important",
-      value: "important",
+      name: "Medium",
+      value: "Medium",
     },
     {
-      name: "not important",
-      value: "not important",
+      name: "Low",
+      value: "Low",
     },
   ];
   return (
@@ -108,12 +112,12 @@ const CreateNewTasksDialog: React.FC<CreateNewTasksDialogProps> = ({
       <DialogTrigger asChild>{trigger}</DialogTrigger>
       <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[650px]">
         <DialogTitle className="text-lg font-medium">
-          Create New Task
+        {mode === "add" ? "Create New Task" : "Update Task Details"}
         </DialogTitle>
         <hr className="my-2" />
         <DialogDescription className="mt-1 mb-4 text-sm text-gray-500">
           <div className="flex items-center gap-3 mb-3">
-            <div className="rounded-full w-[50px] h-[50px] bg-gray-200 flex items-center justify-center">
+            <div className="rounded-full w-[50px] h-[50px] bg-fullbg flex items-center justify-center">
               {selectedImage ? (
                 <Image
                   src={selectedImage}
@@ -127,7 +131,7 @@ const CreateNewTasksDialog: React.FC<CreateNewTasksDialogProps> = ({
               )}
             </div>
             <button
-              className="flex items-center bg-gray-200 text-black px-4 py-2"
+              className="flex items-center bg-fullbg text-black px-4 py-2"
               onClick={handleButtonClick}
             >
               <MdOutlineFileUpload />
@@ -219,9 +223,24 @@ const CreateNewTasksDialog: React.FC<CreateNewTasksDialogProps> = ({
                   <SelectContent>
                     <SelectGroup>
                       {SelectTaskPriority.map((item, index) => (
-                        <SelectItem key={index} value={item.value}>
-                          {item.name}
-                        </SelectItem>
+                        <SelectItem
+                        key={index}
+                        value={item.value}
+                      >
+                        <div className="flex flex-row gap-1 w-full items-center justify-start">
+                        <MdOutlineStar
+                          className={
+                            item.name === "High" ? "text-red-500" :
+                            item.name === "Medium" ? "text-blue-500" :
+                            "text-gray-500"
+                          }
+                          size={12}
+                        />
+                        {item.name}
+                       
+                        </div>
+                       
+                      </SelectItem>
                       ))}
                     </SelectGroup>
                   </SelectContent>
@@ -253,7 +272,7 @@ const CreateNewTasksDialog: React.FC<CreateNewTasksDialogProps> = ({
         {/* Add your form or other content here */}
         <div className="mt-4 flex flex-col md:flex-row justify-end md:space-x-2">
           <DialogClose asChild>
-            <button className="px-4 py-2 bg-gray-200 text-black rounded-md w-full md:w-1/2">
+            <button className="px-4 py-2 bg-fullbg text-black rounded-md w-full md:w-1/2">
               Cancel
             </button>
           </DialogClose>

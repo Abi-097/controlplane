@@ -22,14 +22,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaAngleDown, FaSearch } from "react-icons/fa";
 import clsx from "clsx";
 
 import { AiOutlineExpandAlt } from "react-icons/ai";
-import { MdDownload } from "react-icons/md";
+import {
+  MdDownload,
+  MdOutlineRefresh,
+  MdOutlineZoomOutMap,
+} from "react-icons/md";
 import * as XLSX from "xlsx";
 import Image from "next/image";
 import {
@@ -47,33 +51,32 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
+import { FiDownload } from "react-icons/fi";
+import { BsThreeDots } from "react-icons/bs";
+import { LuSearch } from "react-icons/lu";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
   data: TData[];
-  isExpanded: boolean;
+  // isExpanded: boolean;
 }
 
-export function CommonTable<TData, TValue>({
+export function HistoryCommonTable<TData, TValue>({
   columns,
   data,
-  isExpanded,
 }: DataTableProps<TData, TValue>) {
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const [isIconMenuOpen, setIsIconMenuOpen] = useState(false);
+  const iconRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLDivElement>(null);
   const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
-    pageSize: isExpanded ? 9 : 8,
+    pageSize: 10,
   });
-
-  useMemo(() => {
-    setPagination((prev) => ({
-      ...prev,
-      pageSize: isExpanded ? 9 : 8,
-    }));
-  }, [isExpanded]);
 
   const table = useReactTable({
     data,
@@ -128,7 +131,27 @@ export function CommonTable<TData, TValue>({
     const worksheet = XLSX.utils.json_to_sheet(tableData);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, "Table Data");
-    XLSX.writeFile(workbook, "table_data.xlsx");
+    XLSX.writeFile(workbook, "history.xlsx");
+  };
+
+  const toggleIconMenu = () => {
+    setIsIconMenuOpen(!isIconMenuOpen);
+  };
+
+  const handleFullScreen = () => {
+    if (tableRef.current) {
+      if (!document.fullscreenElement) {
+        tableRef.current.requestFullscreen().catch((err) => {
+          console.error(
+            `Error attempting to enable full-screen mode: ${err.message}`
+          );
+        });
+        setIsFullScreen(true);
+      } else {
+        document.exitFullscreen();
+        setIsFullScreen(false);
+      }
+    }
   };
 
   return (
@@ -156,80 +179,115 @@ export function CommonTable<TData, TValue>({
               </SelectContent>
             </Select>
           </div>
-          <Image
-            src="/icons/Vector.png"
-            alt="Vector.png"
-            width={15}
-            height={15}
-            onClick={handleDownload}
-          />
         </div>
 
-        <div className="relative max-w-sm mt-1">
-          <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-          <Input
-            placeholder="Filter"
-            value={
-              (table.getColumn("objectType")?.getFilterValue() as string) ?? ""
-            }
-            onChange={(event) =>
-              table.getColumn("objectType")?.setFilterValue(event.target.value)
-            }
-            className="pl-10"
-          />
+        <div className="flex items-center justify-center gap-3">
+          <div className="relative" ref={iconRef}>
+            <div
+              className="cursor-pointer rounded-full hover:bg-gray-200 h-8 w-8 p-0 flex items-center justify-center ml-3"
+              onClick={toggleIconMenu}
+            >
+              <BsThreeDots size={20} />
+            </div>
+
+            {/* Icons with Animation */}
+            <div
+              className={`flex items-center gap-3 absolute right-full top-1/2 transform -translate-y-1/2 transition-opacity duration-300 ${
+                isIconMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
+              }`}
+            >
+              <MdOutlineRefresh
+                className="text-gray-400 cursor-pointer hover:text-gray-700"
+                size={20}
+              />
+              <MdOutlineZoomOutMap
+                className="text-gray-400 cursor-pointer hover:text-gray-700"
+                size={20}
+                onClick={handleFullScreen}
+              />
+              <FiDownload
+                size={20}
+                onClick={handleDownload}
+                className="text-gray-400 cursor-pointer hover:text-gray-700"
+              />
+            </div>
+          </div>
+          <div className="relative max-w-sm mt-1">
+            <LuSearch
+              size={20}
+              className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+            />
+            <Input
+              placeholder="Filter"
+              value={
+                (table.getColumn("objectType")?.getFilterValue() as string) ??
+                ""
+              }
+              onChange={(event) =>
+                table
+                  .getColumn("objectType")
+                  ?.setFilterValue(event.target.value)
+              }
+              className="pl-10"
+            />
+          </div>
         </div>
       </div>
-      {/* <div className="flex flex-col h-full"> */}
-      <div className="flex-1 max-h-[650px] overflow-y-auto">
-        <div className="rounded-md border overflow-auto">
-          <Table>
-            <TableHeader>
-              {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
-                  {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
-                    </TableHead>
+
+      <div
+        ref={tableRef}
+        className={`flex-1 max-h-[70vh] w-full px-1 overflow-auto no-scrollbar ${
+          isFullScreen ? "bg-white text-black" : ""
+        }`}
+      >
+        <Table>
+          <TableHeader className="bg-tableBg">
+            {table.getHeaderGroups().map((headerGroup) => (
+              <TableRow key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <TableHead key={header.id}>
+                    {header.isPlaceholder
+                      ? null
+                      : flexRender(
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
+                  </TableHead>
+                ))}
+              </TableRow>
+            ))}
+          </TableHeader>
+          <TableBody>
+            {table.getRowModel().rows.length ? (
+              table.getRowModel().rows.map((row) => (
+                <TableRow
+                  key={row.id}
+                  data-state={row.getIsSelected() && "selected"}
+                >
+                  {row.getVisibleCells().map((cell) => (
+                    <TableCell key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </TableCell>
                   ))}
                 </TableRow>
-              ))}
-            </TableHeader>
-            <TableBody>
-              {table.getRowModel().rows.length ? (
-                table.getRowModel().rows.map((row) => (
-                  <TableRow
-                    key={row.id}
-                    data-state={row.getIsSelected() && "selected"}
-                  >
-                    {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
-                        {flexRender(
-                          cell.column.columnDef.cell,
-                          cell.getContext()
-                        )}
-                      </TableCell>
-                    ))}
-                  </TableRow>
-                ))
-              ) : (
-                <TableRow>
-                  <TableCell
-                    colSpan={columns.length}
-                    className="h-24 text-center"
-                  >
-                    No results.
-                  </TableCell>
-                </TableRow>
-              )}
-            </TableBody>
-          </Table>
-        </div>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell
+                  colSpan={columns.length}
+                  className="h-24 text-center"
+                >
+                  No results.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
       </div>
+      {/* </div> */}
       {/* <div className="flex items-center justify-center space-x-2 py-4"> */}
       <div className="flex items-center justify-between space-x-2 py-4">
         <div className="flex items-center gap-3">
@@ -244,36 +302,35 @@ export function CommonTable<TData, TValue>({
               table.getFilteredRowModel().rows.length
             )} of ${table.getFilteredRowModel().rows.length} Results`}
           </div>
-          {isExpanded && (
-            <div className="flex gap-2 text-sm text-muted-foreground items-center justify-center">
-              <div className="text-gray-800">{"Show"}</div>
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <div className="cursor-pointer h-8 w-8 flex items-center justify-center border-2 border-gray-400 gap-2 px-[28px] py-[8px] rounded-md">
-                    <div>{table.getState().pagination.pageSize}</div>
-                    <div>
-                      <FaAngleDown />
-                    </div>
+
+          <div className="flex gap-2 text-sm text-muted-foreground items-center justify-center">
+            <div className="text-gray-800">{"Show"}</div>
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <div className="cursor-pointer h-8 w-8 flex items-center justify-center border-2 border-gray-400 gap-2 px-[28px] py-[8px] rounded-md">
+                  <div>{table.getState().pagination.pageSize}</div>
+                  <div>
+                    <FaAngleDown />
                   </div>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  {[9, 20, 30, 40, 50].map((pageSize) => (
-                    <DropdownMenuItem
-                      key={pageSize}
-                      onClick={() => {
-                        table.setPageSize(Number(pageSize));
-                      }}
-                      className="cursor-pointer"
-                      defaultValue={pageSize}
-                    >
-                      {pageSize}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <div className="text-gray-800">{"Row"}</div>
-            </div>
-          )}
+                </div>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                {[10, 20, 30, 40, 50].map((pageSize) => (
+                  <DropdownMenuItem
+                    key={pageSize}
+                    onClick={() => {
+                      table.setPageSize(Number(pageSize));
+                    }}
+                    className="cursor-pointer"
+                    defaultValue={pageSize}
+                  >
+                    {pageSize}
+                  </DropdownMenuItem>
+                ))}
+              </DropdownMenuContent>
+            </DropdownMenu>
+            <div className="text-gray-800">{"Row"}</div>
+          </div>
         </div>
         <div className="flex gap-2 items-center justify-center space-x-2">
           <Button

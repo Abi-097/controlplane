@@ -1,7 +1,14 @@
-// pages/index.tsx or any other page
 import VerticalTabs from '@/app/leads/leadsComponents/individualView/categorySidebar/VerticalTabs';
 import { useState } from 'react';
 import Contacts_Leads from './contacts_Leads/Contacts_Leads';
+import Engagement_Leads from './engagement_Leads/Engagement_Leads';
+import ActivityLeads from './activity_Leads/ActivityLeads';
+import StageHistory_Leads from './stageHistory_Leads/StageHistory_Leads';
+import ApprovalHistory_Leads from './approvalHistory_Leads/ApprovalHistory_Leads';
+import PartnersLeads from './partners_Leads/Partners_Leads';
+import QuotesLeads from './quotes_Leads/Quotes_Leads';
+import ProductsLeads from './products_Leads/Products_Leads';
+import FilesLeads from './files_Leads/Files_Leads';
 
 const tabs = [
   { id: 'activity', label: 'Activity' },
@@ -16,41 +23,41 @@ const tabs = [
 ];
 
 const CategoarySidebar=()=> {
-  const [activeTab, setActiveTab] = useState('contact');
+  const [activeTab, setActiveTab] = useState('activity');
 
   const renderContent = () => {
     switch (activeTab) {
       case 'activity':
-        return(<div>Content</div>);
+        return(<ActivityLeads/>);
       case 'contact':
         return(<Contacts_Leads/>);
       case 'engagement':
-        return(<div>Content3</div>);
+        return(<Engagement_Leads/>);
       case 'partners':
-        return(<div>Content4</div>);
+        return(<PartnersLeads/>);
       case 'products':
-        return(<div>Content5</div>);
+        return(<ProductsLeads/>);
       case 'quotes':
-        return(<div>Content6</div>);
+        return(<QuotesLeads/>);
       case 'stageHistory':
-        return(<div>Content</div>);
+        return(<StageHistory_Leads/>);
       case 'approvalHistory':
-        return(<div>Content</div>);
+        return(<ApprovalHistory_Leads/>);
       case 'files':
-        return(<div>Content</div>);
+        return(<FilesLeads/>);
       default:
         return <div>Select a tab to view content</div>;
     }
   };
 
   return (
-    <div className="flex ">
+    <div className="flex w-[50vw] h-[63.5vh] ">
       <VerticalTabs
         tabs={tabs}
         activeTab={activeTab}
         onTabChange={setActiveTab}
       />
-      <div className="flex-1 p-2  ">
+      <div className="flex-1 w-full  overflow-y-scroll no-scrollbar rounded-sm ml-betweenComponents">
         {/* Your main content here */}
         {renderContent()}
         {/* Add your content based on the active tab */}

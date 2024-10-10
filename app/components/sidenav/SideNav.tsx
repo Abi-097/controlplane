@@ -6,64 +6,44 @@ import NavItem from "./NavItem";
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { SideNavOptions } from "../config";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 
 const SideNav = () => {
   const [isNavOpen, setIsNavOpen] = useState(false);
   const pathname = usePathname();
-
+  const router = useRouter();
   const mainNavOptions = SideNavOptions.filter(
     (item) => item.title !== "Settings"
   );
   const settingsOption = SideNavOptions.find(
     (item) => item.title === "Settings"
   );
+  const toggleNav = () => {
+    setIsNavOpen(!isNavOpen);
+  };
 
   return (
-    // <div
-    //   onMouseEnter={() => {
-    //     setIsNavOpen(true);
-    //   }}
-    //   onMouseLeave={() => {
-    //     setIsNavOpen(false);
-    //   }}
-    //   className="bg-[#f7f7f7] space-y-14 text-[#3a3a3a] w-24 hover:w-60"
-    // >
-    //   {/* logo */}
-    //   <Link
-    //     href={"/"}
-    //     className="flex mx-8 my-6 w-full items-center justify-start gap-3 font-[700]"
-    //   >
-    //     <Image alt="logo" src={Logo} width={32} />
-    //     {isNavOpen && <div className="text-black">DataNue</div>}
-    //   </Link>
-
-    //   {/* navigation items */}
-    //   <Link href={"/"} className="flex flex-col font-[400]">
-    //     {SideNavOptions.map((item) => (
-    //       <NavItem
-    //         key={item.id}
-    //         title={item.title}
-    //         Icon={item?.Icon}
-    //         menuState={isNavOpen}
-    //       />
-    //     ))}
-    //   </Link>
-    // </div>
     <div
-      onMouseEnter={() => setIsNavOpen(true)}
-      onMouseLeave={() => setIsNavOpen(false)}
-      // className="bg-[#f7f7f7] space-y-14 text-[#3a3a3a] w-24 hover:w-60"
-      className="bg-[#f7f7f7] space-y-14 text-[#3a3a3a] w-24 hover:w-60 flex flex-col justify-between h-screen"
+      className={`bg-[#0070c0] space-y-14 text-[#3a3a3a] z-10 ${
+        isNavOpen ? "w-60" : "w-[72px]"
+      } flex flex-col justify-between h-screen relative transition-width duration-300`}
     >
+      {/* Toggle Button */}
+      {/* {isHovered && ( */}
+
+      {/* )} */}
+
       <div>
         {/* logo */}
         <Link
           href={"/"}
-          className="flex mx-8 my-6 w-full items-center justify-start gap-3 font-[700]"
+          className={`flex my-6 w-full items-center gap-3 font-[700] ${
+            isNavOpen ? "w-60 justify-start mx-6" : "w-18 justify-center"
+          }`}
         >
           <Image alt="logo" src={Logo} width={32} />
-          {isNavOpen && <div className="text-black">DataNue</div>}
+          {isNavOpen && <div className="text-white">DataNue</div>}
         </Link>
 
         {/* navigation items */}
@@ -80,7 +60,16 @@ const SideNav = () => {
           ))}
         </div>
       </div>
-
+      <button
+        onClick={toggleNav}
+        className="absolute bottom-16 right-4 transform translate-x-full text-black bg-white p-2 rounded-full shadow-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-white z-[999]"
+      >
+        {isNavOpen ? (
+          <IoIosArrowBack size={15} />
+        ) : (
+          <IoIosArrowForward size={15} />
+        )}
+      </button>
       {/* settings option */}
       <div className="mb-6">
         <Link href={settingsOption?.path || "#"} key={settingsOption?.id}>

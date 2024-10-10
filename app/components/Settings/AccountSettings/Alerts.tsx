@@ -8,8 +8,12 @@ import Switch from "react-switch";
 import { BsBell } from "react-icons/bs";
 import { AlertTable } from "./AlertsTable/AlertTable";
 import { columns } from "./AlertsTable/AlertsTableColumn";
+import { Bell } from "lucide-react";
+interface UserSettingsProps {
+  UserSettings?: boolean;
+}
 
-const AlertsNotifications = () => {
+const AlertsNotifications = ({ UserSettings }: UserSettingsProps) => {
   const [isChecked, setIsChecked] = useState(false);
   const [data, setData] = useState<any[]>([]);
   const handleSwitchChange = (checked: boolean) => {
@@ -19,19 +23,17 @@ const AlertsNotifications = () => {
   return (
     <div>
       <form className="w-full p-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3 ">
-            <BsBell size={20} />
-            <p className="font-semibold">Alerts & Notifications</p>
-          </div>
-          <MdOutlineHistory size={24} />
+        <div className="flex items-center gap-2">
+          <Bell size={20} />
+          <p className="font-semibold">Alerts & Notifications</p>
         </div>
+
         <hr className="text-slate-300 my-4" />
         <div>
           <div className="my-7">
-            <p className="font-semibold mb-2">Alerts & Notifications</p>
+            <p className="font-semibold mb-2 text-sm">Alerts & Notifications</p>
             <div className="flex items-center justify-between mr-4">
-              <p>
+              <p className="text-sm">
                 Alerts & Notification on/off choice will help user to choose the
                 option to notify alerts or not.
               </p>
@@ -47,10 +49,7 @@ const AlertsNotifications = () => {
             </div>
           </div>
           {/*  */}
-          <AlertTable columns={columns} data={data} />
-        </div>
-        <div className="flex justify-end">
-          <Button className="bg-[#57534e] text-white w-20 h-8">Save</Button>
+          {!UserSettings && <AlertTable columns={columns} data={data} />}
         </div>
       </form>
     </div>

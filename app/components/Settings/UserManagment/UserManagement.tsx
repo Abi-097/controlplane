@@ -1,7 +1,11 @@
 import React, { useState } from "react";
 import UserManagementUser from "./User/UserManagementUser";
 import UserManagementGroup from "./Group/UserManagementGroup";
-// import UserManagementUser from "./UserManagementUser";
+import UserManagementPermission from "./Permissions/UserManagementPermission";
+import UserManagementPolicy from "./Policy/UserManagementPolicy";
+import AddRolesMain from "./Roles/AddRolesMain";
+import SecurityRules from "./SecurityRules/SecurityRules";
+import UserSettings from "./UserSettings/UserSettingsMain";
 
 const UserManagement = () => {
   const [activeTab, setActiveTab] = useState("User");
@@ -17,7 +21,7 @@ const UserManagement = () => {
   ];
 
   return (
-    <div className="w-full">
+    <div className="w-full h-[92vh] py-1 ">
       <div className="border-b">
         <ul className="flex">
           {tabs.map((tab) => (
@@ -35,17 +39,15 @@ const UserManagement = () => {
           ))}
         </ul>
       </div>
-      <div className="p-4">
-        {/* <h1 className="text-2xl font-bold mb-4">{activeTab}</h1> */}
-        <div className="w-full">
-          {activeTab === "User" && <UserManagementUser />}
-          {activeTab === "Group" && <UserManagementGroup />}
-          {activeTab === "Permissions" && <p>Content for Permissions</p>}
-          {activeTab === "Policy" && <p>Content for Policy</p>}
-          {activeTab === "Roles" && <p>Content for Roles</p>}
-          {activeTab === "Rules" && <p>Content for Rules</p>}
-          {activeTab === "User Settings" && <p>Content for User Settings</p>}
-        </div>
+      <div className="w-full m-0 p-0">
+        {activeTab === "User" && <UserManagementUser />}
+        {activeTab === "Group" && <UserManagementGroup />}
+        {activeTab === "Permissions" && <UserManagementPermission />}
+        {activeTab === "Policy" && <UserManagementPolicy />}
+        {activeTab === "Roles" && <AddRolesMain />}
+        {activeTab === "Rules" && <SecurityRules />}
+        {activeTab === "User Settings" && <UserSettings />}
+        {/* </div> */}
       </div>
     </div>
   );

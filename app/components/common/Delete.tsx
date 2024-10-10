@@ -20,7 +20,7 @@ const Delete: React.FC<DeleteDialogProps> = ({ trigger }) => {
     <div>
       <Dialog>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
-        <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[450px]">
+        <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[450px] z-[999]">
           <DialogDescription className="p-0 text-sm text-gray-500">
             <div className="w-full h-full overflow-auto">
               <div className="flex justify-center p-4">

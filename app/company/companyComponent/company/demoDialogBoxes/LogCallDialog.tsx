@@ -126,7 +126,7 @@ const LogCallDialog: React.FC<LogCallDialogProps> = ({ trigger }) => {
                   className="block text-sm font-medium text-black mb-1"
                 >
                   End Date and Time
-                  </label>
+                </label>
                 <DateTimePickerForm />
               </div>
             </div>
@@ -182,7 +182,7 @@ const LogCallDialog: React.FC<LogCallDialogProps> = ({ trigger }) => {
                     <SelectGroup>
                       {SelectCallTo.map((item, index) => (
                         <SelectItem key={index} value={item.value}>
-                           <div className="flex gap-2 items-center">
+                          <div className="flex gap-2 items-center">
                             <Avatar className="w-6 h-6">
                               <AvatarImage
                                 src={`/users/${item.id}.jpg`}

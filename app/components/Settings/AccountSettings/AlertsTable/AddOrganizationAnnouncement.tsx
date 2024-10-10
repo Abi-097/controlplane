@@ -47,41 +47,19 @@ import {
 } from "@/components/ui/select";
 
 import Switch from "react-switch";
-import { Country, State, City } from "country-state-city";
-import Flag from "react-world-flags";
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableFooter,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import Image from "next/image";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
 import ColorPicker from "@/components/colorpicker";
-import { FaRegCheckSquare } from "react-icons/fa";
-import MultiSelectCountries from "@/components/multipleCountry";
-import CustomMultiSelect from "@/components/multipleCountry";
 import MultiSelect from "@/components/multipleCountry";
 import moment from "moment-timezone";
 interface AddOrganizationAnnouncementDialogProps {
   trigger: React.ReactNode;
+  mode: "addAlert" | "editAlert";
 }
-const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
-const holidays = [
-  {
-    date: "10/10/2024",
-    holiday: "Holowin",
-    status: "Active",
-    description: "Credit Card",
-  },
-];
+
 const AddOrganizationAnnouncementDialog: React.FC<
   AddOrganizationAnnouncementDialogProps
 > = ({ trigger }) => {
@@ -274,7 +252,7 @@ const AddOrganizationAnnouncementDialog: React.FC<
               Cancel
             </button>
           </DialogClose>
-          <button className="px-4 py-2 bg-black text-white rounded-md w-full md:w-1/2">
+          <button className="px-4 py-2 bg-saveButton text-white rounded-md w-full md:w-1/2">
             Save
           </button>
         </div>

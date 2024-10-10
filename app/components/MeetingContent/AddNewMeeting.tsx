@@ -26,18 +26,14 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
-  DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import InputWithButton from "./InputWithButton";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { TimePickerDemo } from "../../components/common/dateTimePicker/Time-picker-demo";
@@ -53,13 +49,11 @@ interface Meeting {
 }
 
 const AddNewMeeting: React.FC<Meeting> = ({ trigger, meetingData }) => {
-  const [eventName, setEventName] = useState("");
   const [isHovered, setIsHovered] = useState(false);
   const [description, setDescription] = useState("");
   const [date, setDate] = useState<Date | undefined>(new Date());
   const [time, setTime] = useState<Date | undefined>(new Date());
   const [duration, setDuration] = useState("3h 45m");
-  const [location, setLocation] = useState("");
   const [guests, setGuests] = useState([
     { id: "1", name: "Guest 1", avatar: "/users/8.jpg" },
     { id: "2", name: "Guest 2", avatar: "/users/2.jpg" },
@@ -68,12 +62,7 @@ const AddNewMeeting: React.FC<Meeting> = ({ trigger, meetingData }) => {
     { id: "5", name: "Guest 5", avatar: "/users/1.jpg" },
     { id: "6", name: "Guest 6", avatar: "/users/7.jpg" },
   ]);
-  const [newGuest, setNewGuest] = useState("");
-  const [notifications, setNotifications] = useState({
-    email: true,
-    slack: false,
-  });
-  const [reminder, setReminder] = useState("1 hour before event");
+ 
   const [attachments, setAttachments] = useState<File[]>([]);
 
   const handleMouseEnter = () => {
@@ -86,7 +75,7 @@ const AddNewMeeting: React.FC<Meeting> = ({ trigger, meetingData }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[650px] overflow-y-scroll max-h-screen">
+      <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[650px] ">
         <DialogTitle className="text-lg font-medium">
           Create New Meeting
         </DialogTitle>
@@ -114,29 +103,7 @@ const AddNewMeeting: React.FC<Meeting> = ({ trigger, meetingData }) => {
                 />
               </div>
 
-              {/* Hover Button */}
-              <div
-                className={`mt-2 transition-opacity duration-100 ease-out ${
-                  isHovered ? "opacity-100 max-h-40" : "opacity-0 max-h-0"
-                }`}
-              >
-                <div className="w-full">
-                  <Label
-                    htmlFor="addDescription"
-                    className="block text-sm font-medium text-black mb-1"
-                  >
-                    Add Description
-                  </Label>
-                  <Input
-                    type="text"
-                    id="addDescription"
-                    placeholder="Add description"
-                    name="addDescription"
-                    value={description}
-                    onChange={(e) => setDescription(e.target.value)}
-                  />
-                </div>
-              </div>
+         
             </div>
             {/* Date */}
             <div className="flex space-x-4 justify-between">
@@ -160,7 +127,7 @@ const AddNewMeeting: React.FC<Meeting> = ({ trigger, meetingData }) => {
                       {date ? format(date, "PPP") : <span>Pick a date</span>}
                     </Button>
                   </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0">
+                  <PopoverContent className="w-auto p-0 ">
                     <Calendar
                       mode="single"
                       selected={date}
@@ -177,7 +144,7 @@ const AddNewMeeting: React.FC<Meeting> = ({ trigger, meetingData }) => {
                 >
                   Time
                 </Label>
-                <div>                  
+                <div>
                   <Popover>
                     <PopoverTrigger asChild>
                       <Button
@@ -201,7 +168,7 @@ const AddNewMeeting: React.FC<Meeting> = ({ trigger, meetingData }) => {
                   </Popover>
                 </div>
               </div>
-             
+
               <div className="flex-1">
                 <Label
                   htmlFor="eventName"
@@ -253,13 +220,11 @@ const AddNewMeeting: React.FC<Meeting> = ({ trigger, meetingData }) => {
                   <TooltipProvider>
                     <Tooltip>
                       <TooltipTrigger asChild>
-                        <AddGuestDialog 
-                         trigger={
-                          <FiPlus className="cursor-pointer" size={18} />
-
-                         }
+                        <AddGuestDialog
+                          trigger={
+                            <FiPlus className="cursor-pointer" size={18} />
+                          }
                         />
-                        
                       </TooltipTrigger>
                       <TooltipContent>
                         <p>Add Guests</p>
@@ -336,15 +301,12 @@ const AddNewMeeting: React.FC<Meeting> = ({ trigger, meetingData }) => {
               />
             </div>
 
-            {/* <div className="flex justify-end space-x-2">
-              <Button variant="outline">Cancel</Button>
-              <Button type="submit">Create Event</Button>
-            </div> */}
+   
           </form>
         </DialogDescription>
         <div className="mt-4 flex flex-col md:flex-row justify-end md:space-x-2">
           <DialogClose asChild>
-            <button className="px-4 py-2 bg-gray-200 text-black rounded-md w-full md:w-1/2">
+            <button className="px-4 py-2 bg-fullbg text-black rounded-md w-full md:w-1/2">
               Cancel
             </button>
           </DialogClose>

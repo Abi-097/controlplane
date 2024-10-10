@@ -22,12 +22,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { LiaTicketAltSolid } from "react-icons/lia";
-import { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaAngleDown, FaSearch } from "react-icons/fa";
 import clsx from "clsx";
-import { MdDownload, MdOutlineRefresh, MdViewColumn } from "react-icons/md";
+import {
+  MdDownload,
+  MdOutlineRefresh,
+  MdOutlineZoomOutMap,
+  MdViewColumn,
+} from "react-icons/md";
 import * as XLSX from "xlsx";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -56,17 +61,42 @@ export function TicketTable<TData, TValue>({
   heading,
 }: //   isExpanded,
 DataTableProps<TData, TValue>) {
+  const [globalFilter, setGlobalFilter] = useState("");
   const [isIconMenuOpen, setIsIconMenuOpen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const iconRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLDivElement>(null);
   const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({
+    ticketId: false,
+    priority: false,
+    createdBy: false,
+    createdAt: false,
+    updatedBy: false,
+    updatedAt: false,
+    issueState: false,
+    ownerID: false,
+    ownerName: false,
+    assignName: false,
+    label: false,
+    productisse: false,
+    startDate: false,
+    dueDate: false,
+    module: false,
+    moduleID: false,
+    cycle: false,
+    parentTicket: false,
+    notifiedDate: false,
+  });
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
   });
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectAll, setSelectAll] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
   const table = useReactTable({
     columns,
     onSortingChange: setSorting,
@@ -77,6 +107,7 @@ DataTableProps<TData, TValue>) {
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onGlobalFilterChange: setGlobalFilter,
     pageCount: pagination.pageSize,
     data,
     state: {
@@ -85,6 +116,7 @@ DataTableProps<TData, TValue>) {
       columnVisibility,
       rowSelection,
       pagination,
+      globalFilter,
     },
     onPaginationChange: setPagination,
   });
@@ -106,6 +138,24 @@ DataTableProps<TData, TValue>) {
       </button>
     );
   }
+
+  useEffect(() => {
+    // Load the column visibility from local storage when the component mounts
+    const savedVisibility = localStorage.getItem("columnVisibility");
+    if (savedVisibility) {
+      setColumnVisibility(JSON.parse(savedVisibility));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Update the select all checkbox based on the current column visibility state
+    const allVisible = table
+      .getAllColumns()
+      .filter((column) => column.getCanHide())
+      .every((column) => column.getIsVisible());
+
+    setSelectAll(allVisible);
+  }, [columnVisibility, table]);
 
   const handleDownload = () => {
     const tableData = table.getPrePaginationRowModel().rows.map((row) => {
@@ -135,12 +185,56 @@ DataTableProps<TData, TValue>) {
   const toggleIconMenu = () => {
     setIsIconMenuOpen(!isIconMenuOpen);
   };
-  const handleClickOutside = (event: MouseEvent) => {
-    if (iconRef.current && !iconRef.current.contains(event.target as Node)) {
-      setIsIconMenuOpen(false);
+
+  const handleFullScreen = () => {
+    if (tableRef.current) {
+      if (!document.fullscreenElement) {
+        tableRef.current.requestFullscreen().catch((err) => {
+          console.error(
+            `Error attempting to enable full-screen mode: ${err.message}`
+          );
+        });
+        setIsFullScreen(true); // Set fullscreen state to true
+      } else {
+        document.exitFullscreen();
+        setIsFullScreen(false); // Set fullscreen state to false
+      }
     }
   };
 
+  const handleSelectAllChange = (checked: boolean) => {
+    setSelectAll(checked);
+    table.getAllColumns().forEach((column) => {
+      if (column.getCanHide()) {
+        column.toggleVisibility(checked);
+      }
+    });
+  };
+  const handleColumnVisibilityChange = (columnId: string, checked: boolean) => {
+    const column = table.getColumn(columnId);
+
+    // Check if the column exists
+    if (column) {
+      column.toggleVisibility(checked);
+
+      // Check if all columns are visible
+      const allVisible = table
+        .getAllColumns()
+        .filter((column) => column.getCanHide())
+        .every((column) => column.getIsVisible());
+
+      setSelectAll(allVisible);
+    }
+  };
+  const handleSave = () => {
+    // Save the column visibility to local storage
+    localStorage.setItem(
+      "columnVisibility",
+      JSON.stringify(table.getState().columnVisibility)
+    );
+    setIsSheetOpen(false);
+    // console.log("Columns visibility saved:", columnVisibility);
+  };
   return (
     <>
       {/* <h2 className="text-xl mb-4">{heading}</h2> */}
@@ -168,13 +262,18 @@ DataTableProps<TData, TValue>) {
                 className="text-gray-400 cursor-pointer hover:text-gray-700"
                 size={20}
               />
+              <MdOutlineZoomOutMap
+                className="text-gray-400 cursor-pointer hover:text-gray-700"
+                size={20}
+                onClick={handleFullScreen}
+              />
               <FiDownload
                 size={20}
                 onClick={handleDownload}
                 className="text-gray-400 cursor-pointer hover:text-gray-700"
               />
               <div>
-                <Sheet>
+                <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                   <SheetTrigger asChild>
                     <button className="border-none flex items-center justify-center">
                       <MdViewColumn
@@ -199,9 +298,25 @@ DataTableProps<TData, TValue>) {
                           setSearchQuery(e.target.value.toLowerCase())
                         }
                       />
+                      <div className="flex items-center px-5">
+                        <Checkbox
+                          checked={selectAll}
+                          onCheckedChange={(value) =>
+                            handleSelectAllChange(!!value)
+                          }
+                          id="select-all"
+                          className="data-[state=checked]:bg-[#3f76ff] data-[state=checked]:border-[#3f76ff] mt-3"
+                        />
+                        <label
+                          htmlFor="select-all"
+                          className="ml-2 mt-3 text-sm text-gray-600"
+                        >
+                          Select All
+                        </label>
+                      </div>
                     </SheetHeader>
                     {/* Apply fixed height and overflow for scrolling */}
-                    <div className="px-3 mt-4 max-h-[80%] overflow-y-auto">
+                    <div className="px-3 mt-1 max-h-[75%] overflow-y-auto">
                       {table
                         .getAllColumns()
                         .filter((column) => column.getCanHide())
@@ -219,36 +334,77 @@ DataTableProps<TData, TValue>) {
                           if (!aMatches && bMatches) return 1;
                           return 0;
                         })
-                        .map((column) => (
-                          <div
-                            key={column.id}
-                            className="flex items-center px-2 py-2 cursor-pointer capitalize "
-                          >
-                            <Checkbox
-                              checked={column.getIsVisible()}
-                              onCheckedChange={(value) => {
-                                column.toggleVisibility(!!value);
-                              }}
-                              id={column.id}
-                              className="data-[state=checked]:bg-[#3f76ff] data-[state=checked]:border-[#3f76ff]"
-                            />
-                            <label
-                              htmlFor={column.id}
-                              className="ml-2 text-sm text-gray-600"
+                        .map((column) => {
+                          let headerLabel: string | undefined;
+
+                          if (typeof column.columnDef.header === "function") {
+                            const headerContent = column.columnDef.header({
+                              column,
+                              header: table.getHeaderGroups()[0].headers[0],
+                              table,
+                            });
+                            if (React.isValidElement(headerContent)) {
+                              const element =
+                                headerContent as React.ReactElement;
+
+                              // Filter out icons and get only the text nodes from the header content
+                              const textNodes = React.Children.toArray(
+                                element.props.children
+                              )
+                                .filter((child) => typeof child === "string")
+                                .join(""); // Join in case there are multiple text nodes
+
+                              headerLabel = textNodes;
+                            } else if (typeof headerContent === "string") {
+                              headerLabel = headerContent;
+                            }
+                          } else {
+                            headerLabel = column.columnDef.header as string;
+                          }
+
+                          return (
+                            <div
+                              key={column.id}
+                              className="flex items-center p-2 cursor-pointer capitalize"
                             >
-                              {column.id}
-                            </label>
-                          </div>
-                        ))}
+                              <Checkbox
+                                checked={column.getIsVisible()}
+                                onCheckedChange={(value) =>
+                                  handleColumnVisibilityChange(
+                                    column.id,
+                                    !!value
+                                  )
+                                }
+                                id={column.id}
+                                className="data-[state=checked]:bg-[#3f76ff] data-[state=checked]:border-[#3f76ff]"
+                              />
+                              <label
+                                htmlFor={column.id}
+                                className="ml-2 text-sm text-gray-600"
+                              >
+                                {headerLabel || column.id}
+                              </label>
+                            </div>
+                          );
+                        })}
+                    </div>
+                    <div className="flex justify-end mt-4">
+                      <Button
+                        variant="outline"
+                        className="ml-auto bg-saveButton text-white"
+                        onClick={handleSave}
+                      >
+                        Save
+                      </Button>
                     </div>
                   </SheetContent>
                 </Sheet>
               </div>
             </div>
-          </div>{" "}
+          </div>
           <div className="relative max-w-sm mt-1">
             <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
-            <Input
+            {/* <Input
               placeholder="Search Ticket"
               value={
                 (table.getColumn("ticketName")?.getFilterValue() as string) ??
@@ -260,15 +416,26 @@ DataTableProps<TData, TValue>) {
                   ?.setFilterValue(event.target.value)
               }
               className="pl-10 bg-[#f9fafb]"
+            /> */}
+            <Input
+              placeholder="Search Tickets"
+              value={globalFilter ?? ""}
+              onChange={(event) => setGlobalFilter(event.target.value)} // Set the global filter on change
+              className="pl-10 bg-[#f9fafb]"
             />
           </div>
         </div>
       </div>
       {/* <div className="flex flex-col h-full"> */}
-      <div className="flex-1 max-h-[650px] w-[82vw] overflow-auto">
+      <div
+        ref={tableRef}
+        className={`flex-1 max-h-[73vh] w-full px-1 overflow-auto ${
+          isFullScreen ? "bg-white text-black" : ""
+        }`}
+      >
         <div className="rounded-md border">
           <Table>
-            <TableHeader>
+            <TableHeader className="bg-tableBg">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
@@ -314,50 +481,51 @@ DataTableProps<TData, TValue>) {
             </TableBody>
           </Table>
         </div>
-      </div>
-      {/* <div className="flex items-center justify-center space-x-2 py-4"> */}
-      <div className="flex items-center justify-between space-x-2 p-4">
-        <div className="flex items-center gap-3">
-          <div className="text-sm text-gray-800">
-            {`${
-              table.getState().pagination.pageIndex *
-                table.getState().pagination.pageSize +
-              1
-            }-${Math.min(
-              (table.getState().pagination.pageIndex + 1) *
-                table.getState().pagination.pageSize,
-              table.getFilteredRowModel().rows.length
-            )} of ${table.getFilteredRowModel().rows.length} Results`}
+
+        {/* <div className="flex items-center justify-center space-x-2 py-4"> */}
+        <div className="flex items-center justify-between space-x-2 p-4">
+          <div className="flex items-center gap-3">
+            <div className="text-sm text-gray-800">
+              {`${
+                table.getState().pagination.pageIndex *
+                  table.getState().pagination.pageSize +
+                1
+              }-${Math.min(
+                (table.getState().pagination.pageIndex + 1) *
+                  table.getState().pagination.pageSize,
+                table.getFilteredRowModel().rows.length
+              )} of ${table.getFilteredRowModel().rows.length} Results`}
+            </div>
           </div>
-        </div>
-        <div className="flex gap-2 items-center justify-center space-x-2">
-          <Button
-            className={clsx(
-              "bg-gray-100",
-              !table.getCanPreviousPage() && "text-gray-400"
-            )}
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <IoIosArrowBack />
-          </Button>
-          <div className="flex flex-row gap-2">
-            {paginationButtons.map((u) => u)}
+          <div className="flex gap-2 items-center justify-center space-x-2">
+            <Button
+              className={clsx(
+                "bg-gray-100",
+                !table.getCanPreviousPage() && "text-gray-400"
+              )}
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <IoIosArrowBack />
+            </Button>
+            <div className="flex flex-row gap-2">
+              {paginationButtons.map((u) => u)}
+            </div>
+            <Button
+              className={clsx(
+                "bg-gray-100",
+                !table.getCanNextPage() && "text-gray-400"
+              )}
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              <IoIosArrowForward />
+            </Button>
           </div>
-          <Button
-            className={clsx(
-              "bg-gray-100",
-              !table.getCanNextPage() && "text-gray-400"
-            )}
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <IoIosArrowForward />
-          </Button>
         </div>
       </div>
       {/* </div> */}

@@ -12,9 +12,10 @@ import UserManagementUserProfile from "./UserManagementUserProfile";
 import UserManagementUserDepartment from "./UserManagementUserDepartment";
 interface AddUserDialogProps {
   trigger: React.ReactNode;
+  mode: "addUser" | "editUser";
 }
 
-const AddUserDialog: React.FC<AddUserDialogProps> = ({ trigger }) => {
+const AddUserDialog: React.FC<AddUserDialogProps> = ({ trigger, mode }) => {
   const [isChecked, setIsChecked] = useState(false);
   const [date, setDate] = React.useState<Date | undefined>(new Date());
 
@@ -34,14 +35,14 @@ const AddUserDialog: React.FC<AddUserDialogProps> = ({ trigger }) => {
         <DialogTitle className="text-lg font-medium">
           <span className="flex items-center gap-2">
             <IoMdSettings size={20} />
-            Add User
+            {mode === "addUser" ? "Add User" : "Edit User"}
           </span>
           <hr className="my-1" />
         </DialogTitle>
         <DialogDescription className="mt-2 mb-10 text-sm text-gray-500">
           {/* activate component */}
           <div className="w-full">
-            <div className="border-b">
+            <div>
               <ul className="flex">
                 {tabs.map((tab) => (
                   <li

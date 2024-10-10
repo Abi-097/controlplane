@@ -77,8 +77,8 @@ const LogCallDialog: React.FC<LogCallDialogProps> = ({ trigger }) => {
   return (
     <Dialog>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[650px]">
-        <DialogTitle className="text-lg font-medium">Log A Call</DialogTitle>
+      <DialogContent className="fixed bg-white p-4 rounded-md shadow-lg top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[650px] z-[999]">
+        <DialogTitle className="text-lg font-medium">Add A Call</DialogTitle>
         <hr className="my-2" />
         <DialogDescription className="mt-1 mb-4 text-sm text-gray-500">
           <form className="space-y-4">

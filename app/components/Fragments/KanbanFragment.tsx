@@ -83,15 +83,15 @@ const KanbanFragment = () => {
   }
 
   return (
-    <div className="flex overflow-x-auto space-x-3 p-3 h-[80vh] w-full">
+    <div className="flex overflow-x-auto space-x-3 px-4 py-2 h-[80vh] w-full bg-fullbg">
       {Object.keys(groupedUsers).map((category) => {
         const isVisible = visibleCategories[category];
         return (
           <div key={category} className="w-[350px] flex-shrink-0 ">
             {/* <div className="mb-3 shadow-lg rounded-md"> */}
-            <div className="mb-3 shadow-md rounded-md">
-              {/* <CardHeader className="bg-slate-100 p-3"> */}
-              <CardHeader className="bg-white p-3">
+            <div className="mb-3 shadow-md rounded-lg">
+              {/*<CardHeader className="bg-slate-100 p-3">*/}
+              <CardHeader className="bg-white p-3 shadow-md rounded-md">
                 <div className="flex items-center justify-between">
                   <h6
                     onClick={() => toggleVisibility(category)}
@@ -134,18 +134,3 @@ const KanbanFragment = () => {
 };
 
 export default KanbanFragment;
-
-// <Card className="w-[400px] mx-3 my-3">
-// <Card className="">
-//   <CardHeader>
-//     <CardTitle></CardTitle>
-//     <CardDescription>
-//       Deploy your new project in one-click.
-//     </CardDescription>
-//   </CardHeader>
-//   <CardContent></CardContent>
-//   <CardFooter className="flex justify-between">
-//     <p>Hello</p>
-//   </CardFooter>
-// </Card>
-// </Card>

@@ -10,6 +10,12 @@ import {
 import { RiDeleteBin5Line, RiExpandUpDownLine } from "react-icons/ri";
 import { MoreHorizontal } from "lucide-react";
 import { MdOutlineHistory } from "react-icons/md";
+import { BsThreeDots } from "react-icons/bs";
+import AddUserDialog from "./AddUser";
+import { FillButton } from "@/components/libs/buttons";
+import { GoShieldLock } from "react-icons/go";
+import History from "@/app/components/History/History";
+import Delete from "@/app/components/common/Delete";
 // import AuditLogs from "@/app/components/History/AuditLogs/AuditLogs";
 
 export type UserManagementUserColumnProps = {
@@ -37,7 +43,7 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           User ID
@@ -48,10 +54,13 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
   },
   {
     accessorKey: "FirstName",
+    size: 570,
+    enableResizing: true,
+    //  columnResizeDirection: 'rtl',
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           First Name
@@ -65,7 +74,7 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Last Name
@@ -79,7 +88,7 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Group
@@ -93,7 +102,7 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Role
@@ -107,7 +116,7 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Email
@@ -121,7 +130,7 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Status
@@ -135,7 +144,7 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Photo
@@ -149,7 +158,7 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Department Desc
@@ -163,7 +172,7 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Reporting Manager
@@ -178,7 +187,7 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Created By
@@ -193,7 +202,7 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Created At
@@ -250,7 +259,7 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Updated By
@@ -264,7 +273,7 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Updated At
@@ -275,41 +284,78 @@ export const columns: ColumnDef<UserManagementUserColumnProps>[] = [
   },
   {
     id: "actions",
-    header: "Action",
+    header: () => {
+      return (
+        <div className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap">
+          Action
+        </div>
+      );
+    },
     enableHiding: false,
     cell: ({ row }) => {
       const user = row.original;
 
       return (
         <DropdownMenu>
-          {/* <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <MoreHorizontal className="h-4 w-4" />
+              <BsThreeDots className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.id)}
+            {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
+            {/* <DropdownMenuItem
+              onClick={() => navigator.clipboard.writeText(UsersData.id)}
             >
               Copy user ID
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <span className="pl-2 gap-1 flex items-center justify-center">
-                <MdOutlineHistory className="mr-2" size={20} /> Pending !!!
-              </span>
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleMenuItemClick}>
-              <AuditLogs
+            </DropdownMenuItem> */}
+            {/* <DropdownMenuSeparator /> */}
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
+              <AddUserDialog
+                mode="editUser"
                 trigger={
-                  <span className="pl-2 gap-1 flex items-center justify-center">
-                    <RiDeleteBin5Line className="mr-2" size={20} /> Audit Logs
+                  <FillButton className="px-3 py-1">
+                    <p className="text-sm">Edit User</p>
+                  </FillButton>
+                }
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              // onClick={handleMenuItemClick}
+            >
+              <GoShieldLock />
+              Security
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
+              <History
+                trigger={
+                  <span className="flex items-center justify-center">
+                    <MdOutlineHistory className="mr-2" size={20} /> History
                   </span>
                 }
               />
             </DropdownMenuItem>
-          </DropdownMenuContent> */}
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
+              <Delete
+                trigger={
+                  <span className="flex items-center justify-center">
+                    <RiDeleteBin5Line className="mr-2 text-red-500" size={20} />{" "}
+                    Delete
+                  </span>
+                }
+              />
+            </DropdownMenuItem>
+          </DropdownMenuContent>
         </DropdownMenu>
       );
     },

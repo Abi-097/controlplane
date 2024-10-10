@@ -174,7 +174,8 @@ const MultiRoleSelect: React.FC = () => {
     <div className="relative w-full" ref={dropdownRef}>
       <button
         type="button"
-        className="w-full py-2 px-3 border xl:max-w-[300px] lg:max-w-[300px] md:max-w-none sm:max-w-none max-w-none bg-[#f9fafb] border-gray-300 rounded-lg shadow-sm focus:outline-none focus:none focus:transparent overflow-hidden text-ellipsis whitespace-nowrap"
+        className="w-full py-2 px-3 border bg-[#f9fafb] border-gray-300 rounded-lg shadow-sm focus:outline-none focus:none focus:transparent"
+        // className="w-full py-2 px-3 border xl:max-w-[300px] lg:max-w-[300px] md:max-w-none sm:max-w-none max-w-none bg-[#f9fafb] border-gray-300 rounded-lg shadow-sm focus:outline-none focus:none focus:transparent overflow-hidden text-ellipsis whitespace-nowrap"
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="block overflow-hidden text-ellipsis whitespace-nowrap">
@@ -192,7 +193,7 @@ const MultiRoleSelect: React.FC = () => {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <div className="max-h-60 overflow-y-auto">
+          <div className="max-h-[185px] overflow-y-auto">
             {filteredOptions.map((option) => (
               <label
                 key={option.value}

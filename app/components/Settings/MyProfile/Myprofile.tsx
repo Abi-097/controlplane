@@ -1,12 +1,21 @@
 import React, { useState } from "react";
 import { CgProfile } from "react-icons/cg";
-import { RiLockPasswordLine } from "react-icons/ri";
+import { RiHistoryFill, RiLockPasswordLine } from "react-icons/ri";
 import NameImage from "./NameImage";
 import Address from "./Address";
 import { CiLocationOn } from "react-icons/ci";
 import { BiWorld } from "react-icons/bi";
 import Region from "./Region";
 import Password from "./Password";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { MdOutlineLocationOn } from "react-icons/md";
+
 const MyProfile = () => {
   // specific keys for the contentMap
   const options = [
@@ -14,7 +23,7 @@ const MyProfile = () => {
     "Address",
     "Region & Time Zone",
     "Password Change",
-    "History",
+    // "History",
   ] as const;
   type OptionType = (typeof options)[number];
 
@@ -27,28 +36,27 @@ const MyProfile = () => {
     Address: <Address />,
     "Region & Time Zone": <Region />,
     "Password Change": <Password />,
-    History: "History",
+    // History: null,
   };
   const iconsMap: Record<OptionType, React.ReactNode> = {
     "Name & Image": <CgProfile size={20} />,
-    Address: <CiLocationOn size={20} />,
+    Address: <MdOutlineLocationOn size={20} />,
     "Region & Time Zone": <BiWorld size={20} />,
     "Password Change": <RiLockPasswordLine size={20} />,
-    History: <CgProfile size={20} />,
+    // History: <RiHistoryFill size={20} />,
   };
   return (
     // <div id="profile">
-    <div className="flex flex-wrap gap-2 w-full h-[90vh] bg-gray-100">
+    <div className="flex flex-wrap gap-3 w-full bg-gray-100">
       {/* Left Side - Menu */}
       <div
         className="
           w-full 
-          sm:w-full sm:mb-2
+          sm:w-full
           md:w-[100%] 
           lg:w-[15%] 
           xl:w-[15%]
-         p-1 bg-white rounded-md
-        "
+         h-fit xl:h-fit lg:h-fit md:h-full sm:h-full p-1 bg-white rounded-md"
       >
         {options.map((option) => (
           <div
@@ -68,7 +76,7 @@ const MyProfile = () => {
 
       {/* Right Side - Content */}
       <div
-        className=" 
+        className="h-full overflow-auto
           w-full 
           sm:w-full
           md:w-[100%]

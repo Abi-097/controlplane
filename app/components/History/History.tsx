@@ -10,18 +10,15 @@ import {
 
 import axios from "axios";
 import { FaCompress, FaExpand } from "react-icons/fa";
-import { CommonTable } from "../HistoryTable/data-table";
+import { HistoryCommonTable } from "../HistoryTable/data-table";
 import { HistoryTable, columns } from "../HistoryTable/HistoryColumnTable";
 interface AddHistoryDialogProps {
   trigger: React.ReactNode;
 }
 
 const History: React.FC<AddHistoryDialogProps> = ({ trigger }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
   const [data, setData] = useState<any[]>([]);
   const [dataLength, setDataLength] = useState<number>(0);
-
-  const toggleExpand = () => setIsExpanded(!isExpanded);
 
   useEffect(() => {
     // Fetch data from the URL
@@ -44,32 +41,11 @@ const History: React.FC<AddHistoryDialogProps> = ({ trigger }) => {
       <Dialog>
         <DialogTrigger asChild>{trigger}</DialogTrigger>
 
-        <DialogContent
-          className={`fixed bg-white rounded-md shadow-lg left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[1200px] max-h-[850px] transition-all duration-300 ${
-            isExpanded ? "w-full h-full max-w-full max-h-full" : ""
-          }`}
-        >
+        <DialogContent className="fixed bg-white rounded-md shadow-lg left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full max-w-[1200px] max-h-[850px] transition-all duration-300 z-[999]">
           {/* <div className="flex flex-col h-full"> */}
           <DialogHeader>
             <DialogTitle className="text-lg font-semibold">
               <div className="flex items-center">
-                <button
-                  type="button"
-                  onClick={toggleExpand}
-                  className="hover:text-gray-200 transition-transform duration-300 pr-2"
-                >
-                  {isExpanded ? (
-                    <FaCompress
-                      className="text-black transform hover:scale-110"
-                      size={18}
-                    />
-                  ) : (
-                    <FaExpand
-                      className="text-black transform hover:scale-110"
-                      size={18}
-                    />
-                  )}
-                </button>
                 History
                 <span className="bg-[#1D62B450] ml-2 rounded-md cursor-default px-1">
                   {dataLength}
@@ -77,11 +53,7 @@ const History: React.FC<AddHistoryDialogProps> = ({ trigger }) => {
               </div>
               <hr className="my-2" />
             </DialogTitle>
-            <CommonTable
-              columns={columns}
-              data={data}
-              isExpanded={isExpanded}
-            />
+            <HistoryCommonTable columns={columns} data={data} />
           </DialogHeader>
 
           {/* <DialogDescription className="text-sm text-gray-500"> */}

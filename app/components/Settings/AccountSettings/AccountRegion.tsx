@@ -20,6 +20,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { BiWorld } from "react-icons/bi";
+import History from "../../History/History";
 
 const AccountRegion = () => {
   const [phone, setPhone] = useState<string>("");
@@ -48,7 +49,7 @@ const AccountRegion = () => {
 
   return (
     <>
-      <form className="w-full p-4 h-[90vh] overflow-auto">
+      <form className="w-full p-4 overflow-auto">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <BiWorld size={24} />
@@ -56,12 +57,16 @@ const AccountRegion = () => {
           </div>
           <div className="flex items-center gap-2">
             <RiLockPasswordLine size={24} />
-            <MdOutlineHistory size={24} />
+            <History
+              trigger={
+                <MdOutlineHistory className="mr-2 cursor-pointer" size={24} />
+              }
+            />
           </div>
         </div>
         <hr className="text-slate-300 my-4" />
 
-        <p className="py-5 text-md">
+        <p className="py-5 text-sm">
           Please choose the region in which your data will be processed by
           DataNue`s hosted data centers. Once you create your account, this
           region selection cannot be modified. If you`re unsure about the
@@ -123,7 +128,7 @@ const AccountRegion = () => {
           </div>
         </div>
         <div className="flex justify-end">
-          <Button className="bg-[#57534e] text-white">
+          <Button className="bg-saveButton text-white">
             Save Account Details
           </Button>
         </div>

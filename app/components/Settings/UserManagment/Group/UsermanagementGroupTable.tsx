@@ -22,12 +22,18 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { LiaTicketAltSolid } from "react-icons/lia";
-import { useMemo, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaAngleDown, FaRegUser, FaSearch } from "react-icons/fa";
 import clsx from "clsx";
-import { MdDownload, MdOutlineRefresh, MdViewColumn } from "react-icons/md";
+import {
+  MdDownload,
+  MdOutlineHistory,
+  MdOutlineRefresh,
+  MdOutlineZoomOutMap,
+  MdViewColumn,
+} from "react-icons/md";
 import * as XLSX from "xlsx";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -45,6 +51,7 @@ import { Label } from "@/components/ui/label";
 import { FillButton } from "@/components/libs/buttons";
 import { HiOutlineUserGroup } from "react-icons/hi";
 import UserManagementGroupDialog from "./AddGroup";
+import History from "@/app/components/History/History";
 // import AddUserDialog from "./AddUser";
 
 interface UserManagementGroupTableProps<TData, TValue> {
@@ -61,7 +68,9 @@ export function UserManagementGroupTable<TData, TValue>({
 //   isExpanded,
 UserManagementGroupTableProps<TData, TValue>) {
   const [isIconMenuOpen, setIsIconMenuOpen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
   const iconRef = useRef<HTMLDivElement>(null);
+  const tableRef = useRef<HTMLDivElement>(null);
   const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -71,6 +80,9 @@ UserManagementGroupTableProps<TData, TValue>) {
     pageSize: 10,
   });
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectAll, setSelectAll] = useState(false);
+  const [isSheetOpen, setIsSheetOpen] = useState(false);
+
   const table = useReactTable({
     columns,
     onSortingChange: setSorting,
@@ -92,6 +104,40 @@ UserManagementGroupTableProps<TData, TValue>) {
     },
     onPaginationChange: setPagination,
   });
+  useEffect(() => {
+    // Load the column visibility from local storage when the component mounts
+    const savedVisibility = localStorage.getItem("columnVisibility");
+    if (savedVisibility) {
+      setColumnVisibility(JSON.parse(savedVisibility));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Update the select all checkbox based on the current column visibility state
+    const allVisible = table
+      .getAllColumns()
+      .filter((column) => column.getCanHide())
+      .every((column) => column.getIsVisible());
+
+    setSelectAll(allVisible);
+  }, [columnVisibility, table]);
+  useEffect(() => {
+    // Load the column visibility from local storage when the component mounts
+    const savedVisibility = localStorage.getItem("columnVisibility");
+    if (savedVisibility) {
+      setColumnVisibility(JSON.parse(savedVisibility));
+    }
+  }, []);
+
+  useEffect(() => {
+    // Update the select all checkbox based on the current column visibility state
+    const allVisible = table
+      .getAllColumns()
+      .filter((column) => column.getCanHide())
+      .every((column) => column.getIsVisible());
+
+    setSelectAll(allVisible);
+  }, [columnVisibility, table]);
 
   const paginationButtons = [];
   for (let i = 0; i < table.getRowCount() / pagination.pageSize; i++) {
@@ -129,29 +175,67 @@ UserManagementGroupTableProps<TData, TValue>) {
 
   // clicking on the icon MdViewColumn need to open the Datatable sheet
   const sheetTriggerRef = useRef<HTMLButtonElement>(null);
-
-  const handleViewColumnClick = () => {
-    if (sheetTriggerRef.current) {
-      sheetTriggerRef.current.click();
-    }
-  };
-
   const toggleIconMenu = () => {
     setIsIconMenuOpen(!isIconMenuOpen);
   };
-  const handleClickOutside = (event: MouseEvent) => {
-    if (iconRef.current && !iconRef.current.contains(event.target as Node)) {
-      setIsIconMenuOpen(false);
+
+  const handleSelectAllChange = (checked: boolean) => {
+    setSelectAll(checked);
+    table.getAllColumns().forEach((column) => {
+      if (column.getCanHide()) {
+        column.toggleVisibility(checked);
+      }
+    });
+  };
+  const handleColumnVisibilityChange = (columnId: string, checked: boolean) => {
+    const column = table.getColumn(columnId);
+
+    // Check if the column exists
+    if (column) {
+      column.toggleVisibility(checked);
+
+      // Check if all columns are visible
+      const allVisible = table
+        .getAllColumns()
+        .filter((column) => column.getCanHide())
+        .every((column) => column.getIsVisible());
+
+      setSelectAll(allVisible);
+    }
+  };
+  const handleSave = () => {
+    // Save the column visibility to local storage
+    localStorage.setItem(
+      "columnVisibility",
+      JSON.stringify(table.getState().columnVisibility)
+    );
+    setIsSheetOpen(false);
+    // console.log("Columns visibility saved:", columnVisibility);
+  };
+
+  const handleFullScreen = () => {
+    if (tableRef.current) {
+      if (!document.fullscreenElement) {
+        tableRef.current.requestFullscreen().catch((err) => {
+          console.error(
+            `Error attempting to enable full-screen mode: ${err.message}`
+          );
+        });
+        setIsFullScreen(true); // Set fullscreen state to true
+      } else {
+        document.exitFullscreen();
+        setIsFullScreen(false); // Set fullscreen state to false
+      }
     }
   };
 
   return (
     <>
       {/* <h2 className="text-xl mb-4">{heading}</h2> */}
-      <div className="flex justify-between items-center pb-2 px-7">
-        <div className="flex items-center gap-3">
-          <HiOutlineUserGroup size={20} />
-          <p className="text-sm">User Management - Group</p>
+      <div className="flex justify-between items-center px-4 py-2">
+        <div className="flex items-center gap-2">
+          <HiOutlineUserGroup size={24} />
+          <p className="font-semibold">User Management - Group</p>
         </div>
         <div className="flex items-center justify-center gap-3">
           <div className="relative" ref={iconRef}>
@@ -168,6 +252,19 @@ UserManagementGroupTableProps<TData, TValue>) {
                 isIconMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
             >
+              <History
+                trigger={
+                  <MdOutlineHistory
+                    className="text-gray-400 cursor-pointer hover:text-gray-700"
+                    size={20}
+                  />
+                }
+              />
+              <MdOutlineZoomOutMap
+                className="text-gray-400 cursor-pointer hover:text-gray-700"
+                size={20}
+                onClick={handleFullScreen}
+              />
               <MdOutlineRefresh
                 className="text-gray-400 cursor-pointer hover:text-gray-700"
                 size={20}
@@ -178,7 +275,7 @@ UserManagementGroupTableProps<TData, TValue>) {
                 className="text-gray-400 cursor-pointer hover:text-gray-700"
               />
               <div>
-                <Sheet>
+                <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
                   <SheetTrigger asChild>
                     <button className="border-none flex items-center justify-center">
                       <MdViewColumn
@@ -197,15 +294,31 @@ UserManagementGroupTableProps<TData, TValue>) {
                       <Input
                         type="text"
                         placeholder="Search Columns"
-                        className="mt-2 p-1 border rounded w-full bg-[#f9fafb]"
+                        className="mt-2 p-1 border rounded w-full bg-inputField"
                         value={searchQuery}
                         onChange={(e) =>
                           setSearchQuery(e.target.value.toLowerCase())
                         }
                       />
+                      <div className="flex items-center px-5">
+                        <Checkbox
+                          checked={selectAll}
+                          onCheckedChange={(value) =>
+                            handleSelectAllChange(!!value)
+                          }
+                          id="select-all"
+                          className="data-[state=checked]:bg-[#3f76ff] data-[state=checked]:border-[#3f76ff] mt-3"
+                        />
+                        <label
+                          htmlFor="select-all"
+                          className="ml-2 mt-3 text-sm text-gray-600"
+                        >
+                          Select All
+                        </label>
+                      </div>
                     </SheetHeader>
                     {/* Apply fixed height and overflow for scrolling */}
-                    <div className="px-3 mt-4 max-h-[80%] overflow-y-auto">
+                    <div className="px-3 mt-1 max-h-[80%] overflow-y-auto">
                       {table
                         .getAllColumns()
                         .filter((column) => column.getCanHide())
@@ -223,37 +336,79 @@ UserManagementGroupTableProps<TData, TValue>) {
                           if (!aMatches && bMatches) return 1;
                           return 0;
                         })
-                        .map((column) => (
-                          <div
-                            key={column.id}
-                            className="flex items-center px-2 py-2 cursor-pointer capitalize "
-                          >
-                            <Checkbox
-                              checked={column.getIsVisible()}
-                              onCheckedChange={(value) => {
-                                column.toggleVisibility(!!value);
-                              }}
-                              id={column.id}
-                              className="data-[state=checked]:bg-[#3f76ff] data-[state=checked]:border-[#3f76ff]"
-                            />
-                            <label
-                              htmlFor={column.id}
-                              className="ml-2 text-sm text-gray-600"
+                        .map((column) => {
+                          let headerLabel: string | undefined;
+
+                          if (typeof column.columnDef.header === "function") {
+                            const headerContent = column.columnDef.header({
+                              column,
+                              header: table.getHeaderGroups()[0].headers[0],
+                              table,
+                            });
+                            if (React.isValidElement(headerContent)) {
+                              const element =
+                                headerContent as React.ReactElement;
+
+                              // Filter out icons and get only the text nodes from the header content
+                              const textNodes = React.Children.toArray(
+                                element.props.children
+                              )
+                                .filter((child) => typeof child === "string")
+                                .join(""); // Join in case there are multiple text nodes
+
+                              headerLabel = textNodes;
+                            } else if (typeof headerContent === "string") {
+                              headerLabel = headerContent;
+                            }
+                          } else {
+                            headerLabel = column.columnDef.header as string;
+                          }
+
+                          return (
+                            <div
+                              key={column.id}
+                              className="flex items-center p-2 cursor-pointer capitalize"
                             >
-                              {column.id}
-                            </label>
-                          </div>
-                        ))}
+                              <Checkbox
+                                checked={column.getIsVisible()}
+                                onCheckedChange={(value) =>
+                                  handleColumnVisibilityChange(
+                                    column.id,
+                                    !!value
+                                  )
+                                }
+                                id={column.id}
+                                className="data-[state=checked]:bg-[#3f76ff] data-[state=checked]:border-[#3f76ff]"
+                              />
+                              <label
+                                htmlFor={column.id}
+                                className="ml-2 text-sm text-gray-600"
+                              >
+                                {headerLabel || column.id}
+                              </label>
+                            </div>
+                          );
+                        })}
+                    </div>
+                    <div className="flex justify-end mt-4">
+                      <Button
+                        variant="outline"
+                        className="ml-auto bg-saveButton text-white"
+                        onClick={handleSave}
+                      >
+                        Save
+                      </Button>
                     </div>
                   </SheetContent>
                 </Sheet>
               </div>
             </div>
-          </div>{" "}
+          </div>
           <div>
             <UserManagementGroupDialog
+              mode="addGroup"
               trigger={
-                <FillButton className="px-3 py-1">
+                <FillButton className="px-3 py-1 bg-saveButton">
                   <p className="text-sm">Add Group</p>
                 </FillButton>
               }
@@ -275,10 +430,16 @@ UserManagementGroupTableProps<TData, TValue>) {
         </div>
       </div>
       {/* <div className="flex flex-col h-full"> */}
-      <div className="flex-1 max-h-[650px] w-[80vw] overflow-auto">
+      {/* <div className="flex-1 max-h-[650px] w-full p-1 overflow-auto"> */}
+      <div
+        ref={tableRef}
+        className={`flex-1 max-h-[73vh] w-full px-1 overflow-auto ${
+          isFullScreen ? "bg-white text-black" : ""
+        }`}
+      >
         <div className="rounded-md border">
           <Table>
-            <TableHeader>
+            <TableHeader className="bg-tableBg">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (

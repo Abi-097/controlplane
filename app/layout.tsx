@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Toaster } from "@/components/ui/toaster";
 import "./globals.css";
-// import { Providers } from "./GlobalRedux/provider";
+import { Providers } from "./store/provider";
 
 export const metadata: Metadata = {
   title: "Control Plane",
@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <Providers>{children}</Providers>
         <Toaster />
       </body>
     </html>

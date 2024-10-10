@@ -12,6 +12,7 @@ import { RiLockPasswordLine } from "react-icons/ri";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/light.css";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import History from "../../History/History";
 const CompanyDetails = () => {
   const [phone, setPhone] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -39,15 +40,19 @@ const CompanyDetails = () => {
 
   return (
     <>
-      <form className="w-full p-4 h-[90vh] overflow-auto">
+      <form className="w-full p-4 overflow-auto">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2">
             <HiOutlineBuildingOffice2 size={24} />
             <p className="font-semibold">Company Details</p>
           </div>
           <div className="flex items-center gap-2">
             <RiLockPasswordLine size={24} />
-            <MdOutlineHistory size={24} />
+            <History
+              trigger={
+                <MdOutlineHistory className="mr-2 cursor-pointer" size={24} />
+              }
+            />
           </div>
         </div>
         <hr className="text-slate-300 my-4" />
@@ -58,11 +63,11 @@ const CompanyDetails = () => {
           lg:w-[40%] 
           xl:w-[40%]"
             >
-              <Label className="text-md mb-1 ">Company Name</Label>
+              <Label className="text-sm mb-1 ">Company Name</Label>
               <Input
                 type="companyName"
                 placeholder=""
-                className="bg-[#f9fafb]"
+                className="bg-inputField"
               />
             </div>
             <div className="flex items-center justify-center w-full md:w-full lg:w-[40%] xl:w-[40%]">
@@ -75,7 +80,7 @@ const CompanyDetails = () => {
                   width={25}
                   height={15}
                 />
-                <p>In Active</p>
+                <p className="text-sm">In Active</p>
               </div>
               <div className="w-28 h-28 rounded-full bg-slate-100 ml-16" />
             </div>
@@ -85,23 +90,23 @@ const CompanyDetails = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Legal Name</Label>
-            <Input type="legalName" placeholder="" className="bg-[#f9fafb]" />
+            <Label className="text-sm mb-1 ">Legal Name</Label>
+            <Input type="legalName" placeholder="" className="bg-inputField" />
           </div>
           <div
             className=" mb-4 w-full md:w-full 
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Email Address</Label>
-            <Input type="email" placeholder="" className="bg-[#f9fafb]" />
+            <Label className="text-sm mb-1 ">Email Address</Label>
+            <Input type="email" placeholder="" className="bg-inputField" />
           </div>
           <div
             className=" mb-4 w-full md:w-full 
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Phone</Label>
+            <Label className="text-sm mb-1 ">Phone</Label>
             <PhoneInput
               country={"us"}
               value={phone}
@@ -118,45 +123,45 @@ const CompanyDetails = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Website</Label>
-            <Input type="website" placeholder="" className="bg-[#f9fafb]" />
+            <Label className="text-sm mb-1 ">Website</Label>
+            <Input type="website" placeholder="" className="bg-inputField" />
           </div>
           <div
             className=" mb-4 w-full md:w-full 
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Industry</Label>
-            <Input type="industry" placeholder="" className="bg-[#f9fafb]" />
+            <Label className="text-sm mb-1 ">Industry</Label>
+            <Input type="industry" placeholder="" className="bg-inputField" />
           </div>
           <div
             className=" mb-4 w-full md:w-full 
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">
+            <Label className="text-sm mb-1 ">
               Business Unit Identification Number
             </Label>
-            <Input type="idnumber" placeholder="" className="bg-[#f9fafb]" />
+            <Input type="idnumber" placeholder="" className="bg-inputField" />
           </div>
           <div
             className=" mb-4 w-full md:w-full 
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Associate Reference</Label>
-            <Input type="idnumber" placeholder="" className="bg-[#f9fafb]" />
+            <Label className="text-sm mb-1 ">Associate Reference</Label>
+            <Input type="idnumber" placeholder="" className="bg-inputField" />
           </div>
           <div
             className=" mb-4 w-full md:w-full 
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Customer Unique Number</Label>
+            <Label className="text-sm mb-1 ">Customer Unique Number</Label>
             <Input
               type="uniquenumber"
               placeholder=""
-              className="bg-[#f9fafb]"
+              className="bg-inputField"
             />
           </div>
           <div
@@ -164,10 +169,10 @@ const CompanyDetails = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md mb-1 ">Created On</Label>
+            <Label className="text-sm mb-1 ">Created On</Label>
 
             <Flatpickr
-              className="bg-[#f9fafb] flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+              className="bg-inputField flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-transparent focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               data-enable-time
               value={date}
               onChange={(date) => setDate(date[0])}
@@ -179,7 +184,7 @@ const CompanyDetails = () => {
           lg:w-[40%] 
           xl:w-[40%]"
           >
-            <Label className="text-md">Header Configuration</Label>
+            <Label className="text-sm">Header Configuration</Label>
             <RadioGroup defaultValue="both" className="mt-3">
               <div className="flex items-center space-x-2 mb-2">
                 <RadioGroupItem value="both" id="r1" />
@@ -196,8 +201,8 @@ const CompanyDetails = () => {
             </RadioGroup>
           </div>
         </div>
-        <div className="flex justify-end">
-          <Button className="bg-[#57534e] text-white">
+        <div className="flex justify-end pb-4">
+          <Button className="bg-saveButton text-white">
             Save Account Details
           </Button>
         </div>

@@ -29,7 +29,7 @@ import { SiConvertio } from "react-icons/si";
 import { GrContactInfo } from "react-icons/gr";
 import { BiSolidEdit, BiTransfer } from "react-icons/bi";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { IoMailOpenOutline } from "react-icons/io5";
+import { IoFemale, IoMailOpenOutline, IoMale } from "react-icons/io5";
 
 import ConvertContact from "../convertContact/ConvertContact";
 import History from "@/app/components/History/History";
@@ -43,6 +43,19 @@ import dynamic from "next/dynamic";
 import LogCallDialog from "../Call/LogCallDialog";
 import AddContactDialog from "../ContactTable/AddContact";
 import AddData from "../NodataComponent/AddData";
+import CreateNewChat from "../Chat/CreateNewChat";
+import { VscSend } from "react-icons/vsc";
+import {
+  Mail,
+  MapPin,
+  NotebookPen,
+  Phone,
+  Plus,
+  Projector,
+} from "lucide-react";
+import AddNewMeeting from "../MeetingContent/AddNewMeeting";
+import LogDialog from "../Log/LogDialog";
+import AddNoteDialog from "../NotesContent/NewNote";
 const EmailDialog = dynamic(() => import("../EmailContent/Email"), {
   ssr: false,
 });
@@ -98,9 +111,9 @@ const GridCard: React.FC<GridCardProps> = ({ users }) => {
     event.stopPropagation();
   };
   return (
-    <>
+    <div>
       {users.length > 0 ? (
-        <div className="m-1 grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-start">
+        <div className="px-4 py-2 grid gap-3 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 justify-start bg-fullbg">
           {users.map((user) => (
             <Card key={user.id} className="shadow-md w-full bg-white">
               <CardHeader>
@@ -115,24 +128,27 @@ const GridCard: React.FC<GridCardProps> = ({ users }) => {
                       <div className="absolute bottom-2 right-1 transform translate-x-1/2 translate-y-1/2">
                         <div className="flex items-center justify-center w-5 h-5 bg-white rounded-full border border-gray-400 ">
                           {user.gender === "Male" && (
-                            <BsGenderMale size={11} className="text-gray-600" />
+                            <IoMale size={11} className="text-gray-600" />
                           )}
                           {user.gender === "Female" && (
-                            <BsGenderFemale className="text-gray-400" />
+                            <IoFemale size={11} className="text-gray-600" />
                           )}
                           {user.gender !== "Male" &&
                             user.gender !== "Female" && (
-                              <BsGenderTrans className="text-gray-400" />
+                              <BsGenderTrans
+                                size={11}
+                                className="text-gray-600"
+                              />
                             )}
                         </div>
                       </div>
                     </div>
                     <div>
-                      <CardTitle className="text-[18px] text-gray-700">
+                      <CardTitle className="text-[18px] text-textColor">
                         {user.name}
                       </CardTitle>
                       <div className="flex items-center gap-1 text-gray-500 text-sm">
-                        <SlLocationPin />{" "}
+                        <MapPin size={14} />
                         <p>
                           {user.location}, {user.country}
                         </p>
@@ -162,7 +178,7 @@ const GridCard: React.FC<GridCardProps> = ({ users }) => {
                           }
                         />
                       </DropdownMenuItem>
-                      <DropdownMenuItem
+                      {/* <DropdownMenuItem
                         onClick={() => {
                           const tmp_data = UsersData.find(
                             (item) => item.id === user.id
@@ -177,7 +193,7 @@ const GridCard: React.FC<GridCardProps> = ({ users }) => {
                         <span className="pl-2 gap-3 flex items-center justify-center">
                           <GrContactInfo size={20} /> Contact View
                         </span>
-                      </DropdownMenuItem>
+                      </DropdownMenuItem> */}
                       <DropdownMenuItem
                         onClick={() => {
                           const tmp_data = UsersData.find(
@@ -191,7 +207,7 @@ const GridCard: React.FC<GridCardProps> = ({ users }) => {
                         className="cursor-pointer"
                       >
                         <span className="pl-2 gap-3 flex items-center justify-center">
-                          <GrContactInfo size={20} /> Contact Full View
+                          <GrContactInfo size={20} /> Contact View
                         </span>
                       </DropdownMenuItem>
                       <DropdownMenuItem
@@ -207,6 +223,78 @@ const GridCard: React.FC<GridCardProps> = ({ users }) => {
                           }
                         />
                       </DropdownMenuItem>
+
+                      <DropdownMenuSeparator />
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={handleMenuItemClick}
+                      >
+                        <AddNewMeeting
+                          trigger={
+                            <span className="pl-2 gap-3 flex items-center justify-center">
+                              <Projector size={20} /> Meetings
+                            </span>
+                          }
+                        />
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={handleMenuItemClick}
+                      >
+                        <AddNoteDialog
+                          mode="add"
+                          trigger={
+                            <span className="pl-2 gap-3 flex items-center justify-center">
+                              <NotebookPen size={19} /> Notes
+                            </span>
+                          }
+                        />
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={handleMenuItemClick}
+                      >
+                        <LogDialog
+                          trigger={
+                            <span className="pl-2 gap-3 flex items-center justify-center">
+                              <Plus size={17} /> Logs
+                            </span>
+                          }
+                        />
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={handleMenuItemClick}
+                      >
+                        <CreateNewChat
+                          trigger={
+                            <span className="pl-2 gap-3 flex items-center justify-center">
+                              <VscSend className="" size={20} /> Chat
+                            </span>
+                          }
+                        />
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={handleMenuItemClick}
+                      >
+                        <LogCallDialog
+                          trigger={
+                            <span className="pl-2 gap-3 flex items-center justify-center">
+                              <FiPhone className="" size={20} /> Call
+                            </span>
+                          }
+                        />
+                      </DropdownMenuItem>
+                      <DropdownMenuItem
+                        className="cursor-pointer"
+                        onClick={handleAddCategoryClick}
+                      >
+                        <span className="pl-2 gap-3 flex items-center justify-center">
+                          <HiOutlineMailOpen size={20} /> Mail
+                        </span>
+                      </DropdownMenuItem>
+                      <DropdownMenuSeparator />
                       <DropdownMenuItem
                         className="cursor-pointer"
                         onClick={handleMenuItemClick}
@@ -235,27 +323,6 @@ const GridCard: React.FC<GridCardProps> = ({ users }) => {
                           }
                         />
                       </DropdownMenuItem>
-                      <DropdownMenuSeparator />
-                      <DropdownMenuItem
-                        className="cursor-pointer"
-                        onClick={handleMenuItemClick}
-                      >
-                        <LogCallDialog
-                          trigger={
-                            <span className="pl-2 gap-3 flex items-center justify-center">
-                              <FiPhone size={20} /> Call
-                            </span>
-                          }
-                        />
-                      </DropdownMenuItem>
-                      <DropdownMenuItem
-                        className="cursor-pointer"
-                        onClick={handleAddCategoryClick}
-                      >
-                        <span className="pl-2 gap-3 flex items-center justify-center">
-                          <HiOutlineMailOpen size={20} /> Mail
-                        </span>
-                      </DropdownMenuItem>
                     </DropdownMenuContent>
                   </DropdownMenu>
                 </div>
@@ -263,7 +330,7 @@ const GridCard: React.FC<GridCardProps> = ({ users }) => {
                 <div className="flex items-center">
                   <p
                     className={clsx(
-                      "mt-1 p-1 cursor-default rounded-md text-sm",
+                      "mt-1 p-1 cursor-default rounded-md text-sm font-semibold",
                       user?.category === "Customers"
                         ? "text-[#4167ED] bg-[#4167ED20]"
                         : user?.category === "Employee"
@@ -274,15 +341,15 @@ const GridCard: React.FC<GridCardProps> = ({ users }) => {
                     {user.category}
                   </p>
                 </div>
-                <div className="flex items-center gap-2 text-gray-500 text-sm">
-                  <TfiEmail className="mt-1" />{" "}
+                <div className="flex items-center gap-2 text-textColor text-sm">
+                  <Mail size={14} className="mt-1" />{" "}
                   <p className="mt-1"> {user.email}</p>
                 </div>
-                <div className="flex items-center gap-2 text-gray-500 text-sm">
-                  <PiPhoneLight className="mt-1" />{" "}
+                <div className="flex items-center gap-2 text-textColor text-sm">
+                  <Phone size={14} className="mt-1" />{" "}
                   <p className="mt-1">{user.contact}</p>
                 </div>
-                <div className="flex items-center gap-2 text-gray-500 text-sm mb-1">
+                <div className="flex items-center gap-2 text-textColor text-sm mb-1">
                   <Image
                     className="rounded-full transition-all group-hover:scale-110 mt-1"
                     alt="profile"
@@ -301,7 +368,7 @@ const GridCard: React.FC<GridCardProps> = ({ users }) => {
           <AddData buttonText="Add Contact" />
         </div>
       )}
-    </>
+    </div>
   );
 };
 

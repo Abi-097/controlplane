@@ -1,15 +1,9 @@
 import React, { useState } from "react";
-import { IoCallOutline, IoEllipsisHorizontal } from "react-icons/io5";
-import { AiTwotoneMail } from "react-icons/ai";
-import { GoPlus } from "react-icons/go";
 import dynamic from "next/dynamic";
-import { HiOutlineMail } from "react-icons/hi";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -20,8 +14,17 @@ import History from "../History/History";
 import { MdOutlineHistory } from "react-icons/md";
 import Delete from "../common/Delete";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { FiPhone, FiPlus } from "react-icons/fi";
 import LogCallDialog from "../Call/LogCallDialog";
+import ConvertLeads from "../Convert_Leads/ConvertLeads";
+import { BiTransfer } from "react-icons/bi";
+import { VscSend } from "react-icons/vsc";
+import CreateNewChat from "../Chat/CreateNewChat";
+import { Mail, NotebookPen, Phone, Plus, Projector } from "lucide-react";
+import LogDialog from "../Log/LogDialog";
+import AddNewMeeting from "../MeetingContent/AddNewMeeting";
+import AddNoteDialog from "../NotesContent/NewNote";
+import { FaTimeline } from "react-icons/fa6";
+
 const EmailDialog = dynamic(() => import("../EmailContent/Email"), {
   ssr: false,
 });
@@ -42,26 +45,30 @@ const SocialIcons = () => {
     event.stopPropagation();
   };
   const icons = [
-    { icon: <FiPlus />, label: "Log" },
+    { icon: <LogDialog trigger={<Plus size={17} />} />, label: "Log" },
     {
-      icon: <LogCallDialog trigger={<FiPhone />} />,
+      icon: <LogCallDialog trigger={<Phone size={17} />} />,
       label: "Call",
     },
+
     {
-      icon: <HiOutlineMail size={19} onClick={handleAddEmailClick} />,
+      icon: <Mail size={17} onClick={handleAddEmailClick} />,
       label: "Email",
     },
-    // { icon: <IoEllipsisHorizontal />, label: "More" },
 
+    {
+      icon: <CreateNewChat trigger={<VscSend size={17} />} />,
+      label: "Chat",
+    },
     {
       icon: (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <div className="flex items-center justify-center border border-gray-400 hover:bg-gray-200 hover:text-gray-700 transition rounded-full w-9 h-9 text-slate-500 cursor-pointer">
+            <div className="flex items-center justify-center border border-gray-400 hover:bg-gray-200 hover:text-gray-700 transition rounded-full w-9 h-9 text-slate-500 cursor-pointer ">
               <BsThreeDots />
             </div>
           </DropdownMenuTrigger>
-          <DropdownMenuContent>
+          <DropdownMenuContent className="z-[999]">
             {/* <DropdownMenuLabel>Email Options</DropdownMenuLabel> */}
             {/* <DropdownMenuItem>Add New Email</DropdownMenuItem> */}
             {/* <DropdownMenuSeparator /> */}
@@ -86,6 +93,44 @@ const SocialIcons = () => {
                 }
               />
             </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
+              <AddNewMeeting
+                trigger={
+                  <span className="pl-2 gap-3 flex items-center justify-center">
+                    <FaTimeline size={20} /> Meetings
+                  </span>
+                }
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
+              <AddNoteDialog
+                mode="add"
+                trigger={
+                  <span className="pl-2 gap-3 flex items-center justify-center">
+                    <NotebookPen size={19} /> Notes
+                  </span>
+                }
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
+              <ConvertLeads
+                trigger={
+                  <span className="pl-2 gap-3 flex items-center justify-center">
+                    <BiTransfer className="" size={20} /> Convert Leads
+                  </span>
+                }
+              />
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
             <DropdownMenuItem
               className="cursor-pointer"
               onClick={handleMenuItemClick}

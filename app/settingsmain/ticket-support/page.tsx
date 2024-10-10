@@ -1,0 +1,86 @@
+"use client";
+
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { TicketTable } from "@/app/components/Settings/Ticket/Table/TicketTable";
+import { columns } from "@/app/components/Settings/Ticket/Table/TicketTableColumn";
+const TicketSupportPage = () => {
+  const [activeTab, setActiveTab] = useState("Recent");
+  const [data, setData] = useState<any[]>([]);
+  const tabs = ["Recent", "My Tickets", "Shared with me"];
+
+  useEffect(() => {
+    // Fetch data from the URL
+    axios
+      .get("https://66c76bcb732bf1b79fa67bcd.mockapi.io/api/ticket")
+      .then((response) => {
+        // Set the data to state and log it
+        setData(response.data);
+        // setDataLength(response.data.length);
+        // console.log(response.data);
+      })
+      .catch((error) => {
+        // Handle any errors
+        console.error("There was an error fetching the data!", error);
+      });
+  }, []);
+  return (
+    <div className="flex flex-col w-full h-[92vh] p-1">
+      {/* Navigation Tabs */}
+      <div className="flex pt-3">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            className={`relative p-2 text-sm ${
+              activeTab === tab ? "text-blue-500 font-semibold " : ""
+            }`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab}
+            {activeTab === tab && (
+              <span className="absolute left-0 bottom-0 w-full h-1 bg-blue-500 rounded" />
+            )}
+          </button>
+        ))}
+      </div>
+      <hr className="border-slate-100" />
+      {/* Content Area */}
+      <div className="mt-5">
+        <div className="overflow-auto w-full h-full bg-screenbg">
+          {/* The table component should handle horizontal scroll */}
+          <div className="overflow-x-auto">
+            {activeTab === "Recent" && (
+              <div>
+                <TicketTable
+                  columns={columns}
+                  data={data}
+                  heading={activeTab}
+                />
+              </div>
+            )}
+            {activeTab === "My Tickets" && (
+              <div>
+                <TicketTable
+                  columns={columns}
+                  data={data}
+                  heading={activeTab}
+                />
+              </div>
+            )}
+            {activeTab === "Shared with me" && (
+              <div>
+                <TicketTable
+                  columns={columns}
+                  data={data}
+                  heading={activeTab}
+                />
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default TicketSupportPage;

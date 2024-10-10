@@ -1,5 +1,5 @@
 import React from "react";
-import { BsTicket } from "react-icons/bs";
+import { BsThreeDots, BsTicket } from "react-icons/bs";
 import { MdInfoOutline } from "react-icons/md";
 import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
@@ -13,6 +13,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { RiDeleteBin5Line, RiExpandUpDownLine } from "react-icons/ri";
+import Delete from "@/app/components/common/Delete";
+import History from "@/app/components/History/History";
+import { GoShieldLock } from "react-icons/go";
+import AddTicketDialog from "./AddTicket";
+import { FillButton } from "@/components/libs/buttons";
+import { CiEdit } from "react-icons/ci";
+import CloneDialog from "./Clone";
+import { FaRegClone } from "react-icons/fa";
 export type TicketTableColumn = {
   id: string;
   objectType: string;
@@ -31,7 +39,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Ticket ID
@@ -45,7 +53,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Ticket Number
@@ -59,7 +67,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Ticket Name
@@ -73,7 +81,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Ticket Description
@@ -87,7 +95,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Status
@@ -101,7 +109,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Issue State
@@ -116,7 +124,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Priority
@@ -131,7 +139,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Created By
@@ -146,7 +154,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Created At
@@ -156,24 +164,6 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     },
     cell: ({ row }) => {
       const date = new Date(row.getValue("createdAt"));
-
-      // // Format the date
-      // const dateFormatter = new Intl.DateTimeFormat("en-GB", {
-      //   day: "numeric",
-      //   month: "long",
-      //   year: "numeric",
-      // });
-      // const formattedDate = dateFormatter.format(date);
-
-      // // Format the time
-      // const timeFormatter = new Intl.DateTimeFormat("en-GB", {
-      //   hour: "2-digit",
-      //   minute: "2-digit",
-      //   second: "2-digit",
-      //   hour12: true,
-      // });
-      // const formattedTime = timeFormatter.format(date);
-      // const formattedDateTime = `${formattedDate} ${formattedTime}`;
 
       // Function to get ordinal suffix
       const getOrdinalSuffix = (day: number) => {
@@ -222,7 +212,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Updated By
@@ -237,7 +227,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Updated At
@@ -247,24 +237,6 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     },
     cell: ({ row }) => {
       const date = new Date(row.getValue("updatedAt"));
-
-      // // Format the date
-      // const dateFormatter = new Intl.DateTimeFormat("en-GB", {
-      //   day: "numeric",
-      //   month: "long",
-      //   year: "numeric",
-      // });
-      // const formattedDate = dateFormatter.format(date);
-
-      // // Format the time
-      // const timeFormatter = new Intl.DateTimeFormat("en-GB", {
-      //   hour: "2-digit",
-      //   minute: "2-digit",
-      //   second: "2-digit",
-      //   hour12: true,
-      // });
-      // const formattedTime = timeFormatter.format(date);
-      // const formattedDateTime = `${formattedDate} ${formattedTime}`;
 
       // Function to get ordinal suffix
       const getOrdinalSuffix = (day: number) => {
@@ -313,7 +285,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Owner ID
@@ -328,7 +300,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Owner Name
@@ -343,7 +315,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Assigned To Name
@@ -358,7 +330,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Label
@@ -373,7 +345,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Product Issue or Bug
@@ -388,7 +360,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Start Date
@@ -403,7 +375,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Due Date
@@ -418,7 +390,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Module
@@ -433,7 +405,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Module ID
@@ -448,7 +420,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           Cycle
@@ -463,7 +435,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           ParentTicket
@@ -478,7 +450,7 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
     header: ({ column }) => {
       return (
         <div
-          className="flex items-center gap-2 cursor-pointer select-none"
+          className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
           DateNue Notified Date
@@ -489,7 +461,13 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
   },
   {
     id: "actions",
-    header: "Action",
+    header: () => {
+      return (
+        <div className="flex items-center gap-2 cursor-pointer select-none text-tableText font-semibold text-xs whitespace-nowrap">
+          Action
+        </div>
+      );
+    },
     enableHiding: false,
     cell: ({ row }) => {
       const user = row.original;
@@ -498,22 +476,76 @@ export const columns: ColumnDef<TicketTableColumn>[] = [
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
-              <MoreHorizontal className="h-4 w-4" />
+              <BsThreeDots className="h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             {/* <DropdownMenuLabel>Actions</DropdownMenuLabel> */}
             {/* <DropdownMenuItem
-              onClick={() => navigator.clipboard.writeText(user.id)}
-            >
-              Copy user ID
-            </DropdownMenuItem> */}
+            onClick={() => navigator.clipboard.writeText(UsersData.id)}
+          >
+            Copy user ID
+          </DropdownMenuItem> */}
             {/* <DropdownMenuSeparator /> */}
-            <DropdownMenuItem onClick={handleMenuItemClick}>
-              {/* <HistoryData /> */}
-              {/* </span> */}
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
+              <AddTicketDialog
+                mode="editTicket"
+                trigger={
+                  <span className="flex items-center justify-center">
+                    <CiEdit className="mr-2 text-black" size={20} /> Edit
+                  </span>
+                }
+              />
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={handleMenuItemClick}></DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
+              <CloneDialog
+                mode="cloneTicket"
+                trigger={
+                  <span className="flex items-center justify-center">
+                    <FaRegClone className="mr-2 text-black" size={16} /> Clone
+                  </span>
+                }
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              // onClick={handleMenuItemClick}
+            >
+              <span className="flex items-center justify-center">
+                <GoShieldLock className="mr-2 text-black" size={20} /> Security
+              </span>
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
+              <History
+                trigger={
+                  <span className="flex items-center justify-center">
+                    <MdOutlineHistory className="mr-2" size={20} /> History
+                  </span>
+                }
+              />
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              className="cursor-pointer"
+              onClick={handleMenuItemClick}
+            >
+              <Delete
+                trigger={
+                  <span className="flex items-center justify-center">
+                    <RiDeleteBin5Line className="mr-2 text-red-500" size={20} />{" "}
+                    Delete
+                  </span>
+                }
+              />
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );

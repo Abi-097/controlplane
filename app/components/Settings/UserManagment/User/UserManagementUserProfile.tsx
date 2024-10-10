@@ -155,11 +155,11 @@ const UserManagementUserProfile = () => {
         </div>
         <div className="mt-4 flex flex-col md:flex-row justify-end md:space-x-2">
           <DialogClose asChild>
-            <button className="px-4 py-2 bg-gray-200 text-black rounded-md w-full md:w-1/2">
+            <button className="px-4 py-2 bg-gray-300 text-black rounded-md w-[13%] ">
               Cancel
             </button>
           </DialogClose>
-          <button className="px-4 py-2 bg-black text-white rounded-md w-full md:w-1/2">
+          <button className="px-4 py-2 bg-saveButton text-white rounded-md w-[13%]">
             Save
           </button>
         </div>

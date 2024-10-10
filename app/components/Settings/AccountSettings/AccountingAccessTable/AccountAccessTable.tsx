@@ -31,7 +31,13 @@ import {
 } from "react-icons/io";
 import { FaAngleDown, FaRegCalendar, FaSearch } from "react-icons/fa";
 import clsx from "clsx";
-import { MdDownload, MdOutlineRefresh, MdViewColumn } from "react-icons/md";
+import {
+  MdDownload,
+  MdOutlineHistory,
+  MdOutlineRefresh,
+  MdOutlineZoomOutMap,
+  MdViewColumn,
+} from "react-icons/md";
 import * as XLSX from "xlsx";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -58,6 +64,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import AddAccountAccessDialog from "./AddAccountAccess";
+import History from "@/app/components/History/History";
 // import AddOrganizationAnnouncementDialog from "./AddOrganizationAnnouncement";
 // import AddHoliday from "./AddHoliday";
 
@@ -73,6 +80,8 @@ export function AccountingAccessTable<TData, TValue>({
   data,
 }: AccountingAccessTableProps<TData, TValue>) {
   const [isIconMenuOpen, setIsIconMenuOpen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+  const tableRef = useRef<HTMLDivElement>(null);
   const iconRef = useRef<HTMLDivElement>(null);
   const [rowSelection, setRowSelection] = useState({});
   const [sorting, setSorting] = useState<SortingState>([]);
@@ -157,13 +166,29 @@ export function AccountingAccessTable<TData, TValue>({
     }
   };
 
+  const handleFullScreen = () => {
+    if (tableRef.current) {
+      if (!document.fullscreenElement) {
+        tableRef.current.requestFullscreen().catch((err) => {
+          console.error(
+            `Error attempting to enable full-screen mode: ${err.message}`
+          );
+        });
+        setIsFullScreen(true); // Set fullscreen state to true
+      } else {
+        document.exitFullscreen();
+        setIsFullScreen(false); // Set fullscreen state to false
+      }
+    }
+  };
+
   return (
     <>
       <div className="flex justify-between items-center pb-2 pr-7">
         <div className="flex items-center justify-center gap-3">
           <p className="text-sm whitespace-nowrap">Allow Access Period</p>
           <Select>
-            <SelectTrigger className="w-full bg-[#f9fafb]">
+            <SelectTrigger className="w-[150px] bg-inputField text-sm">
               <SelectValue placeholder="Choose Access Period" />
             </SelectTrigger>
             <SelectContent>
@@ -195,6 +220,19 @@ export function AccountingAccessTable<TData, TValue>({
                 isIconMenuOpen ? "opacity-100" : "opacity-0 pointer-events-none"
               }`}
             >
+              <History
+                trigger={
+                  <MdOutlineHistory
+                    className="text-gray-400 cursor-pointer hover:text-gray-700"
+                    size={20}
+                  />
+                }
+              />
+              <MdOutlineZoomOutMap
+                className="text-gray-400 cursor-pointer hover:text-gray-700"
+                size={20}
+                onClick={handleFullScreen}
+              />
               <MdOutlineRefresh
                 className="text-gray-400 cursor-pointer hover:text-gray-700"
                 size={20}
@@ -221,20 +259,27 @@ export function AccountingAccessTable<TData, TValue>({
           </div>
           <div>
             <AddAccountAccessDialog
+              mode="addAccess"
               trigger={
-                <FillButton className="px-2 py-1">
+                <Button className="bg-saveButton">
                   <p className="text-sm">Add Account Access</p>
-                </FillButton>
+                </Button>
               }
             />
           </div>
         </div>
       </div>
-      {/* <div className="flex flex-col h-full"> */}
-      <div className="flex-1 max-h-[650px] overflow-y-auto">
-        <div className="rounded-md border overflow-auto">
+      {/* <div className="max-h-full"> */}
+      {/* <div className="flex-1 max-h-[650px] overflow-y-auto"> */}
+      <div
+        ref={tableRef}
+        className={`flex-1 max-h-[73vh] w-full px-1 overflow-auto ${
+          isFullScreen ? "bg-white text-black" : ""
+        }`}
+      >
+        <div className="rounded-md border">
           <Table>
-            <TableHeader>
+            <TableHeader className="bg-tableBg">
               {table.getHeaderGroups().map((headerGroup) => (
                 <TableRow key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
@@ -280,52 +325,53 @@ export function AccountingAccessTable<TData, TValue>({
             </TableBody>
           </Table>
         </div>
-      </div>
-      {/* <div className="flex items-center justify-center space-x-2 py-4"> */}
-      <div className="flex items-center justify-between space-x-2 py-4">
-        <div className="flex items-center gap-3">
-          <div className="text-sm text-gray-800">
-            {`${
-              table.getState().pagination.pageIndex *
-                table.getState().pagination.pageSize +
-              1
-            }-${Math.min(
-              (table.getState().pagination.pageIndex + 1) *
-                table.getState().pagination.pageSize,
-              table.getFilteredRowModel().rows.length
-            )} of ${table.getFilteredRowModel().rows.length} Results`}
+        {/* <div className="flex items-center justify-center space-x-2 py-4"> */}
+        <div className="flex items-center justify-between space-x-2 py-4">
+          <div className="flex items-center gap-3">
+            <div className="text-sm text-gray-800">
+              {`${
+                table.getState().pagination.pageIndex *
+                  table.getState().pagination.pageSize +
+                1
+              }-${Math.min(
+                (table.getState().pagination.pageIndex + 1) *
+                  table.getState().pagination.pageSize,
+                table.getFilteredRowModel().rows.length
+              )} of ${table.getFilteredRowModel().rows.length} Results`}
+            </div>
+          </div>
+          <div className="flex gap-2 items-center justify-center space-x-2">
+            <Button
+              className={clsx(
+                "bg-gray-100",
+                !table.getCanPreviousPage() && "text-gray-400"
+              )}
+              variant="outline"
+              size="sm"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <IoIosArrowBack />
+            </Button>
+            <div className="flex flex-row gap-2">
+              {paginationButtons.map((u) => u)}
+            </div>
+            <Button
+              className={clsx(
+                "bg-gray-100",
+                !table.getCanNextPage() && "text-gray-400"
+              )}
+              variant="outline"
+              size="sm"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              <IoIosArrowForward />
+            </Button>
           </div>
         </div>
-        <div className="flex gap-2 items-center justify-center space-x-2">
-          <Button
-            className={clsx(
-              "bg-gray-100",
-              !table.getCanPreviousPage() && "text-gray-400"
-            )}
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <IoIosArrowBack />
-          </Button>
-          <div className="flex flex-row gap-2">
-            {paginationButtons.map((u) => u)}
-          </div>
-          <Button
-            className={clsx(
-              "bg-gray-100",
-              !table.getCanNextPage() && "text-gray-400"
-            )}
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <IoIosArrowForward />
-          </Button>
-        </div>
       </div>
+      {/* </div> */}
       {/* </div> */}
       {/* </div> */}
     </>
